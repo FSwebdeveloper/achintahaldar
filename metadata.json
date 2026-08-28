@@ -1,0 +1,5 @@
+{
+  "name": "Multi-Level Dropdown Menu",
+  "description": "A responsive React navigation menu with multi-level dropdown support, animated with Framer Motion and styled with Tailwind CSS.",
+  "requestFramePermissions": []
+}
