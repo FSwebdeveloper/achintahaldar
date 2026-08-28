@@ -77,7 +77,7 @@ const Productsprice = () => {
        <p className='get-quote-content-title price-basic'>iVoomi Quest + Wired USB Standard Desktop Keyboard Compatible with Desktop, Laptop, Mac stand support,IVOOMI QUEST (Black)</p>
        <div className='price-pax'>
        <p className='get-quote-content price-pax-sec'>₹ 299</p>
-       <p className='get-quote-content per-person-sec'>Per Piece</p>
+       {/* <p className='get-quote-content per-person-sec'>Per Piece</p> */}
        </div>
        </div>
       </div>
