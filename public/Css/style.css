@@ -1015,6 +1015,49 @@ hr {
     
 
 }
+
+@media(max-width:975px){
+
+    .andaman-sec-img{
+        width:96%;
+        max-width: 96%;
+        margin: auto;
+        height: auto;
+        /* background-image: url("https://images.unsplash.com/photo-1682687981630-cefe9cd73072?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        background-repeat: no-repeat; */
+    
+     }
+    
+     .package-detail{
+        width:100%;
+        max-width: 100%;
+        height: auto;
+     }
+
+    .andaman-section{
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .andaman-img{
+        width: 100%;
+        max-width: 100%;
+        margin: auto;
+        height: auto;
+
+    }
+
+    .get-quote{
+        max-width: 96%;
+    }
+
+    .price-tag-quote{
+        width: 100%;
+        max-width: 99%;
+        margin: auto;
+    }
+}
 @media (max-width:730px) and (min-width:240px) {
 
     .top-navbar {
