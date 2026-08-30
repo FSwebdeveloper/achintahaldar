@@ -92,9 +92,9 @@ function AppContent() {
 
 
           <Route
-          path="/product/iVoomi keyboard"
+          path="/product-details/:id"
           element={<Productsprice />}
-        />
+          />
 
           {/* Fallback */}
 

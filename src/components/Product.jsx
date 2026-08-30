@@ -38,7 +38,7 @@ export default function Products() {
             />
 
             <div className="forgen-destion-name">
-               <Link className="product-price" to={`/product/${item.title.toLowerCase()}`}>
+               <Link className="product-price" to={`/product-details/${item.id}`}>
               <h5 className="country-city">
                 {item.title}
               </h5>

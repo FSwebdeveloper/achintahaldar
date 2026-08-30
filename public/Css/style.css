@@ -9,6 +9,12 @@
     color: #2563eb;
 }
 
+.Approx-price{
+    font-size: 16px;
+    color: #1E293B;
+    margin-left: 10px;
+}
+
 .logo-text-color{
     font-size: 28px;
     color: #1e293b;
@@ -42,17 +48,18 @@
 /* Andaman Page */
 
 .andaman-sec-img{
-    width:100%;
-    height: 442px;
+    width:350px;
+    height: 250px;
     /* background-image: url("https://images.unsplash.com/photo-1682687981630-cefe9cd73072?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; */
+    background-color: #ffffff;
  }
 
  .package-detail{
     width: 375px;
-    height: 442px;
+    height: auto;
  }
 
 /* Question Section  */
@@ -197,7 +204,7 @@ button:hover{
 
 .andaman-section{
     display: flex;
-    align-items: flex-end;
+    align-items:center;
     justify-content: center;
     /* background-color: #FFFFFF; */
     border: 1px solid whitesmoke;
@@ -212,8 +219,9 @@ button:hover{
 }
 
  .andaman-img{
-    width: 100%;
-    height: auto;
+    width:100%;
+    height: 100%;
+    object-fit: contain;
     /* display: none; */
  }
 
@@ -236,7 +244,10 @@ button:hover{
     width: 95%;
     border: 1px solid #F3F3F3;
     margin: auto;
-    background-color: #fff;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+
  }
 
  .get-quote-content-title{
@@ -468,11 +479,12 @@ button:hover{
 /* Zoom Effect  */
 
 .container{
-    height: auto;
+    height: 250px;
     width: 340px;
     max-width: 100%;
     overflow: hidden;
     position: relative;
+    
 }
 
 .container img{
@@ -481,6 +493,8 @@ button:hover{
    position: relative;
    display: block;
    transition: transform 1s;
+   height: 100%;
+   object-fit: contain;
 }
 
 .container .forgen-destion-name{
@@ -527,66 +541,6 @@ button:hover{
 
 }
 
-
-    
-/* Top Navbar */
-
-/* .top-navbar-bg{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ba2e1f;
-}
-
-.top-navbar{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ba2e1f;
-    height: 50px;
-    max-width: 960px;
-    width: 100%;
-
-}
-
-.list-menu{
-display: flex;
-align-items: center;
-gap: 10px;
-color: whitesmoke;
-cursor: pointer;
-}
-
-hr {
-    border-style: none;
-    border-top-style: solid;
-    border-width: 1px;
-    width: 15px;
-    transform: rotate(90deg);
-    color: #fff;
-    opacity: 100%;
-}
-
-.search-bar{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-menu{
-    background-color: #fff;
-    border-radius: 25px;
-    padding: 5px;
-}
-
-.search-box{
-    outline: none;
-    border: transparent;
-    color: gray;
-    width: 85%;
-    margin-left: 7px;
-
-} */
 
 /* Top Navbar */
 
@@ -668,55 +622,6 @@ hr {
     background-color:#0a66c2;
     cursor: pointer;
  }
-
- 
- 
-/* Dropdown Menu */
-
-/* .nav-menu-bg{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 52px;
-
-}
-
-.top-menu-bg{
-    background-color: #333333;
-    height: 26px;
-    width: 960px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: transparent;
-}
-
-.bottom-menu-bg{
-    background-color: #2b2b2b;
-    height: 26px;
-    width: 960px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border: transparent;
-}
-
-.nav-div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.Dorpdown-menu{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-items: center;
-    gap: 25px;
-    text-transform: uppercase;
-    position: absolute;
-    color: #fff;
-    margin-bottom: 50px;
-} */
 
 
 /* Hero Section */
@@ -936,7 +841,7 @@ hr {
     padding: 4%;
     width: 92%;
     border-radius: 3px;
-    color: #64748b;
+    color: #1e293b;
     outline: none;
 }
 
@@ -949,7 +854,7 @@ hr {
     padding: 4%;
     height: 70px;
     width: 92%;
-    color: #64748b;
+    color: #1e293b;
     outline: none;
 }
 
@@ -960,7 +865,7 @@ hr {
     border: none;
     margin-bottom: 10px;
     padding: 4%;
-    color: #64748b;
+    color: #1e293b;
     border-radius: 5px;
 }
 
