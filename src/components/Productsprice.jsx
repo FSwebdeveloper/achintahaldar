@@ -200,6 +200,10 @@ const Productsprice = () => {
 
                 </div> */}
 
+      {/* <div onClick={()=> setPopUp(true)}>
+      <div className='sign-destination-btn quote-btn' type='submit'> <img className='call-gif' src='https://i.pinimg.com/originals/68/85/87/688587d89bcaad9109cda401fed39b66.gif' alt='' />Order on whatsapp</div>
+      </div> */}
+
 
               </div>
 

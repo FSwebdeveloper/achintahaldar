@@ -17,6 +17,7 @@ const menuData = [
           { label: 'CCTV & Accessories', href: '/contact?product=CCTV%20%26%20Accessories' },
           { label: 'Keyboard', href: '/product/keyboard' },
           { label: 'Mouse', href: '/product/mouse' },
+          { label: 'VGA', href: '/product/vga' },
         ],
       },
       { label: 'Desktop & Laptop', href: '/contact?product=Desktop%20%26%20Laptop' },
