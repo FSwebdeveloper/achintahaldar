@@ -5,8 +5,8 @@ const products = [
     title: 'Wired keyboard',
     description:"Wired USB Standard Desktop Keyboard Compatible with Desktop, Laptop, Mac stand support,(Black)",
     category: 'keyboard',
-    imgURL:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/keyboard/desktop-keyboard/f/l/m/quest-ivoomi-original-imah5usscvbmswjk.jpeg?q=90",
-    imgURLB:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/keyboard/desktop-keyboard/b/7/p/quest-ivoomi-original-imah5ussgxgvvyss.jpeg?q=90",
+    imgURL:"https://images.pexels.com/photos/20510020/pexels-photo-20510020.jpeg",
+    imgURLB:"https://images.pexels.com/photos/20510013/pexels-photo-20510013.jpeg",
     price: 299,
   },
 

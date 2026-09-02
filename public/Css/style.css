@@ -631,7 +631,7 @@ button:hover{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 0;
+    margin-top: 50px;
     background-color: #F8FAFC;
     
 }
@@ -651,8 +651,11 @@ button:hover{
 
 
 .hero-img{
-    max-width: 400px;
-    height: 440px;
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 3px solid #2563EB;
 }
 
 .hero-title{
@@ -664,6 +667,23 @@ button:hover{
     margin-bottom: 20px;
 }
 
+.hero-greeting{
+   color: #2563EB; 
+   font-size: 16px;
+   margin-left: 50px;
+   font-family: Georgia;
+   line-height: 1.4;
+
+}
+
+.web-highlight{
+    color: #2563EB;
+    margin-left: 50px;
+    font-family: Georgia;
+    line-height: 1.4;
+    font-weight: 100;
+}
+
 .hero-about{
     font-size: 16px;
     color: #64748b;
@@ -672,12 +692,41 @@ button:hover{
     line-height: 1.4;
 }
 
-.hero-about-details{
-    color: #ba2e1f;
+.hero-about-details {
+    color: #2563eb;
+    text-decoration: none;
     text-align: right;
     margin-top: 20px;
-    text-decoration: none;
     float: right;
+}
+
+.hero-about-details:hover {
+    text-decoration: underline;
+    color: #1D4ED8;
+}
+
+.service-name{
+    font-family: Georgia;
+    background-color: #ffffff;
+    border: 1px solid #2563EB;
+    margin-bottom: 10px;
+    padding: 2%;
+    color:#2563EB;
+    border-radius: 3px;
+    width: auto;
+    font-size: 16px;
+}
+
+.service-name:hover{
+    background-color: #1D4ED8;
+    color: #ffffff;
+}
+
+.service-n-div{
+   margin-left: 50px;
+   display: flex;
+   gap: 15px;
+   flex-wrap: wrap;
 }
 
 
@@ -739,6 +788,7 @@ button:hover{
 .service-title{
     margin-bottom: 10px;
     font-size: 18px;
+    color:#2563eb;
 }
 
 .service-content-img{
@@ -764,8 +814,13 @@ button:hover{
 
 .more-info{
     float: right;
-    color: #ba2e1f;
+    color: #2563eb;
     margin-bottom: 20px;
+}
+
+.more-info:hover{
+    color: #1D4ED8;
+    text-decoration: underline;
 }
 
 
@@ -787,9 +842,26 @@ button:hover{
     gap: 35px;
 }
 
+.logo-about{
+    font-size: 16px;
+    color: #64748b;
+    margin-top: 5px;
+    font-family: Georgia;
+}
+
+.follow-text{
+    color: #2563EB;
+    margin-left: 0px;
+    font-family: Georgia;
+    line-height: 1.4;
+    font-weight: 100;
+    margin-bottom: 5px;
+}
+
 .social-about-col{
     color: #1e293b;
-    width: 300px;
+    width: 550px;
+    max-width: 550px;
     height: Auto;
     
 }
@@ -862,16 +934,16 @@ button:hover{
 
 .contact-page-submit{
     font-family: Georgia;
-    background-color: #e2e8f0;
+    background-color: #2563eb;
     border: none;
     margin-bottom: 10px;
     padding: 4%;
-    color: #1e293b;
+    color: #ffffff;
     border-radius: 5px;
 }
 
 .contact-page-submit:hover{
-  background-color:#ba2e1f;
+  background-color:#1D4ED8;
   color: #F2F2F2;
   cursor: pointer;
 }
@@ -997,6 +1069,10 @@ button:hover{
         
     }
 
+    .hero-img-sec{
+        margin-bottom: 30px;
+    }
+
     .hero-about{
         margin: auto;
     }
@@ -1012,9 +1088,22 @@ button:hover{
 
     .hero-title{
         font-size: 54px;
-        margin-top: 20px;
+        margin-top: 10px;
         margin-left: auto;
     }
+
+    .hero-greeting {
+    margin-left: 0px;
+
+    }
+
+    .web-highlight {
+    margin-left: 0px;
+    }
+
+    .service-n-div {
+    margin-left: 0px;
+}
 
     .hero-title-sub-front {
         font-size: 30px;

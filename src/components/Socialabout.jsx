@@ -61,35 +61,65 @@ const Socialabout = ({
     // ADD REVIEW
     // ==============================
 
-    setReviews((prevReviews) => {
-      return [
-        ...prevReviews,
-        {
-          ...formData,
+    const newReview = {
+    ...formData,
 
-          // Current date
-          date: new Date().toISOString(),
+    date: new Date().toISOString(),
 
-          // Convert rating ⭐ to number
-          rating:
-            formData.rating === "⭐"
-              ? 1
-              : formData.rating === "⭐⭐"
-              ? 2
-              : formData.rating === "⭐⭐⭐"
-              ? 3
-              : formData.rating === "⭐⭐⭐⭐"
-              ? 4
-              : 5,
+    rating:
+      formData.rating === "⭐"
+        ? 1
+        : formData.rating === "⭐⭐"
+        ? 2
+        : formData.rating === "⭐⭐⭐"
+        ? 3
+        : formData.rating === "⭐⭐⭐⭐"
+        ? 4
+        : 5,
 
-          // Like system
-          likes: 0,
+    likes: 0,
 
-          // Who liked this review
-          likedBy: [],
-        },
-      ];
-    });
+    likedBy: [],
+  };
+
+
+  // ==============================
+  // GET OLD REVIEWS
+  // ==============================
+
+  const savedReviews = localStorage.getItem("reviews");
+
+  const oldReviews = savedReviews
+    ? JSON.parse(savedReviews)
+    : [];
+
+
+  // ==============================
+  // ADD NEW REVIEW
+  // ==============================
+
+  const updatedReviews = [
+    ...oldReviews,
+    newReview,
+  ];
+
+
+  // ==============================
+  // SAVE ALL REVIEWS
+  // ==============================
+
+  localStorage.setItem(
+    "reviews",
+    JSON.stringify(updatedReviews)
+  );
+
+
+  // ==============================
+  // UPDATE REACT STATE
+  // ==============================
+
+  setReviews(updatedReviews);
+    
 
     // ==============================
     // CLEAR FORM
@@ -109,6 +139,7 @@ const Socialabout = ({
   }
 
   return (
+    <section id="review-form">
     <div className="social-about-bg">
          <div className="social-about">            
              <div className="social-about-col">
@@ -262,6 +293,7 @@ const Socialabout = ({
       </div>
     </div>
     </div>
+    </section>
   );
 };
 

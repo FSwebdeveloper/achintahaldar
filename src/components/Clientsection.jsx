@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Clientsection({
   reviews,
@@ -247,6 +248,8 @@ function Clientsection({
           );
         })
       )}
+      <br></br>
+      <a href="#review-form"><button className="contact-page-submit">Write A Review</button></a>
     </div>
   );
 }
