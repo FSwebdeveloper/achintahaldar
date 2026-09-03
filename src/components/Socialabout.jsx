@@ -61,65 +61,35 @@ const Socialabout = ({
     // ADD REVIEW
     // ==============================
 
-    const newReview = {
-    ...formData,
+    setReviews((prevReviews) => {
+      return [
+        ...prevReviews,
+        {
+          ...formData,
 
-    date: new Date().toISOString(),
+          // Current date
+          date: new Date().toISOString(),
 
-    rating:
-      formData.rating === "⭐"
-        ? 1
-        : formData.rating === "⭐⭐"
-        ? 2
-        : formData.rating === "⭐⭐⭐"
-        ? 3
-        : formData.rating === "⭐⭐⭐⭐"
-        ? 4
-        : 5,
+          // Convert rating ⭐ to number
+          rating:
+            formData.rating === "⭐"
+              ? 1
+              : formData.rating === "⭐⭐"
+              ? 2
+              : formData.rating === "⭐⭐⭐"
+              ? 3
+              : formData.rating === "⭐⭐⭐⭐"
+              ? 4
+              : 5,
 
-    likes: 0,
+          // Like system
+          likes: 0,
 
-    likedBy: [],
-  };
-
-
-  // ==============================
-  // GET OLD REVIEWS
-  // ==============================
-
-  const savedReviews = localStorage.getItem("reviews");
-
-  const oldReviews = savedReviews
-    ? JSON.parse(savedReviews)
-    : [];
-
-
-  // ==============================
-  // ADD NEW REVIEW
-  // ==============================
-
-  const updatedReviews = [
-    ...oldReviews,
-    newReview,
-  ];
-
-
-  // ==============================
-  // SAVE ALL REVIEWS
-  // ==============================
-
-  localStorage.setItem(
-    "reviews",
-    JSON.stringify(updatedReviews)
-  );
-
-
-  // ==============================
-  // UPDATE REACT STATE
-  // ==============================
-
-  setReviews(updatedReviews);
-    
+          // Who liked this review
+          likedBy: [],
+        },
+      ];
+    });
 
     // ==============================
     // CLEAR FORM
@@ -287,7 +257,7 @@ const Socialabout = ({
           type="submit"
           className="contact-page-submit"
         >
-          Client Submit Review
+          Submit Your Review
         </button>
       </form>
       </div>

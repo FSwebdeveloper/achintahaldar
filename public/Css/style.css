@@ -548,81 +548,6 @@ button:hover{
 /* Vertical Sroll */
 
 
-/* Logo Section */
-
-.logo-section-bg{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #F8FAFC;
-}
-
-.logo-section{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    max-width: 960px;
-    width: 100%;
-}
-
-.logo-Fist-latter{
-    font-size: 40px;
-    font-weight: 500;
-    color: #2563eb;
-}
-
-.logo-text-color{
-   font-weight: 500;
-   font-size: 35px;
-}
-
-.social-link{
-    display: flex;
-    gap: 10px;
-    color: #fff;
-}
-
-.social-icon-bg{
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #1e293b;
-}
-
-.fb-icon{
-    color: #ffffff;
-}
-
-.facebook-icon:hover{
-   background-color: #0866FF;
-   cursor: pointer;
-}
-
-.instragram-icon:hover{
-    background-color: #E4405F;
-    cursor: pointer;
- }
-
- .whatsapp-icon:hover{
-    background-color:#25D366;
-    cursor: pointer;
- }
-
- .github-icon:hover{
-    background-color:#1F2328;
-    cursor: pointer;
- }
-
- .linkedin-icon:hover{
-    background-color:#0a66c2;
-    cursor: pointer;
- }
 
 
 /* Hero Section */
@@ -690,6 +615,7 @@ button:hover{
     margin-left: 50px;
     font-family: Georgia;
     line-height: 1.4;
+    margin-top: -10px;
 }
 
 .hero-about-details {
@@ -860,8 +786,8 @@ button:hover{
 
 .social-about-col{
     color: #1e293b;
-    width: 550px;
-    max-width: 550px;
+    width: 100%;
+    max-width: 960px;
     height: Auto;
     
 }
@@ -906,16 +832,24 @@ button:hover{
 
 /* Contact Page */
 
+.review-section{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .contact-page{
     font-family: Georgia;
     background-color: #e2e8f0;
     border: none;
     margin-bottom: 10px;
-    padding: 4%;
+    padding: 3%;
     width: 92%;
     border-radius: 3px;
     color: #1e293b;
     outline: none;
+    flex-grow: 1;
+    flex-basis: 200px;
 }
 
 .contact-page-massage{
@@ -924,11 +858,14 @@ button:hover{
     border: none;
     border-radius: 3px;
     margin-bottom: 10px;
-    padding: 4%;
+    padding: 3%;
     height: 70px;
     width: 92%;
     color: #1e293b;
     outline: none;
+    flex-grow: 1;
+    flex-basis: 300px;
+
 }
 
 
@@ -937,7 +874,7 @@ button:hover{
     background-color: #2563eb;
     border: none;
     margin-bottom: 10px;
-    padding: 4%;
+    padding: 3%;
     color: #ffffff;
     border-radius: 5px;
 }
@@ -947,6 +884,83 @@ button:hover{
   color: #F2F2F2;
   cursor: pointer;
 }
+
+/* Logo Section */
+
+.logo-section-bg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F8FAFC;
+}
+
+.logo-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 70px;
+    margin-bottom: 70px;
+    max-width: 960px;
+    width: 100%;
+}
+
+.logo-Fist-latter{
+    font-size: 40px;
+    font-weight: 500;
+    color: #2563eb;
+}
+
+.logo-text-color{
+   font-weight: 500;
+   font-size: 35px;
+}
+
+.social-link{
+    display: flex;
+    gap: 10px;
+    color: #fff;
+}
+
+.social-icon-bg{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1e293b;
+}
+
+.fb-icon{
+    color: #ffffff;
+}
+
+.facebook-icon:hover{
+   background-color: #0866FF;
+   cursor: pointer;
+}
+
+.instragram-icon:hover{
+    background-color: #E4405F;
+    cursor: pointer;
+ }
+
+ .whatsapp-icon:hover{
+    background-color:#25D366;
+    cursor: pointer;
+ }
+
+ .github-icon:hover{
+    background-color:#1F2328;
+    cursor: pointer;
+ }
+
+ .linkedin-icon:hover{
+    background-color:#0a66c2;
+    cursor: pointer;
+ }
+
 
 /* Footer Section */
 
@@ -971,152 +985,3 @@ button:hover{
 }
 
 
-@media (max-width:965px){
-
-    .top-navbar {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    .navbar-bg{
-        display: none;
-    }
-
-    .logo-section{
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    .hero-title{
-        font-size: 65px;
-        margin-bottom: 20px;
-    }
-
-    
-
-}
-
-@media(max-width:975px){
-
-    .andaman-sec-img{
-        width:96%;
-        max-width: 96%;
-        margin: auto;
-        height: auto;
-        /* background-image: url("https://images.unsplash.com/photo-1682687981630-cefe9cd73072?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
-        background-size: cover;
-        background-repeat: no-repeat; */
-    
-     }
-    
-     .package-detail{
-        width:100%;
-        max-width: 100%;
-        height: auto;
-     }
-
-    .andaman-section{
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .andaman-img{
-        width: 100%;
-        max-width: 100%;
-        margin: auto;
-        height: auto;
-
-    }
-
-    .get-quote{
-        max-width: 96%;
-    }
-
-    .price-tag-quote{
-        width: 100%;
-        max-width: 99%;
-        margin: auto;
-    }
-}
-@media (max-width:730px) and (min-width:240px) {
-
-    .top-navbar {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 75px;
-        gap: 10px;
-
-    }
-
-    .list-menu{
-        gap: 0;
-    }
-
-    .logo-section{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .hero-section{
-        flex-direction: column;
-        width: 95%;
-        
-        
-    }
-
-    .hero-img-sec{
-        margin-bottom: 30px;
-    }
-
-    .hero-about{
-        margin: auto;
-    }
-
-    .about-section{ 
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .about-title-section{
-        width: 95%;
-    }
-
-    .hero-title{
-        font-size: 54px;
-        margin-top: 10px;
-        margin-left: auto;
-    }
-
-    .hero-greeting {
-    margin-left: 0px;
-
-    }
-
-    .web-highlight {
-    margin-left: 0px;
-    }
-
-    .service-n-div {
-    margin-left: 0px;
-}
-
-    .hero-title-sub-front {
-        font-size: 30px;
-        
-    }
-
-    .social-about{
-        flex-direction: column;
-    }
-
-    .social-about-col{
-        width: 95%;
-        height: auto;
-    }
-
-}

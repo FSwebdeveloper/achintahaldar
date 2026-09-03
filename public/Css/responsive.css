@@ -1,0 +1,161 @@
+@media (max-width:965px){
+
+    .top-navbar {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .navbar-bg{
+        display: none;
+    }
+
+    .logo-section{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .hero-title{
+        font-size: 65px;
+        margin-bottom: 20px;
+    }
+
+    
+
+}
+
+@media(max-width:975px){
+
+    .andaman-sec-img{
+        width:96%;
+        max-width: 96%;
+        margin: auto;
+        height: auto;
+        /* background-image: url("https://images.unsplash.com/photo-1682687981630-cefe9cd73072?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        background-repeat: no-repeat; */
+    
+     }
+    
+     .package-detail{
+        width:100%;
+        max-width: 100%;
+        height: auto;
+     }
+
+    .andaman-section{
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .andaman-img{
+        width: 100%;
+        max-width: 100%;
+        margin: auto;
+        height: auto;
+
+    }
+
+    .get-quote{
+        max-width: 96%;
+    }
+
+    .price-tag-quote{
+        width: 100%;
+        max-width: 99%;
+        margin: auto;
+    }
+}
+@media (max-width:730px) and (min-width:240px) {
+
+    .top-navbar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 75px;
+        gap: 10px;
+
+    }
+
+    .list-menu{
+        gap: 0;
+    }
+
+    .logo-section{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-section{
+        flex-direction: column;
+        width: 95%;
+        
+        
+    }
+
+    .hero-img-sec{
+        margin-bottom: 30px;
+    }
+
+    .hero-about{
+        margin: auto;
+        margin-top: -15px;
+        margin-bottom: 10px;
+
+    }
+
+    .hero-img {
+    width: 260px;
+    height: 260px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 3px solid #2563EB;
+    }
+
+    .about-section{ 
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-title-section{
+        width: 95%;
+    }
+
+    .hero-title{
+        font-size: 54px;
+        margin-top: 10px;
+        margin-left: auto;
+    }
+
+    .hero-greeting {
+    margin-left: 0px;
+
+    }
+
+    .web-highlight {
+    margin-left: 0px;
+    }
+
+    .service-n-div {
+    margin-left: 0px;
+}
+
+    .hero-title-sub-front {
+        font-size: 30px;
+        
+    }
+
+    .social-about{
+        flex-direction: column;
+    }
+
+    .social-about-col{
+        width: 95%;
+        height: auto;
+    }
+
+}

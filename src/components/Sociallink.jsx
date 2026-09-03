@@ -8,7 +8,7 @@ function Sociallink () {
             {/* <img src="../img/logo.png" alt=""/> */}
             <div>
             <h1 className="logo-Fist-latter">F<span className="logo-text-color">Swebdeveloper</span></h1>
-            <p className="logo-about">Web Design & Digital Services</p>
+            <p className="logo-about">Web Design & IT Services</p>
             </div>
             <div>
             <h2 className="follow-text">Follow Us</h2>
