@@ -123,48 +123,63 @@ const Socialabout = ({
         {/* NAME */}
 
         
-
+       <div className="floating-field">
         <input
           name="name"
           value={formData.name}
           className="contact-page"
           type="text"
-          placeholder="Enter your name"
+          placeholder=""
           onChange={handleChange}
         />
+
+        <label htmlFor="name">
+        Your Name
+        </label>
+
+        </div>
 
         {/* EMAIL */}
 
         
-
+       <div className="floating-field">
         <input
           name="email"
           value={formData.email}
           className="contact-page"
           type="email"
-          placeholder="Enter your email"
+          placeholder=""
           onChange={handleChange}
         />
+
+        <label htmlFor="email">
+        Your Email
+        </label>
+        </div>
 
         {/* OCCUPATION */}
 
         
-
+       <div className="floating-field">
         <input
           name="post"
           value={formData.post}
           className="contact-page"
           type="text"
-          placeholder="Enter your profession"
+          placeholder=""
           onChange={handleChange}
         />
+        <label htmlFor="post">
+        Your Profession
+        </label>
+        </div>
 
         {/* CATEGORY */}
 
         
 
         <select
-          className="contact-page"
+          className="contact-page-select-otp"
           name="category"
           value={formData.category}
           onChange={handleChange}
@@ -202,26 +217,14 @@ const Socialabout = ({
           </option>
         </select>
 
-        {/* REVIEW */}
-
         
-
-        <textarea
-          name="review"
-          className="contact-page-massage"
-          value={formData.review}
-          rows="5"
-          cols="10"
-          placeholder="Write your review..."
-          onChange={handleChange}
-        />
 
         {/* RATING */}
 
         
 
         <select
-          className="contact-page"
+          className="contact-page-select-otp"
           name="rating"
           value={formData.rating}
           onChange={handleChange}
@@ -250,6 +253,24 @@ const Socialabout = ({
             5 Stars
           </option>
         </select>
+
+        {/* REVIEW */}
+
+        
+        <div className="floating-field">
+        <textarea
+          name="review"
+          className="contact-page-massage"
+          value={formData.review}
+          rows="5"
+          cols="10"
+          placeholder=""
+          onChange={handleChange}
+        />
+        <label htmlFor="review">
+        Your Review
+        </label>
+        </div>
 
         {/* SUBMIT */}
 

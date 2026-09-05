@@ -832,13 +832,101 @@ button:hover{
 
 /* Contact Page */
 
+/* Floating Label */
+
+.floating-field {
+  position: relative;
+  width: 100%;
+  flex-grow: 1;
+  flex-basis: 300px;
+
+}
+
+.floating-field input {
+  width: 100%;
+  height:100%;
+  padding: 4%;
+  font-size: 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 2px;
+  outline: none;
+  /* background: #fff; */
+  transition: 0.2s ease;
+}
+
+.floating-field textarea {
+  width: 100%;
+  height:100%;
+  padding: 2%;
+  font-size: 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 2px;
+  outline: none;
+  /* background: #fff; */
+  transition: 0.2s ease;
+}
+
+/* Input click/focus */
+.floating-field textarea:focus,
+.floating-field input:focus {
+  border-color: #2867D9;
+  outline: none;
+}
+
+/* Label */
+.floating-field label {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 5px;
+  background: #e2e8f0;
+  color: #777;
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+/* Focus করলে label উপরে যাবে */
+.floating-field textarea:focus + label,
+.floating-field input:focus + label {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #2867D9;
+}
+
+/* Text থাকলে label উপরে থাকবে */
+.floating-field textarea:not(:placeholder-shown) + label, 
+.floating-field input:not(:placeholder-shown) + label {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #2867D9;
+}
+
+
 .review-section{
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
 }
 
 .contact-page{
+    font-family: Georgia;
+    background-color: #e2e8f0;
+    border: none;
+    margin-bottom: 10px;
+    padding: 4%;
+    width: 92%;
+    border-radius: 3px;
+    color: #1e293b;
+    outline: none;
+    flex-grow: 1;
+    flex-basis: 300px;  
+}
+
+.contact-page-select-otp{
     font-family: Georgia;
     background-color: #e2e8f0;
     border: none;
@@ -849,7 +937,7 @@ button:hover{
     color: #1e293b;
     outline: none;
     flex-grow: 1;
-    flex-basis: 200px;
+    flex-basis: 400px; 
 }
 
 .contact-page-massage{
@@ -859,13 +947,13 @@ button:hover{
     border-radius: 3px;
     margin-bottom: 10px;
     padding: 3%;
-    height: 70px;
+    height:70px;
     width: 92%;
     color: #1e293b;
     outline: none;
     flex-grow: 1;
-    flex-basis: 300px;
-
+    flex-basis: auto;
+    
 }
 
 
@@ -877,6 +965,10 @@ button:hover{
     padding: 3%;
     color: #ffffff;
     border-radius: 5px;
+    width: 35%;
+    flex-basis: 100%;
+    
+    
 }
 
 .contact-page-submit:hover{
