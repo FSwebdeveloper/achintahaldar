@@ -787,7 +787,7 @@ button:hover{
 .social-about-col{
     color: #1e293b;
     width: 100%;
-    max-width: 960px;
+    max-width: 550px;
     height: Auto;
     
 }
@@ -837,33 +837,38 @@ button:hover{
 .floating-field {
   position: relative;
   width: 100%;
-  flex-grow: 1;
-  flex-basis: 300px;
-
+  
 }
 
 .floating-field input {
   width: 100%;
-  height:100%;
-  padding: 4%;
+  /* height:100%; */
+  /* padding: 3%; */
   font-size: 15px;
   border: 1px solid #e2e8f0;
   border-radius: 2px;
   outline: none;
   /* background: #fff; */
   transition: 0.2s ease;
+  height: 42px;
+  padding: 0 12px;
+  box-sizing: border-box;
+
 }
 
 .floating-field textarea {
   width: 100%;
-  height:100%;
-  padding: 2%;
+  /* height:100%;
+  padding: 3%; */
   font-size: 15px;
   border: 1px solid #e2e8f0;
   border-radius: 2px;
   outline: none;
   /* background: #fff; */
   transition: 0.2s ease;
+  height: 110px;
+  padding: 10px 12px;
+  box-sizing: border-box;
 }
 
 /* Input click/focus */
@@ -887,6 +892,7 @@ button:hover{
   transition: 0.2s ease;
 }
 
+
 /* Focus করলে label উপরে যাবে */
 .floating-field textarea:focus + label,
 .floating-field input:focus + label {
@@ -909,35 +915,35 @@ button:hover{
 .review-section{
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 16px;
+    
 }
 
 .contact-page{
     font-family: Georgia;
     background-color: #e2e8f0;
     border: none;
-    margin-bottom: 10px;
-    padding: 4%;
+    padding: 3%;
     width: 92%;
     border-radius: 3px;
     color: #1e293b;
     outline: none;
-    flex-grow: 1;
-    flex-basis: 300px;  
+    
 }
 
 .contact-page-select-otp{
     font-family: Georgia;
     background-color: #e2e8f0;
     border: none;
-    margin-bottom: 10px;
-    padding: 3%;
-    width: 92%;
+    width: 100%;
     border-radius: 3px;
     color: #1e293b;
     outline: none;
-    flex-grow: 1;
-    flex-basis: 400px; 
+    height: 42px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    
+    
 }
 
 .contact-page-massage{
@@ -945,14 +951,12 @@ button:hover{
     background-color: #e2e8f0;
     border: none;
     border-radius: 3px;
-    margin-bottom: 10px;
     padding: 3%;
     height:70px;
     width: 92%;
     color: #1e293b;
     outline: none;
-    flex-grow: 1;
-    flex-basis: auto;
+    
     
 }
 
@@ -965,8 +969,6 @@ button:hover{
     padding: 3%;
     color: #ffffff;
     border-radius: 5px;
-    width: 35%;
-    flex-basis: 100%;
     
     
 }
