@@ -90,11 +90,19 @@
         text-align: center;
     }
 
+    .hero-section-bg {
+    margin-top: 20px;
+    
+}
+
+   .hero-sec-details{
+    margin-top: -10px;
+    text-align: center;
+   }
+
     .hero-section{
         flex-direction: column;
         width: 95%;
-        
-        
     }
 
     .hero-img-sec{
@@ -129,6 +137,15 @@
         font-size: 54px;
         margin-top: 10px;
         margin-left: auto;
+
+    }
+
+    
+
+    .hero-img-sec{
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .hero-greeting {
@@ -138,11 +155,15 @@
 
     .web-highlight {
     margin-left: 0px;
+    margin-top: -10px;
     }
 
     .service-n-div {
     margin-left: 0px;
-}
+    justify-content: center;
+   }
+   
+    
 
     .hero-title-sub-front {
         font-size: 30px;
@@ -157,5 +178,9 @@
         width: 95%;
         height: auto;
     }
+
+    .footer-section {
+    text-align: center;
+}
 
 }

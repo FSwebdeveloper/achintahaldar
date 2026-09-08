@@ -10,14 +10,16 @@ function Aboutsection ({reviews, setReviews, currentUserEmail}) {
         <div className="about-section">
         <div className="about-title-section">
         <h2 className="testimonial-title">A Little About Us</h2>
-        <img src="../img/about_image.jpg" alt=""/>
+        <div className="hero-img-sec">
+         <img src="../img/about_image.jpg" alt=""/>
+        </div>
         <p className="testimonial-about">I'm a Frontend Web Developer passionate about creating responsive, user-friendly, and modern web applications. Alongside web development, I specialize in collecting vintage audio systems, providing sales and service for hearing aids, and offering quality desktop and laptop accessories.</p>
         <p className="testimonial-about-more"> I combine technical expertise with practical solutions to deliver reliable products and exceptional customer service.</p>
         <a className="more-info" href="">Read More About Us »</a>
         </div>
         <div className="about-title-section">
         <h2 className="testimonial-title">Some of Our Services</h2>
-        <div>
+        <div className="service-card-sec">
 
             {servicedetails.map(servicecontent =>
 

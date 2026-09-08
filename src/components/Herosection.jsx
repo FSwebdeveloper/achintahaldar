@@ -7,7 +7,7 @@ function Herosection () {
         <div className="hero-img-sec">
         <img className="hero-img" src="../img/Achinta-preview.png" alt=""/>
         </div>
-        <div>
+        <div className="hero-sec-details">
         <p className="hero-greeting">Hello, I'm</p>
         <h1 className="hero-title"><i className="f-name">A<span className="hero-title-sub-front">CHINTA</span></i> <i>H<span className="hero-title-sub-front">ALDAR</span></i></h1>
         <h2 className="web-highlight">Frontend Web Developer</h2>
