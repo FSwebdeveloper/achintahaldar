@@ -24,15 +24,15 @@ const products = [
   //   imgURL:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/keyboard/desktop-keyboard/f/l/m/quest-ivoomi-original-imah5usscvbmswjk.jpeg?q=90",
   // },
 
-  // {
-  //   id: 2,
-  //   title: 'Wired Mouse',
-  //   description:"Wired Ambidextrous Optical Mouse (USB 2.0, Black)",
-  //   category: 'mouse',
-  //   imgURL:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/mouse/0/6/o/m10-hp-enriched-transparent-original-imahm3bfygvysuku.png?q=90",
-  //   imgURLB:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/mouse/9/1/6/m10-hp-original-imahm3bf2pzacyhe.jpeg?q=90",
-  //   price:"299"
-  // },
+  {
+    id: 2,
+    title: 'Wired Mouse',
+    description:"Wired Ambidextrous Optical Mouse (USB 2.0, Black)",
+    category: 'mouse',
+    imgURL:"https://images.unsplash.com/photo-1605773527852-c546a8584ea3?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    imgURLB:"https://images.unsplash.com/photo-1733151535078-e2c8cf1ae18f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    price:"349"
+  },
 
   {
     id: 3,
