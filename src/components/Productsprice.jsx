@@ -23,7 +23,9 @@ const Productsprice = () => {
     const message = `Hello FSWEBDEVELOPER, I want to order this product.
 
 Product: ${product.title}
+
 Description: ${product.description}
+
 Price: ₹${product.price}
 
 Please confirm availability.`;

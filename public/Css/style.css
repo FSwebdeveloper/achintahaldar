@@ -10,7 +10,7 @@
 }
 
 .Approx-price{
-    font-size: 16px;
+    font-size: 14px;
     color: #1E293B;
     margin-left: 10px;
 }
@@ -55,6 +55,10 @@
     background-repeat: no-repeat;
     background-position: center center; */
     background-color: #ffffff;
+ }
+
+ .andaman-img-two{
+    width: 200px;
  }
 
  .package-detail{
@@ -351,7 +355,7 @@ button:hover{
 
 .price-tag-sec{
     padding: 3% 0;
-    border-top: 5px solid #1d20d3;
+    border-top: 3px solid #1d20d3;
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
     margin-bottom: 15px;
