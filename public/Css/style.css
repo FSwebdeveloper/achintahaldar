@@ -269,23 +269,43 @@ button:hover{
  }
 
  .quote-btn{
-    border-radius: 50px;
-    background-color: #7AB730;
-    color: #fff;
-    border: transparent;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 55px;
-    margin-top: 15px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
+  padding: 12px 22px;
+  border: 1px solid #25D366;
+  border-radius: 7px;
+
+  background: #25D366;
+  color: #fff;
+  width: 92%;
+  margin: auto;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
  }
 
+ .quote-btn i {
+  font-size: 19px;
+  transition: transform 0.25s ease;
+}
+
+.quote-btn:hover i {
+  transform: scale(1.15);
+  cursor: pointer;
+}
+
  .quote-btn:hover{
-    background-color:#527A20;
-    color: #fff;
-    margin-left: 5px;
-    cursor: pointer;
+  background: #fff;
+  color: #25D366;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(37, 211, 102, 0.22);
+  cursor: pointer;
     
  }
 

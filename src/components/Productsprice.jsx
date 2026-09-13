@@ -1,46 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import products from './products';
+import React from "react";
+import { useParams } from "react-router-dom";
+import products from "./products";
 
 const Productsprice = () => {
 
   // URL থেকে ID নেওয়া
   const { id } = useParams();
 
-
   // ID দিয়ে exact product খোঁজা
   const product = products.find(
     (item) => item.id === Number(id)
   );
 
+  // ==============================
+  // WhatsApp Order Function
+  // ==============================
 
-  // Popup
-  const [popUp, setPopUp] = useState(false);
+  const handleWhatsAppOrder = () => {
 
+    const phoneNumber = "9093931042";
 
-  // Popup open হলে page scroll বন্ধ
-  useEffect(() => {
+    const message = `Hello FSWEBDEVELOPER, I want to order this product.
 
-    if (popUp) {
-      document.body.style.overflowY = 'hidden';
-    } else {
-      document.body.style.overflowY = 'auto';
-    }
+Product: ${product.title}
+Description: ${product.description}
+Price: ₹${product.price}
 
-    return () => {
-      document.body.style.overflowY = 'auto';
-    };
+Please confirm availability.`;
 
-  }, [popUp]);
+    const whatsappURL =
+      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappURL, "_blank");
+  };
 
 
   // Product পাওয়া না গেলে
   if (!product) {
-
     return (
-
       <div className="destination-box-section">
-
         <h1>
           Product Not Found
         </h1>
@@ -48,16 +46,12 @@ const Productsprice = () => {
         <p>
           এই product টি পাওয়া যায়নি।
         </p>
-
       </div>
-
     );
-
   }
 
 
   return (
-
     <div>
 
       <div className="Extra-support-poducts">
@@ -82,46 +76,12 @@ const Productsprice = () => {
         </div>
 
 
-
-        {/* Popup Background */}
-
-        <div
-          className={
-            popUp
-              ? "opacity"
-              : "opacity-none"
-          }
-        >
-        </div>
-
-
-
-        {/* Popup */}
-
-        <div
-          className={
-            popUp
-              ? "sign-destination-box-item-popup"
-              : "sign-destination-box-item-close"
-          }
-        >
-
-          {/* <i
-            className="fa fa-window-close"
-            aria-hidden="true"
-            onClick={() => setPopUp(false)}
-          >
-          </i> */}
-
-        </div>
-
-
-
         {/* PRODUCT DETAILS */}
 
         <div className="andaman-section">
 
-          {/* Product Image */}
+
+          {/* Product Image 1 */}
 
           <div className="andaman-sec-img">
 
@@ -132,6 +92,9 @@ const Productsprice = () => {
             />
 
           </div>
+
+
+          {/* Product Image 2 */}
 
           <div className="andaman-sec-img">
 
@@ -145,11 +108,9 @@ const Productsprice = () => {
 
 
 
-
           {/* Product Information */}
 
           <div className="package-detail">
-
 
             <div className="price-tag">
 
@@ -158,9 +119,11 @@ const Productsprice = () => {
 
                 {/* Product Name */}
 
-                {/* <p className="get-quote-content-title price-basic">
+                {/*
+                <p className="get-quote-content-title price-basic">
                   {product.name}
-                </p> */}
+                </p>
+                */}
 
 
                 {/* Product Title */}
@@ -170,6 +133,7 @@ const Productsprice = () => {
                 </p>
 
 
+
                 {/* Product Description */}
 
                 <p className="get-quote-content">
@@ -177,51 +141,51 @@ const Productsprice = () => {
                 </p>
 
 
+
                 {/* Product Price */}
 
                 <div className="price-pax">
 
                   <p className="get-quote-content price-pax-sec">
-                    ₹ {product.price} <span className="Approx-price">(Approx)</span>
+
+                    ₹ {product.price}
+
+                    <span className="Approx-price">
+                      (Approx)
+                    </span>
+
                   </p>
-                  
 
                 </div>
 
 
+
                 {/* WhatsApp Button */}
 
-                {/* <div
+                <div
                   className="sign-destination-btn quote-btn"
-                  onClick={() => setPopUp(true)}
+                  onClick={handleWhatsAppOrder}
                 >
+
+                  <i class="fa-brands fa-whatsapp"></i>
 
                   Order on WhatsApp
 
-                </div> */}
-
-      {/* <div onClick={()=> setPopUp(true)}>
-      <div className='sign-destination-btn quote-btn' type='submit'> <img className='call-gif' src='https://i.pinimg.com/originals/68/85/87/688587d89bcaad9109cda401fed39b66.gif' alt='' />Order on whatsapp</div>
-      </div> */}
+                </div>
 
 
               </div>
 
             </div>
 
-
           </div>
 
-
         </div>
-
 
       </div>
 
     </div>
-
   );
-
 };
 
 export default Productsprice;
