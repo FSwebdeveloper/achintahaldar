@@ -15,8 +15,8 @@ function Herosection () {
         <p className="hero-about">I create modern, responsive websites and provide practical digital services including computer & laptop support, online applications, hearing aid services, and electronics.</p>
         <br></br>
         <div className="service-n-div">
-        <button className="service-name"><i class="fa-solid fa-globe"></i> Web Design </button>
-        <button className="service-name"><i class="fa-solid fa-desktop"></i> Computer & Laptop</button>
+        <button className="service-name"><i className="fa-solid fa-laptop-code"></i> Web Design </button>
+        <button className="service-name"><i className="fa-solid fa-computer"></i> Computer & Laptop</button>
         <button className="service-name"><i class="fa-solid fa-ear-listen"></i> Hearing AIDS</button>
         <button className="service-name"><i class="fa-solid fa-file-circle-check"></i> Apply Online</button>
         {/* <button className="service-name"><i class="fa-solid fa-radio"></i> Vintage Audio</button> */}
