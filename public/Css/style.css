@@ -571,7 +571,174 @@ button:hover{
 
 /* Vertical Sroll */
 
+/* =========================================
+   FIRST 3 REVIEWS
+   No scrollbar
+========================================= */
 
+.reviews-first-three {
+  width: 100%;
+}
+
+
+/* =========================================
+   REVIEW TEXT
+========================================= */
+
+.review-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+
+/* =========================================
+   ONLY 3 LINES
+========================================= */
+
+.review-collapsed {
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 2;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   FULL REVIEW
+========================================= */
+
+.review-expanded {
+  display: block;
+
+  overflow: visible;
+}
+
+
+/* =========================================
+   READ MORE / READ LESS
+========================================= */
+
+.review-read-more {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #2867d9;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  text-decoration: none;
+}
+
+
+.review-read-more:hover {
+  text-decoration: none;
+}
+
+
+/* =========================================
+   4TH REVIEW ONWARD
+
+   ONLY THIS CONTAINER SCROLLS
+========================================= */
+
+.reviews-scroll-area {
+
+  max-height: 400px;
+
+  overflow-y: auto;
+
+  overflow-x: hidden;
+
+  padding-right: 8px;
+
+}
+
+
+/* =========================================
+   IMPORTANT
+
+   Review card itself DOES NOT
+   have fixed height
+========================================= */
+
+.reviews-scroll-area .client-section,
+.reviews-first-three .client-section {
+
+  height: auto;
+
+  min-height: 0;
+
+}
+
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+.reviews-scroll-area::-webkit-scrollbar {
+
+  width: 6px;
+
+}
+
+
+.reviews-scroll-area::-webkit-scrollbar-track {
+
+  background: #eef2f7;
+
+  border-radius: 10px;
+
+}
+
+
+.reviews-scroll-area::-webkit-scrollbar-thumb {
+
+  background: #b8c2d1;
+
+  border-radius: 10px;
+
+}
+
+
+.reviews-scroll-area::-webkit-scrollbar-thumb:hover {
+
+  background: #9aa7b8;
+
+}
+
+.review-view-all {
+  border: none;
+  background: transparent;
+  color: #2867d9;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.reviews-view-button {
+  text-align: center;
+  margin-top: 14px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
 
 
 /* Hero Section */
@@ -759,7 +926,6 @@ button:hover{
 
 .client-details{
     margin-top: 5px;
-    margin-bottom: 15px;
 }
 
 .more-info{
@@ -861,6 +1027,7 @@ button:hover{
 .floating-field {
   position: relative;
   width: 100%;
+
   
 }
 
@@ -872,7 +1039,7 @@ button:hover{
   border: 1px solid #e2e8f0;
   border-radius: 2px;
   outline: none;
-  /* background: #fff; */
+  background: #fff;
   transition: 0.2s ease;
   height: 42px;
   padding: 0 12px;
@@ -888,7 +1055,7 @@ button:hover{
   border: 1px solid #e2e8f0;
   border-radius: 2px;
   outline: none;
-  /* background: #fff; */
+  background: #fff;
   transition: 0.2s ease;
   height: 110px;
   padding: 10px 12px;
@@ -909,7 +1076,7 @@ button:hover{
   top: 50%;
   transform: translateY(-50%);
   padding: 0 5px;
-  background: #e2e8f0;
+  background: #ffffff;
   color: #777;
   font-size: 15px;
   pointer-events: none;
@@ -957,8 +1124,8 @@ button:hover{
 
 .contact-page-select-otp{
     font-family: Georgia;
-    background-color: #e2e8f0;
-    border: none;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
     width: 100%;
     border-radius: 3px;
     color: #1e293b;
@@ -980,8 +1147,7 @@ button:hover{
     width: 92%;
     color: #1e293b;
     outline: none;
-    
-    
+ 
 }
 
 
