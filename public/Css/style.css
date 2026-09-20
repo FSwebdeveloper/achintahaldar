@@ -572,12 +572,24 @@ button:hover{
 /* Vertical Sroll */
 
 /* =========================================
-   FIRST 3 REVIEWS
-   No scrollbar
+   FIRST TWO REVIEWS
 ========================================= */
 
-.reviews-first-three {
+.reviews-first-two {
   width: 100%;
+}
+
+
+/* =========================================
+   FIRST TWO REVIEWS - SCROLL ACTIVE
+   Read More চাপলে এটি active হবে
+========================================= */
+
+.reviews-first-two-scroll-active {
+  max-height: 340px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
 }
 
 
@@ -599,11 +611,8 @@ button:hover{
 
 .review-collapsed {
   display: -webkit-box;
-
   -webkit-box-orient: vertical;
-
-  -webkit-line-clamp: 2;
-
+  -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
@@ -614,7 +623,6 @@ button:hover{
 
 .review-expanded {
   display: block;
-
   overflow: visible;
 }
 
@@ -625,24 +633,15 @@ button:hover{
 
 .review-read-more {
   display: inline-block;
-
   margin-bottom: 10px;
-
   padding: 0;
-
   border: none;
-
   background: transparent;
-
   color: #2867d9;
-
   font-family: inherit;
-
   cursor: pointer;
-
   text-decoration: none;
 }
-
 
 .review-read-more:hover {
   text-decoration: none;
@@ -650,89 +649,92 @@ button:hover{
 
 
 /* =========================================
-   4TH REVIEW ONWARD
-
+   REVIEW 3 ONWARD
    ONLY THIS CONTAINER SCROLLS
 ========================================= */
 
 .reviews-scroll-area {
-
   max-height: 400px;
-
   overflow-y: auto;
-
   overflow-x: hidden;
-
   padding-right: 8px;
-
 }
 
 
 /* =========================================
-   IMPORTANT
-
-   Review card itself DOES NOT
-   have fixed height
+   REVIEW CARD DOES NOT HAVE FIXED HEIGHT
 ========================================= */
 
-.reviews-scroll-area .client-section,
-.reviews-first-three .client-section {
-
+.reviews-first-two .client-section,
+.reviews-first-two-scroll-active .client-section,
+.reviews-scroll-area .client-section {
   height: auto;
-
   min-height: 0;
-
 }
 
 
 /* =========================================
-   SCROLLBAR
+   FIRST TWO SCROLLBAR
+========================================= */
+
+.reviews-first-two-scroll-active::-webkit-scrollbar {
+  width: 6px;
+}
+
+.reviews-first-two-scroll-active::-webkit-scrollbar-track {
+  background: #eef2f7;
+  border-radius: 10px;
+}
+
+.reviews-first-two-scroll-active::-webkit-scrollbar-thumb {
+  background: #b8c2d1;
+  border-radius: 10px;
+}
+
+.reviews-first-two-scroll-active::-webkit-scrollbar-thumb:hover {
+  background: #9aa7b8;
+}
+
+
+/* =========================================
+   REVIEW 3 ONWARD SCROLLBAR
 ========================================= */
 
 .reviews-scroll-area::-webkit-scrollbar {
-
   width: 6px;
-
 }
-
 
 .reviews-scroll-area::-webkit-scrollbar-track {
-
   background: #eef2f7;
-
   border-radius: 10px;
-
 }
-
 
 .reviews-scroll-area::-webkit-scrollbar-thumb {
-
   background: #b8c2d1;
-
   border-radius: 10px;
-
 }
-
 
 .reviews-scroll-area::-webkit-scrollbar-thumb:hover {
-
   background: #9aa7b8;
-
 }
+
+
+/* =========================================
+   VIEW ALL / VIEW LESS
+========================================= */
 
 .review-view-all {
   border: none;
   background: transparent;
   color: #2867d9;
-  font-size: 14px;
-  font-weight: 600;
   cursor: pointer;
   padding: 6px 0;
+  font-family: Georgia, serif;
 }
 
 .reviews-view-button {
-  text-align: center;
   margin-top: 14px;
+  font-size: 14px;
 }
 
 
@@ -895,7 +897,7 @@ button:hover{
 
 .service-content{
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 27px;
     gap: 15px;
     font-family: Georgia;
     font-weight: normal;
@@ -920,7 +922,7 @@ button:hover{
 }
 
 .client-section{
-    margin-bottom: 55px;
+    margin-bottom: 15px;
 
 }
 
