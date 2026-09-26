@@ -18,6 +18,7 @@ const menuData = [
           { label: 'Keyboard', href: '/product/keyboard' },
           { label: 'Mouse', href: '/product/mouse' },
           { label: 'VGA', href: '/product/vga' },
+          { label: 'UPS', href: '/product/ups' }
         ],
       },
       { label: 'Desktop & Laptop', href: '/contact?product=Desktop%20%26%20Laptop' },
