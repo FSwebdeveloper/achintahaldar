@@ -4,8 +4,11 @@ import React, {
   useState,
 } from "react";
 
-import { Link } from "react-router-dom";
+// =====================================================
+// BACKEND URL
+// =====================================================
 
+const API_URL = "http://localhost:5000";
 
 // =====================================================
 // SINGLE REVIEW ITEM
@@ -18,232 +21,191 @@ function ReviewItem({
   handleLike,
   onExpandChange,
 }) {
-
-  // ==============================
+  // ===================================================
   // READ MORE STATE
-  // ==============================
+  // ===================================================
 
-  const [expanded, setExpanded] =
-    useState(false);
+  const [expanded, setExpanded] = useState(false);
 
-  const reviewTextRef =
-    useRef(null);
+  // ===================================================
+  // REVIEW TEXT REF
+  // ===================================================
 
-  // Review card ref
-  // Used for smooth scroll
-  const reviewItemRef =
-    useRef(null);
+  const reviewTextRef = useRef(null);
 
-  const [isLongReview, setIsLongReview] =
-    useState(false);
+  // ===================================================
+  // REVIEW ITEM REF
+  // ===================================================
 
+  const reviewItemRef = useRef(null);
 
-  // ==============================
-  // CHECK REVIEW MORE THAN 3 LINES
-  // ==============================
+  // ===================================================
+  // LONG REVIEW
+  // ===================================================
+
+  const [isLongReview, setIsLongReview] = useState(false);
+
+  // ===================================================
+  // CURRENT USER EMAIL
+  // ===================================================
+
+  const loggedInEmail =
+    currentUserEmail ||
+    localStorage.getItem("currentUserEmail") ||
+    "";
+
+  // ===================================================
+  // CHECK REVIEW HEIGHT
+  // ===================================================
 
   useEffect(() => {
-
     const checkReviewHeight = () => {
-
-      const element =
-        reviewTextRef.current;
+      const element = reviewTextRef.current;
 
       if (!element) return;
 
-
-      // Temporarily remove clamp
-      element.classList.remove(
-        "review-collapsed"
-      );
-
+      // Remove clamp temporarily
+      element.classList.remove("review-collapsed");
 
       // Full review height
-      const fullHeight =
-        element.scrollHeight;
-
+      const fullHeight = element.scrollHeight;
 
       // Get line height
-      const lineHeight =
-        parseFloat(
-          window
-            .getComputedStyle(element)
-            .lineHeight
-        );
+      const lineHeight = parseFloat(
+        window.getComputedStyle(element).lineHeight
+      );
 
-
-      // 3 line height
-      const threeLineHeight =
-        lineHeight * 3;
-
+      // Three line height
+      const threeLineHeight = lineHeight * 3;
 
       // Restore clamp
       if (!expanded) {
-
-        element.classList.add(
-          "review-collapsed"
-        );
-
+        element.classList.add("review-collapsed");
       }
 
-
-      // Check long review
+      // Check whether review is longer than 3 lines
       setIsLongReview(
-        fullHeight >
-          threeLineHeight + 2
+        fullHeight > threeLineHeight + 2
       );
-
     };
 
-
     checkReviewHeight();
-
 
     window.addEventListener(
       "resize",
       checkReviewHeight
     );
 
-
     return () => {
-
       window.removeEventListener(
         "resize",
         checkReviewHeight
       );
-
     };
-
   }, [item.review, expanded]);
 
-
-  // ==============================
-  // OWN REVIEW?
-  // ==============================
+  // ===================================================
+  // OWN REVIEW
+  // ===================================================
 
   const isOwnReview =
-    item.email ===
-    currentUserEmail;
+    item.email &&
+    loggedInEmail &&
+    item.email.toLowerCase() ===
+      loggedInEmail.toLowerCase();
 
-
-  // ==============================
-  // ALREADY LIKED?
-  // ==============================
+  // ===================================================
+  // ALREADY LIKED
+  // ===================================================
 
   const isLiked =
-    item.likedBy.includes(
-      currentUserEmail
+    Array.isArray(item.likedBy) &&
+    loggedInEmail &&
+    item.likedBy.some(
+      (email) =>
+        email.toLowerCase() ===
+        loggedInEmail.toLowerCase()
     );
 
-
-  // ==============================
+  // ===================================================
   // READ MORE / READ LESS
-  // ==============================
+  // ===================================================
 
   const handleReadMore = () => {
+    const nextExpanded = !expanded;
 
-    const nextExpanded =
-      !expanded;
-
-
-    // Open / close review
     setExpanded(nextExpanded);
-
 
     // Tell parent
     if (onExpandChange) {
-
       onExpandChange(
-        item._id ||
-        item.id ||
-        index,
+        item._id || item.id || index,
         nextExpanded
       );
-
     }
 
-
-    // ==============================
-    // WHEN READ MORE IS CLICKED
-    // ==============================
-
+    // Scroll after opening
     if (nextExpanded) {
-
-      /*
-        Two animation frames are used
-        because the review needs to expand
-        first, then scroll.
-      */
-
       requestAnimationFrame(() => {
-
         requestAnimationFrame(() => {
-
           reviewItemRef.current?.scrollIntoView({
             behavior: "smooth",
             block: "nearest",
           });
-
         });
-
       });
-
     }
-
   };
 
+  // ===================================================
+  // REVIEW ITEM
+  // ===================================================
 
   return (
-
     <div
       className="client-section"
       ref={reviewItemRef}
     >
-
-      {/* ==============================
+      {/* ===============================================
           USER
-      ============================== */}
+      =============================================== */}
 
       <div className="client-content">
-
         <img
-          src={item.imgURL}
+          src={
+            item.imgURL ||
+            "https://lh3.googleusercontent.com/a/default-user=s32-cc"
+          }
           alt="comment-img"
         />
 
-        <h3>
-          {item.name} -
-        </h3>
+        <h3>{item.name} -</h3>
 
         <span className="service-category">
           {item.post}
         </span>
-
       </div>
 
-
-      {/* ==============================
+      {/* ===============================================
           RATING + DATE
-      ============================== */}
+      =============================================== */}
 
       <p className="client-details">
-
-        {"⭐".repeat(item.rating)}
+        {"⭐".repeat(Number(item.rating) || 0)}
 
         <span>
           {" "}
-          {getTimeAgo(item.date)}
+          {getTimeAgo(
+            item.createdAt || item.date
+          )}
         </span>
-
       </p>
 
-
-      {/* ==============================
+      {/* ===============================================
           REVIEW
-      ============================== */}
+      =============================================== */}
 
       <div>
-
         <p
           ref={reviewTextRef}
           className={`
@@ -259,190 +221,145 @@ function ReviewItem({
           {item.review}
         </p>
 
-
-        {/* ==============================
+        {/* =============================================
             READ MORE / READ LESS
-        ============================== */}
+        ============================================= */}
 
         {isLongReview && (
-
           <button
             type="button"
             className="review-read-more"
             onClick={handleReadMore}
           >
-
             {expanded
               ? "Read Less"
               : "Read More"}
-
           </button>
-
         )}
 
-
-        {/* ==============================
+        {/* =============================================
             CATEGORY
-        ============================== */}
+        ============================================= */}
 
         <h4 className="client-content">
-
           <span className="service-category">
             Service :
           </span>
 
-          <p>
-            {item.category}
-          </p>
-
+          <p>{item.category}</p>
         </h4>
-
 
         <br />
 
-
-        {/* ==============================
+        {/* =============================================
             LIKE BUTTON
-        ============================== */}
+        ============================================= */}
 
         <div>
-
           {isOwnReview ? (
+            // ==========================================
+            // OWN REVIEW
+            // ==========================================
 
             <button
+              type="button"
               className="btn-outline"
               disabled
               style={{
-                cursor:
-                  "not-allowed",
+                cursor: "not-allowed",
                 opacity: 0.6,
               }}
             >
-
               ❤️{" "}
-
               <span>
-                {item.likes}
+                {item.likes || 0}
               </span>
-
             </button>
-
           ) : (
+            // ==========================================
+            // OTHER USER REVIEW
+            // ==========================================
 
             <button
+              type="button"
               className="btn-outline"
-              onClick={() =>
-                handleLike(index)
-              }
+              onClick={() => handleLike(index)}
             >
-
-              {isLiked
-                ? "❤️"
-                : "🤍"}{" "}
-
+              {isLiked ? "❤️" : "🤍"}{" "}
               <span>
-                {item.likes}
+                {item.likes || 0}
               </span>
-
             </button>
-
           )}
-
         </div>
-
       </div>
-
     </div>
   );
 }
-
 
 // =====================================================
 // RELATIVE DATE
 // =====================================================
 
 function getTimeAgo(reviewDate) {
+  if (!reviewDate) {
+    return "Recently";
+  }
 
-  const now =
-    new Date();
+  const now = new Date();
+  const date = new Date(reviewDate);
 
-  const date =
-    new Date(reviewDate);
+  const difference = now - date;
 
-
-  const difference =
-    now - date;
-
+  // Invalid / future date
+  if (
+    isNaN(difference) ||
+    difference < 0
+  ) {
+    return "Recently";
+  }
 
   // Milliseconds → days
-
-  const days =
-    Math.floor(
-      difference /
-        (1000 * 60 * 60 * 24)
-    );
-
+  const days = Math.floor(
+    difference /
+      (1000 * 60 * 60 * 24)
+  );
 
   // Today
-
   if (days === 0) {
-
     return "Today";
-
   }
-
 
   // Days
-
   if (days < 30) {
-
     return `${days} day${
-      days > 1
-        ? "s"
-        : ""
+      days > 1 ? "s" : ""
     } ago`;
-
   }
-
 
   // Months
-
-  const months =
-    Math.floor(
-      days / 30
-    );
-
+  const months = Math.floor(
+    days / 30
+  );
 
   if (months < 12) {
-
     return `${months} month${
-      months > 1
-        ? "s"
-        : ""
+      months > 1 ? "s" : ""
     } ago`;
-
   }
 
-
   // Years
-
-  const years =
-    Math.floor(
-      months / 12
-    );
-
+  const years = Math.floor(
+    months / 12
+  );
 
   return `${years} year${
-    years > 1
-      ? "s"
-      : ""
+    years > 1 ? "s" : ""
   } ago`;
-
 }
 
-
 // =====================================================
-// MAIN COMPONENT
+// MAIN CLIENT SECTION
 // =====================================================
 
 function Clientsection({
@@ -450,8 +367,6 @@ function Clientsection({
   setReviews,
   currentUserEmail,
 }) {
-
-
   // ===================================================
   // VIEW ALL / VIEW LESS
   // ===================================================
@@ -461,9 +376,8 @@ function Clientsection({
     setShowAllReviews,
   ] = useState(false);
 
-
   // ===================================================
-  // FIRST 2 REVIEWS EXPANDED
+  // EXPANDED FIRST TWO
   // ===================================================
 
   const [
@@ -471,90 +385,93 @@ function Clientsection({
     setExpandedFirstTwo,
   ] = useState(new Set());
 
-
   // ===================================================
-  // FIRST 2 CONTAINER REF
+  // FIRST TWO REF
   // ===================================================
 
   const firstTwoReviewsRef =
     useRef(null);
 
+  // ===================================================
+  // CURRENT USER EMAIL
+  // ===================================================
+
+  const loggedInEmail =
+    currentUserEmail ||
+    localStorage.getItem(
+      "currentUserEmail"
+    ) ||
+    "";
 
   // ===================================================
-  // READ MORE STATE FROM REVIEW ITEM
+  // SAVE EMAIL TO LOCAL STORAGE
+  // ===================================================
+
+  useEffect(() => {
+    if (currentUserEmail) {
+      localStorage.setItem(
+        "currentUserEmail",
+        currentUserEmail.trim()
+      );
+    }
+  }, [currentUserEmail]);
+
+  // ===================================================
+  // EXPAND CHANGE
   // ===================================================
 
   function handleExpandChange(
     reviewId,
     expanded
   ) {
-
     setExpandedFirstTwo(
       (previous) => {
-
-        const next =
-          new Set(previous);
-
-
-        // Read More
+        const next = new Set(previous);
 
         if (expanded) {
-
           next.add(reviewId);
-
-        }
-
-
-        // Read Less
-
-        else {
-
+        } else {
           next.delete(reviewId);
-
         }
-
 
         return next;
-
       }
     );
-
   }
-
 
   // ===================================================
   // VIEW ALL / VIEW LESS
   // ===================================================
 
   function toggleShowAllReviews() {
+    setExpandedFirstTwo(new Set());
 
-    // Reset first-two scroll state
-    setExpandedFirstTwo(
-      new Set()
-    );
-
-    // Toggle
     setShowAllReviews(
-      (previous) =>
-        !previous
+      (previous) => !previous
     );
-
   }
-
 
   // ===================================================
   // LIKE / UNLIKE
   // ===================================================
 
-  function handleLike(index) {
+  async function handleLike(index) {
+    // =================================================
+    // GET CURRENT USER EMAIL
+    // =================================================
 
+    const userEmail =
+      currentUserEmail ||
+      localStorage.getItem(
+        "currentUserEmail"
+      ) ||
+      "";
 
-    // No email
+    // =================================================
+    // NO EMAIL
+    // =================================================
 
-    if (
-      currentUserEmail === ""
-    ) {
-
+    if (!userEmail) {
       alert(
         "Please submit a review first."
       );
@@ -562,324 +479,278 @@ function Clientsection({
       return;
     }
 
+    // =================================================
+    // SELECT REVIEW
+    // =================================================
 
-    setReviews(
-      (prevReviews) => {
+    const selectedReview =
+      reviews[index];
 
-        return prevReviews.map(
-          (review, i) => {
+    if (!selectedReview) {
+      alert("Review not found.");
+      return;
+    }
 
+    // =================================================
+    // REVIEW ID CHECK
+    // =================================================
 
-            // Only clicked review
+    if (!selectedReview._id) {
+      alert("Review ID not found.");
+      return;
+    }
 
-            if (i !== index) {
+    // =================================================
+    // OWN REVIEW CHECK
+    // =================================================
 
-              return review;
+    if (
+      selectedReview.email &&
+      selectedReview.email
+        .toLowerCase() ===
+        userEmail.toLowerCase()
+    ) {
+      alert(
+        "You cannot like your own review."
+      );
 
-            }
+      return;
+    }
 
+    // =================================================
+    // SEND LIKE / UNLIKE TO BACKEND
+    // =================================================
 
-            // Own review
+    try {
+      const response = await fetch(
+        `${API_URL}/api/reviews/${selectedReview._id}/like`,
+        {
+          method: "PUT",
 
-            if (
-              review.email ===
-              currentUserEmail
-            ) {
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-              return review;
+          body: JSON.stringify({
+            email: userEmail.trim(),
+          }),
+        }
+      );
 
-            }
+      // =================================================
+      // BACKEND RESPONSE
+      // =================================================
 
+      const data =
+        await response.json();
 
-            // Already liked?
+      // =================================================
+      // BACKEND ERROR
+      // =================================================
 
-            const alreadyLiked =
-              review.likedBy.includes(
-                currentUserEmail
-              );
-
-
-            // ==============================
-            // UNLIKE
-            // ==============================
-
-            if (alreadyLiked) {
-
-              return {
-
-                ...review,
-
-                likes:
-                  review.likes - 1,
-
-                likedBy:
-                  review.likedBy.filter(
-                    (email) =>
-                      email !==
-                      currentUserEmail
-                  ),
-
-              };
-
-            }
-
-
-            // ==============================
-            // LIKE
-            // ==============================
-
-            return {
-
-              ...review,
-
-              likes:
-                review.likes + 1,
-
-              likedBy: [
-
-                ...review.likedBy,
-
-                currentUserEmail,
-
-              ],
-
-            };
-
-          }
-
+      if (!response.ok) {
+        alert(
+          data.message ||
+            "Like operation failed."
         );
 
+        return;
       }
 
-    );
+      // =================================================
+      // UPDATE REVIEW
+      // =================================================
 
+      if (data.review) {
+        setReviews(
+          (previousReviews) =>
+            previousReviews.map(
+              (review) => {
+                if (
+                  review._id ===
+                  data.review._id
+                ) {
+                  return data.review;
+                }
+
+                return review;
+              }
+            )
+        );
+      }
+
+      // =================================================
+      // OPTIONAL CONSOLE MESSAGE
+      // =================================================
+
+      if (
+        data.message ===
+        "Review liked."
+      ) {
+        console.log(
+          "Review liked"
+        );
+      }
+
+      if (
+        data.message ===
+        "Review unliked."
+      ) {
+        console.log(
+          "Review unliked"
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Like / Unlike error:",
+        error
+      );
+
+      alert(
+        "Unable to connect to server."
+      );
+    }
   }
 
+  // ===================================================
+  // SAFETY CHECK
+  // ===================================================
+
+  const reviewList =
+    Array.isArray(reviews)
+      ? reviews
+      : [];
 
   // ===================================================
   // NO REVIEWS
   // ===================================================
 
-  if (
-    reviews.length === 0
-  ) {
-
+  if (reviewList.length === 0) {
     return (
-
       <div>
-
-        <p>
-          No Reviews Yet.
-        </p>
+        <p>No Reviews Yet.</p>
 
         <br />
 
-        <a
-          href="#review-form"
-        >
-
+        <a href="#review-form">
           <button
+            type="button"
             className="contact-page-submit"
           >
             Write A Review
           </button>
-
         </a>
-
       </div>
-
     );
-
   }
 
-
   // ===================================================
-  // FIRST 2 REVIEWS
+  // FIRST TWO REVIEWS
   // ===================================================
 
   const firstTwoReviews =
-    reviews.slice(0, 2);
-
+    reviewList.slice(0, 2);
 
   // ===================================================
-  // 3RD REVIEW ONWARD
+  // ADDITIONAL REVIEWS
   // ===================================================
 
   const additionalReviews =
-    reviews.slice(2);
+    reviewList.slice(2);
 
+  // ===================================================
+  // RETURN
+  // ===================================================
 
   return (
-
     <div>
-
-
       {/* =================================================
-          FIRST 2 REVIEWS
-
-          NORMAL AT FIRST
-
-          READ MORE CLICK
-          ↓
-          SCROLL ACTIVE
+          FIRST TWO REVIEWS
       ================================================= */}
 
       {!showAllReviews && (
-
         <div
-          ref={
-            firstTwoReviewsRef
-          }
-
+          ref={firstTwoReviewsRef}
           className={`
             reviews-first-two
             ${
-              expandedFirstTwo.size >
-              0
+              expandedFirstTwo.size > 0
                 ? "reviews-first-two-scroll-active"
                 : ""
             }
           `}
         >
-
           {firstTwoReviews.map(
             (item, index) => (
-
               <ReviewItem
-
                 key={
-                  item._id ||
-                  index
+                  item._id || index
                 }
-
                 item={item}
-
                 index={index}
-
                 currentUserEmail={
-                  currentUserEmail
+                  loggedInEmail
                 }
-
                 handleLike={
                   handleLike
                 }
-
                 onExpandChange={
                   handleExpandChange
                 }
-
               />
-
             )
-
           )}
-
         </div>
-
       )}
 
-
       {/* =================================================
-          REVIEW 3 ONWARD
-
-          VIEW ALL CLICK
-          ↓
-          REVIEW 1 + 2 HIDDEN
-          ↓
-          REVIEW 3 ONWARD SHOW
-          ↓
-          SCROLL ACTIVE
+          ADDITIONAL REVIEWS
       ================================================= */}
 
       {showAllReviews &&
-        additionalReviews.length >
-          0 && (
-
-          <div
-            className="
-              reviews-scroll-area
-            "
-          >
-
+        additionalReviews.length > 0 && (
+          <div className="reviews-scroll-area">
             {additionalReviews.map(
               (item, index) => (
-
                 <ReviewItem
-
                   key={
                     item._id ||
                     `additional-${index}`
                   }
-
                   item={item}
-
-
-                  /*
-                    Original array index
-
-                    Review 3 = 2
-                    Review 4 = 3
-                    Review 5 = 4
-                  */
-
-                  index={
-                    index + 2
-                  }
-
+                  index={index + 2}
                   currentUserEmail={
-                    currentUserEmail
+                    loggedInEmail
                   }
-
                   handleLike={
                     handleLike
                   }
-
                 />
-
               )
-
             )}
-
           </div>
-
         )}
-
 
       {/* =================================================
           VIEW ALL / VIEW LESS
       ================================================= */}
 
-      {additionalReviews.length >
-        0 && (
-
-        <div
-          className="
-            reviews-view-button
-          "
-        >
-
+      {additionalReviews.length > 0 && (
+        <div className="reviews-view-button">
           <button
             type="button"
-            className="
-              review-view-all
-            "
+            className="review-view-all"
             onClick={
               toggleShowAllReviews
             }
           >
-
             {showAllReviews
-
               ? "View Less Reviews"
-
               : "View All Reviews"}
-
           </button>
-
         </div>
-
       )}
-
 
       {/* =================================================
           WRITE REVIEW
@@ -887,26 +758,16 @@ function Clientsection({
 
       <br />
 
-      <a
-        href="#review-form"
-      >
-
+      <a href="#review-form">
         <button
-          className="
-            contact-page-submit
-          "
+          type="button"
+          className="contact-page-submit"
         >
           Write A Review
         </button>
-
       </a>
-
-
     </div>
-
   );
-
 }
-
 
 export default Clientsection;
