@@ -8,7 +8,7 @@ import React, {
 // BACKEND URL
 // =====================================================
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://achintahaldar-backend.onrender.com";
 
 // =====================================================
 // SINGLE REVIEW ITEM
