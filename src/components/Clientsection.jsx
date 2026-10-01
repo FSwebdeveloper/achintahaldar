@@ -4,11 +4,14 @@ import React, {
   useState,
 } from "react";
 
+import { toast } from "react-toastify";
+
 // =====================================================
 // BACKEND URL
 // =====================================================
 
-const API_URL = "https://achintahaldar-backend.onrender.com";
+const API_URL =
+  "https://achintahaldar-backend.onrender.com";
 
 // =====================================================
 // SINGLE REVIEW ITEM
@@ -43,7 +46,8 @@ function ReviewItem({
   // LONG REVIEW
   // ===================================================
 
-  const [isLongReview, setIsLongReview] = useState(false);
+  const [isLongReview, setIsLongReview] =
+    useState(false);
 
   // ===================================================
   // CURRENT USER EMAIL
@@ -65,7 +69,9 @@ function ReviewItem({
       if (!element) return;
 
       // Remove clamp temporarily
-      element.classList.remove("review-collapsed");
+      element.classList.remove(
+        "review-collapsed"
+      );
 
       // Full review height
       const fullHeight = element.scrollHeight;
@@ -76,11 +82,14 @@ function ReviewItem({
       );
 
       // Three line height
-      const threeLineHeight = lineHeight * 3;
+      const threeLineHeight =
+        lineHeight * 3;
 
       // Restore clamp
       if (!expanded) {
-        element.classList.add("review-collapsed");
+        element.classList.add(
+          "review-collapsed"
+        );
       }
 
       // Check whether review is longer than 3 lines
@@ -308,7 +317,6 @@ function getTimeAgo(reviewDate) {
 
   const now = new Date();
   const date = new Date(reviewDate);
-
   const difference = now - date;
 
   // Invalid / future date
@@ -472,7 +480,7 @@ function Clientsection({
     // =================================================
 
     if (!userEmail) {
-      alert(
+      toast.error(
         "Please submit a review first."
       );
 
@@ -487,7 +495,10 @@ function Clientsection({
       reviews[index];
 
     if (!selectedReview) {
-      alert("Review not found.");
+      toast.error(
+        "Review not found."
+      );
+
       return;
     }
 
@@ -496,7 +507,10 @@ function Clientsection({
     // =================================================
 
     if (!selectedReview._id) {
-      alert("Review ID not found.");
+      toast.error(
+        "Review ID not found."
+      );
+
       return;
     }
 
@@ -506,11 +520,10 @@ function Clientsection({
 
     if (
       selectedReview.email &&
-      selectedReview.email
-        .toLowerCase() ===
+      selectedReview.email.toLowerCase() ===
         userEmail.toLowerCase()
     ) {
-      alert(
+      toast.error(
         "You cannot like your own review."
       );
 
@@ -545,12 +558,17 @@ function Clientsection({
       const data =
         await response.json();
 
+      console.log(
+        "Like API response:",
+        data
+      );
+
       // =================================================
       // BACKEND ERROR
       // =================================================
 
       if (!response.ok) {
-        alert(
+        toast.error(
           data.message ||
             "Like operation failed."
         );
@@ -581,33 +599,38 @@ function Clientsection({
       }
 
       // =================================================
-      // OPTIONAL CONSOLE MESSAGE
+      // SUCCESS MESSAGE
       // =================================================
 
       if (
         data.message ===
         "Review liked."
       ) {
-        console.log(
-          "Review liked"
+        toast.success(
+          "Review liked."
         );
       }
+
+      // =================================================
+      // UNLIKE MESSAGE
+      // =================================================
 
       if (
         data.message ===
         "Review unliked."
       ) {
-        console.log(
-          "Review unliked"
+        toast.info(
+          "Review unliked."
         );
       }
+
     } catch (error) {
       console.error(
         "Like / Unlike error:",
         error
       );
 
-      alert(
+      toast.error(
         "Unable to connect to server."
       );
     }
@@ -665,6 +688,7 @@ function Clientsection({
 
   return (
     <div>
+
       {/* =================================================
           FIRST TWO REVIEWS
       ================================================= */}
@@ -766,6 +790,7 @@ function Clientsection({
           Write A Review
         </button>
       </a>
+
     </div>
   );
 }
