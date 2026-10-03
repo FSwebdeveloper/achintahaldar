@@ -233,42 +233,11 @@ const COLOR_PALETTES = {
 export const HomePage = ({
   onNavigateToContact,
 }) => {
-
   // ===================================================
   // REVIEW STATE
   // ===================================================
 
   const [reviews, setReviews] = useState([]);
-
-  // ===================================================
-  // CURRENT USER EMAIL
-  // ===================================================
-  // Read email from localStorage when website loads
-  // ===================================================
-
-  const [currentUserEmail, setCurrentUserEmail] =
-    useState(
-      () =>
-        localStorage.getItem(
-          "currentUserEmail"
-        ) || ""
-    );
-
-  // ===================================================
-  // SAVE CURRENT USER EMAIL TO LOCAL STORAGE
-  // ===================================================
-  // Whenever Socialabout updates currentUserEmail,
-  // it will also be saved in localStorage.
-  // ===================================================
-
-  useEffect(() => {
-    if (currentUserEmail) {
-      localStorage.setItem(
-        "currentUserEmail",
-        currentUserEmail.trim()
-      );
-    }
-  }, [currentUserEmail]);
 
   // ===================================================
   // GET APPROVED REVIEWS FROM BACKEND
@@ -281,10 +250,19 @@ export const HomePage = ({
           "Fetching reviews from backend..."
         );
 
-        const response =
-          await fetch(
-            `${API_URL}/api/reviews`
-          );
+        const response = await fetch(
+          `${API_URL}/api/reviews`,
+          {
+            // =================================================
+            // IMPORTANT FOR NEW LIKE SYSTEM
+            // =================================================
+            // This allows the browser to send/receive
+            // the anonymous visitor cookie.
+            // =================================================
+
+            credentials: "include",
+          }
+        );
 
         const data =
           await response.json();
@@ -299,17 +277,17 @@ export const HomePage = ({
             data.message ||
               "Failed to get reviews"
           );
+
           return;
         }
 
-        // =========================================
+        // ===============================================
         // SAVE REVIEWS INTO REACT STATE
-        // =========================================
+        // ===============================================
 
         setReviews(
           data.reviews || []
         );
-
       } catch (error) {
         console.error(
           "GET reviews error:",
@@ -377,7 +355,8 @@ export const HomePage = ({
 
           if (
             ctx &&
-            ctx.state === "suspended"
+            ctx.state ===
+              "suspended"
           ) {
             ctx.resume();
           }
@@ -432,7 +411,6 @@ export const HomePage = ({
           osc.stop(
             ctx.currentTime + 0.09
           );
-
         } catch (error) {
           // Audio error ignored
         }
@@ -537,9 +515,9 @@ export const HomePage = ({
                 );
         }
 
-        // =========================================
+        // =============================================
         // BUBBLE SIZE
-        // =========================================
+        // =============================================
 
         const labelText =
           item.label || "";
@@ -576,9 +554,9 @@ export const HomePage = ({
           size = 120;
         }
 
-        // =========================================
+        // =============================================
         // COLORS
-        // =========================================
+        // =============================================
 
         const color =
           UNIQUE_BUBBLE_COLORS[
@@ -594,34 +572,45 @@ export const HomePage = ({
 
         const floatDuration =
           16 +
-          (itemIdx % 4) *
-            1.5;
+          (itemIdx % 4) * 1.5;
 
-        // =========================================
+        // =============================================
         // RETURN BUBBLE
-        // =========================================
+        // =============================================
 
         return {
           id:
             `bubble-${Date.now()}-${itemIdx}-${Math.random()
               .toString(36)
               .substr(2, 5)}`,
+
           itemIdx,
+
           colIndex,
+
           numCols:
             numLanes,
+
           size,
+
           label:
             item.label,
+
           Icon:
             item.Icon,
+
           duration:
             floatDuration,
+
           initialOffset,
+
           color,
+
           deepBorderColor,
+
           borderWidth:
             2.5,
+
           popped:
             false,
         };
@@ -767,142 +756,152 @@ export const HomePage = ({
   // POP BUBBLE
   // ===================================================
 
-  const handlePop =
-    (event, bubble) => {
-      event.stopPropagation();
+  const handlePop = (
+    event,
+    bubble
+  ) => {
+    event.stopPropagation();
 
-      if (
-        bubble.popped
-      ) {
-        return;
-      }
+    if (bubble.popped) {
+      return;
+    }
 
-      // =========================================
-      // SOUND
-      // =========================================
+    // ===============================================
+    // SOUND
+    // ===============================================
 
-      playPopSound(
-        bubble.size
-      );
+    playPopSound(
+      bubble.size
+    );
 
-      // =========================================
-      // PARTICLES
-      // =========================================
+    // ===============================================
+    // PARTICLES
+    // ===============================================
 
-      if (
-        event &&
+    if (
+      event &&
+      event.currentTarget
+    ) {
+      const rect =
         event.currentTarget
-      ) {
-        const rect =
-          event.currentTarget
-            .getBoundingClientRect();
+          .getBoundingClientRect();
 
-        const centerX =
-          rect.left +
-          rect.width / 2;
+      const centerX =
+        rect.left +
+        rect.width / 2;
 
-        const centerY =
-          rect.top +
-          rect.height / 2;
+      const centerY =
+        rect.top +
+        rect.height / 2;
 
-        const newParticles =
-          Array.from(
-            {
-              length: 8,
-            },
-            (_, i) => {
-              const angle =
-                (i * 45 * Math.PI) /
-                180;
+      const newParticles =
+        Array.from(
+          {
+            length: 8,
+          },
+          (_, i) => {
+            const angle =
+              (i *
+                45 *
+                Math.PI) /
+              180;
 
-              const speed =
+            const speed =
+              Math.random() *
+                40 +
+              20;
+
+            return {
+              id:
+                `particle-${Date.now()}-${i}`,
+
+              x:
+                centerX,
+
+              y:
+                centerY,
+
+              dx:
+                Math.cos(angle) *
+                speed,
+
+              dy:
+                Math.sin(angle) *
+                speed,
+
+              color:
+                bubble.color,
+
+              size:
                 Math.random() *
-                  40 +
-                20;
-
-              return {
-                id:
-                  `particle-${Date.now()}-${i}`,
-                x:
-                  centerX,
-                y:
-                  centerY,
-                dx:
-                  Math.cos(angle) *
-                  speed,
-                dy:
-                  Math.sin(angle) *
-                  speed,
-                color:
-                  bubble.color,
-                size:
-                  Math.random() *
-                    6 +
-                  4,
-              };
-            }
-          );
-
-        setPopParticles(
-          (previous) => [
-            ...previous.slice(-40),
-            ...newParticles,
-          ]
+                  6 +
+                4,
+            };
+          }
         );
-      }
 
-      // =========================================
-      // COUNT
-      // =========================================
-
-      setPoppedCount(
-        (previous) =>
-          previous + 1
+      setPopParticles(
+        (previous) => [
+          ...previous.slice(
+            -40
+          ),
+          ...newParticles,
+        ]
       );
+    }
 
-      // =========================================
-      // MARK POPPED
-      // =========================================
+    // ===============================================
+    // COUNT
+    // ===============================================
 
-      setBubbles(
-        (previous) =>
-          previous.map(
-            (item) =>
-              item.id ===
-              bubble.id
-                ? {
-                    ...item,
-                    popped: true,
-                  }
-                : item
-          )
-      );
+    setPoppedCount(
+      (previous) =>
+        previous + 1
+    );
 
-      // =========================================
-      // NAVIGATE CONTACT
-      // =========================================
+    // ===============================================
+    // MARK POPPED
+    // ===============================================
 
-      if (
-        onNavigateToContact &&
-        bubble.label
-      ) {
-        setTimeout(() => {
-          onNavigateToContact(
-            bubble.label
-          );
-        }, 150);
-      }
+    setBubbles(
+      (previous) =>
+        previous.map(
+          (item) =>
+            item.id ===
+            bubble.id
+              ? {
+                  ...item,
+                  popped: true,
+                }
+              : item
+        )
+    );
 
-      // =========================================
-      // RESPAWN
-      // =========================================
+    // ===============================================
+    // NAVIGATE CONTACT
+    // ===============================================
 
+    if (
+      onNavigateToContact &&
+      bubble.label
+    ) {
       setTimeout(() => {
-        handleBubbleComplete(
-          bubble.id
+        onNavigateToContact(
+          bubble.label
         );
-      }, 800);
-    };
+      }, 150);
+    }
+
+    // ===============================================
+    // RESPAWN
+    // ===============================================
+
+    setTimeout(() => {
+      handleBubbleComplete(
+        bubble.id
+      );
+    }, 800);
+  };
 
   // ===================================================
   // BACKGROUND CLICK
@@ -957,7 +956,9 @@ export const HomePage = ({
           },
           (_, i) => {
             const angle =
-              (i * 60 * Math.PI) /
+              (i *
+                60 *
+                Math.PI) /
               180;
 
             const speed =
@@ -968,21 +969,27 @@ export const HomePage = ({
             return {
               id:
                 `click-particle-${Date.now()}-${i}`,
+
               x:
                 centerX,
+
               y:
                 centerY,
+
               dx:
                 Math.cos(angle) *
                 speed,
+
               dy:
                 Math.sin(angle) *
                 speed,
+
               color:
                 colors[
                   i %
                     colors.length
                 ],
+
               size:
                 Math.random() *
                   5 +
@@ -993,7 +1000,9 @@ export const HomePage = ({
 
       setPopParticles(
         (previous) => [
-          ...previous.slice(-30),
+          ...previous.slice(
+            -30
+          ),
           ...newParticles,
         ]
       );
@@ -1010,7 +1019,9 @@ export const HomePage = ({
     ) {
       const timer =
         setTimeout(() => {
-          setPopParticles([]);
+          setPopParticles(
+            []
+          );
         }, 500);
 
       return () => {
@@ -1039,10 +1050,9 @@ export const HomePage = ({
       }
       id="home-page-container"
     >
-
       {/* =================================================
           FLOATING BUBBLES
-      ================================================= */}
+          ================================================= */}
 
       <div
         className="
@@ -1081,8 +1091,7 @@ export const HomePage = ({
               bubble.colIndex ||
               0;
 
-            const padding =
-              16;
+            const padding = 16;
 
             const leftCalc =
               numCols > 1
@@ -1156,6 +1165,7 @@ export const HomePage = ({
                     `${startBottomPercent}%`,
                     "115%",
                   ],
+
                   scale:
                     bubble.initialOffset >
                     0
@@ -1170,6 +1180,7 @@ export const HomePage = ({
                           1,
                           0.9,
                         ],
+
                   opacity:
                     bubble.initialOffset >
                     0
@@ -1205,18 +1216,25 @@ export const HomePage = ({
                 style={{
                   width:
                     `${bubble.size}px`,
+
                   height:
                     `${bubble.size}px`,
+
                   backgroundColor:
                     bubble.color,
+
                   boxShadow:
                     "0 8px 24px 0 rgba(0, 0, 0, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.3)",
+
                   backdropFilter:
                     "blur(4px)",
+
                   border:
                     "1.5px solid rgba(255, 255, 255, 0.35)",
+
                   outline:
                     `2.5px solid ${bubble.deepBorderColor}`,
+
                   outlineOffset:
                     "5px",
                 }}
@@ -1259,7 +1277,7 @@ export const HomePage = ({
 
       {/* =================================================
           POP PARTICLES
-      ================================================= */}
+          ================================================= */}
 
       <AnimatePresence>
         {popParticles.map(
@@ -1274,42 +1292,56 @@ export const HomePage = ({
               initial={{
                 x:
                   particle.x,
+
                 y:
                   particle.y,
+
                 opacity: 1,
+
                 scale: 1,
               }}
               animate={{
                 x:
                   particle.x +
                   particle.dx,
+
                 y:
                   particle.y +
                   particle.dy,
+
                 opacity: 0,
+
                 scale: 0.1,
               }}
               transition={{
                 duration:
                   0.45,
+
                 ease:
                   "easeOut",
               }}
               style={{
                 position:
                   "fixed",
+
                 width:
                   `${particle.size}px`,
+
                 height:
                   `${particle.size}px`,
+
                 borderRadius:
                   "50%",
+
                 backgroundColor:
                   particle.color,
+
                 boxShadow:
                   "0 0 8px rgba(255, 255, 255, 0.8)",
+
                 pointerEvents:
                   "none",
+
                 zIndex: 90,
               }}
             />
@@ -1319,7 +1351,7 @@ export const HomePage = ({
 
       {/* =================================================
           HERO CONTENT
-      ================================================= */}
+          ================================================= */}
 
       <motion.div
         initial={{
@@ -1342,10 +1374,9 @@ export const HomePage = ({
         "
         id="home-hero-content"
       >
-
         {/* =================================================
             POPPED COUNT
-        ================================================= */}
+            ================================================= */}
 
         {poppedCount > 0 && (
           <div
@@ -1369,9 +1400,13 @@ export const HomePage = ({
               <Trophy
                 size={13}
               />
+
               {" "}
+
               {poppedCount}
+
               {" "}
+
               Popped
             </motion.span>
           </div>
@@ -1379,13 +1414,13 @@ export const HomePage = ({
 
         {/* =================================================
             HERO
-        ================================================= */}
+            ================================================= */}
 
         <Herosection />
 
         {/* =================================================
             ABOUT + REVIEWS
-        ================================================= */}
+            ================================================= */}
 
         <Aboutsection
           reviews={
@@ -1394,17 +1429,11 @@ export const HomePage = ({
           setReviews={
             setReviews
           }
-          currentUserEmail={
-            currentUserEmail
-          }
-          setCurrentUserEmail={
-            setCurrentUserEmail
-          }
         />
 
         {/* =================================================
             REVIEW FORM
-        ================================================= */}
+            ================================================= */}
 
         <Socialabout
           reviews={
@@ -1413,26 +1442,19 @@ export const HomePage = ({
           setReviews={
             setReviews
           }
-          currentUserEmail={
-            currentUserEmail
-          }
-          setCurrentUserEmail={
-            setCurrentUserEmail
-          }
         />
 
         {/* =================================================
             SOCIAL LINKS
-        ================================================= */}
+            ================================================= */}
 
         <Sociallink />
 
         {/* =================================================
             FOOTER
-        ================================================= */}
+            ================================================= */}
 
         <Footer />
-
       </motion.div>
     </div>
   );

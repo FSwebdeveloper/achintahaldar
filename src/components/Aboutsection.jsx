@@ -1,59 +1,123 @@
-import React from 'react';
-import Clientsection from './Clientsection';
-import servicedetails from './servicedetails';
-import Servicsection from './Servicesection';
+import React from "react";
+import Clientsection from "./Clientsection";
+import servicedetails from "./servicedetails";
+import Servicsection from "./Servicesection";
 
+function Aboutsection({
+  reviews,
+  setReviews,
+}) {
+  return (
+    <div className="about-section-bg">
+      <div className="about-section">
 
-function Aboutsection ({reviews, setReviews, currentUserEmail}) {
-    return (
-        <div className="about-section-bg">
-        <div className="about-section">
+        {/* =================================================
+            ABOUT US
+            ================================================= */}
+
         <div className="about-title-section">
-        <h2 className="testimonial-title">A Little About Us</h2>
-        <div className="hero-img-sec">
-         <img src="../img/about_image.jpg" alt=""/>
+
+          <h2 className="testimonial-title">
+            A Little About Us
+          </h2>
+
+          <div className="hero-img-sec">
+            <img
+              src="../img/about_image.jpg"
+              alt=""
+            />
+          </div>
+
+          <p className="testimonial-about">
+            I'm a Frontend Web Developer
+            passionate about creating responsive,
+            user-friendly, and modern web
+            applications. Alongside web development,
+            I specialize in collecting vintage audio
+            systems, providing sales and service for
+            hearing aids, and offering quality desktop
+            and laptop accessories.
+          </p>
+
+          <p className="testimonial-about-more">
+            I combine technical expertise with
+            practical solutions to deliver reliable
+            products and exceptional customer service.
+          </p>
+
+          <a
+            className="more-info"
+            href=""
+          >
+            Read More About Us »
+          </a>
+
         </div>
-        <p className="testimonial-about">I'm a Frontend Web Developer passionate about creating responsive, user-friendly, and modern web applications. Alongside web development, I specialize in collecting vintage audio systems, providing sales and service for hearing aids, and offering quality desktop and laptop accessories.</p>
-        <p className="testimonial-about-more"> I combine technical expertise with practical solutions to deliver reliable products and exceptional customer service.</p>
-        <a className="more-info" href="">Read More About Us »</a>
-        </div>
+
+        {/* =================================================
+            SERVICES
+            ================================================= */}
+
         <div className="about-title-section">
-        <h2 className="testimonial-title">Some of Our Services</h2>
-        <div className="service-card-sec">
 
-            {servicedetails.map(servicecontent =>
+          <h2 className="testimonial-title">
+            Some of Our Services
+          </h2>
 
-              <Servicsection
-              
-              id={servicecontent.id}
-              imgURL={servicecontent.imgURL}
-              title={servicecontent.title}
-              about={servicecontent.about}
+          <div className="service-card-sec">
 
-              />
-
+            {servicedetails.map(
+              (servicecontent) => (
+                <Servicsection
+                  key={servicecontent.id}
+                  id={servicecontent.id}
+                  imgURL={
+                    servicecontent.imgURL
+                  }
+                  title={
+                    servicecontent.title
+                  }
+                  about={
+                    servicecontent.about
+                  }
+                />
               )
-            }
-         
-        </div>
-        <a className="more-info" href="">View All Of Our Services »</a>
-        </div>
-        <div className="about-title-section">
-        <h2 className="testimonial-title">What Our Clients Say</h2>
-        <div>
-             <Clientsection reviews={reviews}
-                setReviews={setReviews}
-                currentUserEmail={currentUserEmail}
-                /> 
-            
+            )}
 
-          
-           
+          </div>
+
+          <a
+            className="more-info"
+            href=""
+          >
+            View All Of Our Services »
+          </a>
+
         </div>
+
+        {/* =================================================
+            CLIENT REVIEWS
+            ================================================= */}
+
+        <div className="about-title-section">
+
+          <h2 className="testimonial-title">
+            What Our Clients Say
+          </h2>
+
+          <div>
+
+            <Clientsection
+              reviews={reviews}
+            />
+
+          </div>
+
         </div>
-        </div>
-        </div>
-    )
+
+      </div>
+    </div>
+  );
 }
 
 export default Aboutsection;

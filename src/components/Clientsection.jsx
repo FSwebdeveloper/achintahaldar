@@ -20,7 +20,8 @@ const API_URL =
 function ReviewItem({
   item,
   index,
-  currentUserEmail,
+  isLiked,
+  likeLoading,
   handleLike,
   onExpandChange,
 }) {
@@ -48,15 +49,6 @@ function ReviewItem({
 
   const [isLongReview, setIsLongReview] =
     useState(false);
-
-  // ===================================================
-  // CURRENT USER EMAIL
-  // ===================================================
-
-  const loggedInEmail =
-    currentUserEmail ||
-    localStorage.getItem("currentUserEmail") ||
-    "";
 
   // ===================================================
   // CHECK REVIEW HEIGHT
@@ -112,29 +104,6 @@ function ReviewItem({
       );
     };
   }, [item.review, expanded]);
-
-  // ===================================================
-  // OWN REVIEW
-  // ===================================================
-
-  const isOwnReview =
-    item.email &&
-    loggedInEmail &&
-    item.email.toLowerCase() ===
-      loggedInEmail.toLowerCase();
-
-  // ===================================================
-  // ALREADY LIKED
-  // ===================================================
-
-  const isLiked =
-    Array.isArray(item.likedBy) &&
-    loggedInEmail &&
-    item.likedBy.some(
-      (email) =>
-        email.toLowerCase() ===
-        loggedInEmail.toLowerCase()
-    );
 
   // ===================================================
   // READ MORE / READ LESS
@@ -265,41 +234,27 @@ function ReviewItem({
         ============================================= */}
 
         <div>
-          {isOwnReview ? (
-            // ==========================================
-            // OWN REVIEW
-            // ==========================================
+          <button
+            type="button"
+            className="btn-outline"
+            onClick={() =>
+              handleLike(item._id)
+            }
+            disabled={likeLoading}
+            style={{
+              cursor: likeLoading
+                ? "not-allowed"
+                : "pointer",
 
-            <button
-              type="button"
-              className="btn-outline"
-              disabled
-              style={{
-                cursor: "not-allowed",
-                opacity: 0.6,
-              }}
-            >
-              ❤️{" "}
-              <span>
-                {item.likes || 0}
-              </span>
-            </button>
-          ) : (
-            // ==========================================
-            // OTHER USER REVIEW
-            // ==========================================
+              opacity: likeLoading ? 0.6 : 1,
+            }}
+          >
+            {isLiked ? "❤️" : "🤍"}{" "}
 
-            <button
-              type="button"
-              className="btn-outline"
-              onClick={() => handleLike(index)}
-            >
-              {isLiked ? "❤️" : "🤍"}{" "}
-              <span>
-                {item.likes || 0}
-              </span>
-            </button>
-          )}
+            <span>
+              {item.likes || 0}
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -372,8 +327,6 @@ function getTimeAgo(reviewDate) {
 
 function Clientsection({
   reviews,
-  setReviews,
-  currentUserEmail,
 }) {
   // ===================================================
   // VIEW ALL / VIEW LESS
@@ -401,28 +354,113 @@ function Clientsection({
     useRef(null);
 
   // ===================================================
-  // CURRENT USER EMAIL
+  // LIKE STATUS
+  //
+  // Object example:
+  //
+  // {
+  //   "reviewId1": true,
+  //   "reviewId2": false
+  // }
   // ===================================================
 
-  const loggedInEmail =
-    currentUserEmail ||
-    localStorage.getItem(
-      "currentUserEmail"
-    ) ||
-    "";
+  const [likedReviews, setLikedReviews] =
+    useState({});
 
   // ===================================================
-  // SAVE EMAIL TO LOCAL STORAGE
+  // LIKE LOADING
+  //
+  // Stores review IDs that are currently
+  // processing Like / Unlike.
+  // ===================================================
+
+  const [likeLoading, setLikeLoading] =
+    useState({});
+
+  // ===================================================
+  // CHECK LIKE STATUS
   // ===================================================
 
   useEffect(() => {
-    if (currentUserEmail) {
-      localStorage.setItem(
-        "currentUserEmail",
-        currentUserEmail.trim()
-      );
-    }
-  }, [currentUserEmail]);
+    const checkLikeStatuses = async () => {
+      const reviewList = Array.isArray(reviews)
+        ? reviews
+        : [];
+
+      if (reviewList.length === 0) {
+        setLikedReviews({});
+        return;
+      }
+
+      try {
+        const statusResults =
+          await Promise.all(
+            reviewList.map(async (review) => {
+              if (!review._id) {
+                return null;
+              }
+
+              try {
+                const response =
+                  await fetch(
+                    `${API_URL}/api/reviews/${review._id}/like-status`,
+                    {
+                      method: "GET",
+
+                      credentials: "include",
+                    }
+                  );
+
+                const data =
+                  await response.json();
+
+                if (!response.ok) {
+                  console.error(
+                    "Like status error:",
+                    data.message
+                  );
+
+                  return null;
+                }
+
+                return {
+                  reviewId: review._id,
+                  liked: Boolean(data.liked),
+                };
+              } catch (error) {
+                console.error(
+                  "Like status request error:",
+                  error
+                );
+
+                return null;
+              }
+            })
+          );
+
+        const newLikedReviews = {};
+
+        statusResults.forEach((result) => {
+          if (!result) return;
+
+          newLikedReviews[
+            result.reviewId
+          ] = result.liked;
+        });
+
+        setLikedReviews(
+          newLikedReviews
+        );
+      } catch (error) {
+        console.error(
+          "Check like statuses error:",
+          error
+        );
+      }
+    };
+
+    checkLikeStatuses();
+  }, [reviews]);
 
   // ===================================================
   // EXPAND CHANGE
@@ -463,50 +501,12 @@ function Clientsection({
   // LIKE / UNLIKE
   // ===================================================
 
-  async function handleLike(index) {
-    // =================================================
-    // GET CURRENT USER EMAIL
-    // =================================================
-
-    const userEmail =
-      currentUserEmail ||
-      localStorage.getItem(
-        "currentUserEmail"
-      ) ||
-      "";
-
-    // =================================================
-    // NO EMAIL
-    // =================================================
-
-    if (!userEmail) {
-      toast.error(
-        "Please submit a review first."
-      );
-
-      return;
-    }
-
-    // =================================================
-    // SELECT REVIEW
-    // =================================================
-
-    const selectedReview =
-      reviews[index];
-
-    if (!selectedReview) {
-      toast.error(
-        "Review not found."
-      );
-
-      return;
-    }
-
+  async function handleLike(reviewId) {
     // =================================================
     // REVIEW ID CHECK
     // =================================================
 
-    if (!selectedReview._id) {
+    if (!reviewId) {
       toast.error(
         "Review ID not found."
       );
@@ -515,28 +515,42 @@ function Clientsection({
     }
 
     // =================================================
-    // OWN REVIEW CHECK
+    // PREVENT DOUBLE CLICK
     // =================================================
 
-    if (
-      selectedReview.email &&
-      selectedReview.email.toLowerCase() ===
-        userEmail.toLowerCase()
-    ) {
-      toast.error(
-        "You cannot like your own review."
-      );
-
+    if (likeLoading[reviewId]) {
       return;
     }
 
     // =================================================
-    // SEND LIKE / UNLIKE TO BACKEND
+    // SET LOADING
     // =================================================
 
+    setLikeLoading(
+      (previous) => ({
+        ...previous,
+        [reviewId]: true,
+      })
+    );
+
     try {
+      // =================================================
+      // SEND LIKE / UNLIKE TO BACKEND
+      //
+      // IMPORTANT:
+      //
+      // No email is sent.
+      //
+      // Backend identifies visitor using:
+      //
+      // HttpOnly anonymous cookie
+      //
+      // credentials: "include"
+      // allows the browser to send that cookie.
+      // =================================================
+
       const response = await fetch(
-        `${API_URL}/api/reviews/${selectedReview._id}/like`,
+        `${API_URL}/api/reviews/${reviewId}/like`,
         {
           method: "PUT",
 
@@ -545,9 +559,7 @@ function Clientsection({
               "application/json",
           },
 
-          body: JSON.stringify({
-            email: userEmail.trim(),
-          }),
+          credentials: "include",
         }
       );
 
@@ -577,53 +589,49 @@ function Clientsection({
       }
 
       // =================================================
-      // UPDATE REVIEW
+      // UPDATE LIKE STATUS
       // =================================================
 
-      if (data.review) {
-        setReviews(
-          (previousReviews) =>
-            previousReviews.map(
-              (review) => {
-                if (
-                  review._id ===
-                  data.review._id
-                ) {
-                  return data.review;
-                }
+      setLikedReviews(
+        (previous) => ({
+          ...previous,
+          [reviewId]: Boolean(
+            data.liked
+          ),
+        })
+      );
 
-                return review;
-              }
-            )
-        );
-      }
+      // =================================================
+      // UPDATE LIKE COUNT
+      //
+      // Parent reviews state is not required here.
+      //
+      // We can update the local review count
+      // separately through likeCounts.
+      // =================================================
+
+      setLikeCounts(
+        (previous) => ({
+          ...previous,
+          [reviewId]: Number(
+            data.likes || 0
+          ),
+        })
+      );
 
       // =================================================
       // SUCCESS MESSAGE
       // =================================================
 
-      if (
-        data.message ===
-        "Review liked."
-      ) {
+      if (data.liked) {
         toast.success(
           "Review liked."
         );
-      }
-
-      // =================================================
-      // UNLIKE MESSAGE
-      // =================================================
-
-      if (
-        data.message ===
-        "Review unliked."
-      ) {
+      } else {
         toast.info(
           "Review unliked."
         );
       }
-
     } catch (error) {
       console.error(
         "Like / Unlike error:",
@@ -633,8 +641,28 @@ function Clientsection({
       toast.error(
         "Unable to connect to server."
       );
+    } finally {
+      // =================================================
+      // REMOVE LOADING
+      // =================================================
+
+      setLikeLoading(
+        (previous) => ({
+          ...previous,
+          [reviewId]: false,
+        })
+      );
     }
   }
+
+  // ===================================================
+  // LIKE COUNTS
+  //
+  // Stores latest backend count locally.
+  // ===================================================
+
+  const [likeCounts, setLikeCounts] =
+    useState({});
 
   // ===================================================
   // SAFETY CHECK
@@ -711,14 +739,31 @@ function Clientsection({
                 key={
                   item._id || index
                 }
+
                 item={item}
+
                 index={index}
-                currentUserEmail={
-                  loggedInEmail
+
+                isLiked={
+                  Boolean(
+                    likedReviews[
+                      item._id
+                    ]
+                  )
                 }
+
+                likeLoading={
+                  Boolean(
+                    likeLoading[
+                      item._id
+                    ]
+                  )
+                }
+
                 handleLike={
                   handleLike
                 }
+
                 onExpandChange={
                   handleExpandChange
                 }
@@ -742,11 +787,27 @@ function Clientsection({
                     item._id ||
                     `additional-${index}`
                   }
+
                   item={item}
+
                   index={index + 2}
-                  currentUserEmail={
-                    loggedInEmail
+
+                  isLiked={
+                    Boolean(
+                      likedReviews[
+                        item._id
+                      ]
+                    )
                   }
+
+                  likeLoading={
+                    Boolean(
+                      likeLoading[
+                        item._id
+                      ]
+                    )
+                  }
+
                   handleLike={
                     handleLike
                   }

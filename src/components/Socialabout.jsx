@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const Socialabout = ({
-  reviews,
-  setReviews,
-  setCurrentUserEmail,
-}) => {
+const Socialabout = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,6 +16,7 @@ const Socialabout = ({
   // ==========================================
   // HANDLE INPUT CHANGE
   // ==========================================
+
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -32,6 +29,7 @@ const Socialabout = ({
   // ==========================================
   // CONVERT STAR TO NUMBER
   // ==========================================
+
   function getRatingNumber(rating) {
     if (rating === "⭐") {
       return 1;
@@ -59,12 +57,14 @@ const Socialabout = ({
   // ==========================================
   // HANDLE FORM SUBMIT
   // ==========================================
+
   async function handleSubmit(event) {
     event.preventDefault();
 
     // ========================================
     // NAME VALIDATION
     // ========================================
+
     if (formData.name.trim() === "") {
       toast.error("Please enter your name.");
       return;
@@ -73,6 +73,7 @@ const Socialabout = ({
     // ========================================
     // EMAIL VALIDATION
     // ========================================
+
     if (formData.email.trim() === "") {
       toast.error("Please enter your email.");
       return;
@@ -81,6 +82,7 @@ const Socialabout = ({
     // ========================================
     // EMAIL FORMAT VALIDATION
     // ========================================
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(formData.email.trim())) {
@@ -91,6 +93,7 @@ const Socialabout = ({
     // ========================================
     // PROFESSION VALIDATION
     // ========================================
+
     if (formData.post.trim() === "") {
       toast.error("Please enter your profession.");
       return;
@@ -99,6 +102,7 @@ const Socialabout = ({
     // ========================================
     // CATEGORY VALIDATION
     // ========================================
+
     if (formData.category === "") {
       toast.error("Please select a category.");
       return;
@@ -107,6 +111,7 @@ const Socialabout = ({
     // ========================================
     // RATING VALIDATION
     // ========================================
+
     if (formData.rating === "") {
       toast.error("Please select a rating.");
       return;
@@ -115,6 +120,7 @@ const Socialabout = ({
     // ========================================
     // REVIEW VALIDATION
     // ========================================
+
     if (formData.review.trim() === "") {
       toast.error("Please write your review.");
       return;
@@ -123,27 +129,25 @@ const Socialabout = ({
     // ========================================
     // CONVERT RATING
     // ========================================
+
     const ratingNumber = getRatingNumber(formData.rating);
 
     // ========================================
     // CHECK RATING NUMBER
     // ========================================
+
     if (ratingNumber === 0) {
       toast.error("Please select a valid rating.");
       return;
     }
 
     // ========================================
-    // CURRENT USER EMAIL
-    // ========================================
-    const userEmail = formData.email.trim();
-
-    // ========================================
     // DATA SEND TO BACKEND
     // ========================================
+
     const reviewData = {
       name: formData.name.trim(),
-      email: userEmail,
+      email: formData.email.trim(),
       post: formData.post.trim(),
       category: formData.category,
       rating: ratingNumber,
@@ -156,6 +160,18 @@ const Socialabout = ({
       // ======================================
       // POST REVIEW TO BACKEND
       // ======================================
+      //
+      // IMPORTANT:
+      // credentials: "include"
+      //
+      // This allows the browser to send/receive
+      // the anonymous visitor HttpOnly cookie.
+      //
+      // The backend creates the anonymous ID
+      // automatically if the visitor does not
+      // already have one.
+      // ======================================
+
       const response = await fetch(
         "https://achintahaldar-backend.onrender.com/api/reviews",
         {
@@ -165,6 +181,8 @@ const Socialabout = ({
             "Content-Type": "application/json",
           },
 
+          credentials: "include",
+
           body: JSON.stringify(reviewData),
         }
       );
@@ -172,6 +190,7 @@ const Socialabout = ({
       // ======================================
       // BACKEND RESPONSE
       // ======================================
+
       const data = await response.json();
 
       console.log("Backend response:", data);
@@ -179,6 +198,7 @@ const Socialabout = ({
       // ======================================
       // CHECK BACKEND ERROR
       // ======================================
+
       if (!response.ok) {
         toast.error(
           data.message || "Review submission failed."
@@ -188,43 +208,49 @@ const Socialabout = ({
       }
 
       // ======================================
-      // SAVE CURRENT USER EMAIL
+      // IMPORTANT:
+      //
+      // DO NOT SAVE EMAIL TO LOCAL STORAGE
+      // FOR THE LIKE SYSTEM.
+      //
+      // Like/Unlike is now controlled by:
+      //
+      // Anonymous ID + Review ID
+      //
+      // The Anonymous ID is stored by the
+      // backend inside an HttpOnly cookie.
       // ======================================
-
-      // React state
-      setCurrentUserEmail(userEmail);
-
-      // Browser localStorage
-      localStorage.setItem(
-        "currentUserEmail",
-        userEmail
-      );
 
       // ======================================
       // IMPORTANT:
-      // DO NOT ADD UNAPPROVED REVIEW
-      // TO REVIEWS STATE
+      //
+      // DO NOT ADD THE NEW REVIEW TO REVIEWS
+      // STATE HERE.
+      //
+      // Backend creates:
+      //
+      // approved: false
+      //
+      // Therefore the review should appear only
+      // after you approve it in MongoDB Atlas.
       // ======================================
 
       /*
-        Backend creates:
-
-        approved: false
-
-        Therefore, don't do:
+        DO NOT DO THIS:
 
         setReviews((prevReviews) => [
           data.review,
           ...prevReviews,
         ]);
 
-        Otherwise the new review will appear
-        immediately even though it is not approved.
+        Because the review is initially:
+        approved: false
       */
 
       // ======================================
       // SUCCESS TOAST
       // ======================================
+
       toast.success(
         "Review submitted successfully!"
       );
@@ -232,6 +258,7 @@ const Socialabout = ({
       // ======================================
       // APPROVAL INFORMATION
       // ======================================
+
       toast.info(
         "Your review is waiting for approval."
       );
@@ -239,6 +266,7 @@ const Socialabout = ({
       // ======================================
       // CLEAR FORM
       // ======================================
+
       setFormData({
         name: "",
         email: "",
@@ -247,7 +275,6 @@ const Socialabout = ({
         rating: "",
         review: "",
       });
-
     } catch (error) {
       console.error(
         "Review submit error:",
@@ -257,6 +284,7 @@ const Socialabout = ({
       // ======================================
       // CONNECTION ERROR
       // ======================================
+
       toast.error(
         "Unable to connect to backend."
       );
@@ -301,7 +329,6 @@ const Socialabout = ({
                 </label>
               </div>
 
-
               {/* ==========================
                   EMAIL
               ========================== */}
@@ -321,7 +348,6 @@ const Socialabout = ({
                 </label>
               </div>
 
-
               {/* ==========================
                   PROFESSION
               ========================== */}
@@ -340,7 +366,6 @@ const Socialabout = ({
                   Your Profession
                 </label>
               </div>
-
 
               {/* ==========================
                   CATEGORY
@@ -385,7 +410,6 @@ const Socialabout = ({
                 </option>
               </select>
 
-
               {/* ==========================
                   RATING
               ========================== */}
@@ -421,7 +445,6 @@ const Socialabout = ({
                 </option>
               </select>
 
-
               {/* ==========================
                   REVIEW
               ========================== */}
@@ -441,7 +464,6 @@ const Socialabout = ({
                   Your Review
                 </label>
               </div>
-
 
               {/* ==========================
                   SUBMIT BUTTON
