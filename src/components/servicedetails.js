@@ -24,7 +24,32 @@ const servicedetails = [
         title: "Apply Online",
         about:"Apply Passport, Panchayet Digital Sertificate & others" ,
     
-    }
+    },
+
+    {
+        id: "5",
+        imgURL:"../img/service_image.jpg",
+        title: "Electronice & Accessories",
+        about:"Sales & Service" ,
+    
+    },
+
+    {
+        id: "6",
+        imgURL:"../img/service_image.jpg",
+        title: "Vintage Audio Collection",
+        about:"Collection, Sales & Service" ,
+    
+    },
+    {
+        id: "7",
+        imgURL:"../img/service_image.jpg",
+        title: "Upgrading & Reinstalling",
+        about:"Windows OS, Linux, Phoneix OS" ,
+    
+    },
+
+
 ]
 
 export default servicedetails;

@@ -49,6 +49,7 @@ import Aboutsection from "./Aboutsection";
 import Socialabout from "./Socialabout";
 import Sociallink from "./Sociallink";
 import Footer from "./Footer";
+import Servicedata from "./Servicedata";
 
 // =====================================================
 // BACKEND API URL
@@ -1430,6 +1431,9 @@ export const HomePage = ({
             setReviews
           }
         />
+          
+         <Servicedata/>
+         
 
         {/* =================================================
             REVIEW FORM
@@ -1444,10 +1448,10 @@ export const HomePage = ({
           }
         />
 
+
         {/* =================================================
             SOCIAL LINKS
             ================================================= */}
-
         <Sociallink />
 
         {/* =================================================

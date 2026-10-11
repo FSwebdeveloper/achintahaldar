@@ -58,7 +58,7 @@ function Aboutsection({
             SERVICES
             ================================================= */}
 
-        <div className="about-title-section">
+        {/* <div className="about-title-section">
 
           <h2 className="testimonial-title">
             Some of Our Services
@@ -93,7 +93,7 @@ function Aboutsection({
             View All Of Our Services »
           </a>
 
-        </div>
+        </div> */}
 
         {/* =================================================
             CLIENT REVIEWS
