@@ -49,7 +49,7 @@ import Aboutsection from "./Aboutsection";
 import Socialabout from "./Socialabout";
 import Sociallink from "./Sociallink";
 import Footer from "./Footer";
-import Servicedata from "./Servicedata";
+import ServiceData from "./Servicedata";
 
 // =====================================================
 // BACKEND API URL
@@ -1432,7 +1432,7 @@ export const HomePage = ({
           }
         />
           
-         <Servicedata/>
+         <ServiceData/>
          
 
         {/* =================================================

@@ -878,6 +878,7 @@ button:hover{
     font-size: 15px;
 }
 
+
 .about-section{
     max-width: 960px;
     width: 100%;  
@@ -917,6 +918,11 @@ button:hover{
     border:1px solid #2563eb;
     border-radius:7px;
 
+}
+
+.service-about-section{
+  max-width: 960px;
+  width: 100%;
 }
 
 .service-card-sec {
@@ -1337,5 +1343,9 @@ button:hover{
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
 
 
