@@ -30,15 +30,15 @@ const Servicedata = () => {
             ))}
           </div>
 
-          <a
+          <button
             type="button"
-            className="more-info"
+            className="view-all-button"
             onClick={() => setShowAll((previous) => !previous)}
           >
             {showAll
-              ? "View Less Services ↑"
+              ? "View Less Services »"
               : "View All Our Services »"}
-          </a>
+          </button>
 
         </div>
       </div>

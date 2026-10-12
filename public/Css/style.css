@@ -925,6 +925,21 @@ button:hover{
   width: 100%;
 }
 
+.view-all-button{
+  float: right;
+  color: #fff;
+  margin-bottom: 20px;
+  border: none;
+  background-color: #2563eb;
+  padding: 12px 28px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.view-all-button:hover{
+    background-color: #1D4ED8;
+}
+
 .service-card-sec {
     display: grid;
     align-items: center;
