@@ -1,26 +1,26 @@
 const servicedetails = [
     {
         id: "1",
-        imgURL:"../img/web-design.svg",
+        imgURL:"../img/code.svg",
         title: "Web Design",
         about:"Website Design & Maintenace",
     },
     {
         id: "2",
-        imgURL:"../img/desktop-laptop.svg",
+        imgURL:"../img/monitor.svg",
         title: "Desktop & Laptop",
         about:"Sales & Service",
     },
     {
         id: "3",
-        imgURL:"../img/hearing-aids.svg",
+        imgURL:"../img/headphones.svg",
         title: "Hearing AIDS",
         about:"Sales & Service",
     },
     
     {
         id: "4",
-        imgURL:"../img/apply-online.svg",
+        imgURL:"../img/file-text.svg",
         title: "Apply Online",
         about:"Apply Passport, Panchayet Digital Sertificate & others" ,
     
@@ -28,7 +28,7 @@ const servicedetails = [
 
     {
         id: "5",
-        imgURL:"../img/service_image.jpg",
+        imgURL:"../img/cpu.svg",
         title: "Electronice & Accessories",
         about:"Sales & Service" ,
     
@@ -36,14 +36,14 @@ const servicedetails = [
 
     {
         id: "6",
-        imgURL:"../img/service_image.jpg",
+        imgURL:"../img/disc.svg",
         title: "Vintage Audio Collection",
         about:"Collection, Sales & Service" ,
     
     },
     {
         id: "7",
-        imgURL:"../img/service_image.jpg",
+        imgURL:"../img/settings.svg",
         title: "Upgrading & Reinstalling",
         about:"Windows OS, Linux, Phoneix OS" ,
     

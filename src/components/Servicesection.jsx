@@ -6,7 +6,7 @@ function Servicsection (props) {
         <div className="service-content">
         <div className="service-i-img">
           <img className="service-content-img" src={props.imgURL} alt=""/>
-        </div>   
+        </div>  
           <div className="service-con-about">
            <h2 className="service-title">{props.title}</h2>
            <p>{props.about}</p>
