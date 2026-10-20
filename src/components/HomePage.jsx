@@ -49,7 +49,7 @@ import Aboutsection from "./Aboutsection";
 import Socialabout from "./Socialabout";
 import Sociallink from "./Sociallink";
 import Footer from "./Footer";
-import ServiceData from "./Servicedata";
+import ServiceData from "./ServiceData";
 
 // =====================================================
 // BACKEND API URL

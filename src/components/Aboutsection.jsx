@@ -22,8 +22,8 @@ function Aboutsection({
           </h2>
 
           <div className="hero-img-sec">
-            <img
-              src="../img/about_image.jpg"
+            <img className="about-img"
+              src="../img/fswebdeveloper_typing_animation_final_monitor_fit.gif"
               alt=""
             />
           </div>
