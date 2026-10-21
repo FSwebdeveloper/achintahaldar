@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import servicedetails from "./servicedetails";
 import Servicsection from "./Servicesection";
 
-const Servicedata = () => {
+const ServiceData = () => {
   const [showAll, setShowAll] = useState(false);
 
   const visibleServices = showAll
@@ -46,4 +46,4 @@ const Servicedata = () => {
   );
 };
 
-export default Servicedata;
+export default ServiceData;
