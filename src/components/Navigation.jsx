@@ -22,7 +22,7 @@ const menuData = [
         ],
       },
       { label: 'Desktop & Laptop', href: '/contact?product=Desktop%20%26%20Laptop' },
-      { label: 'Hearing AIDS', href: '/contact?product=Hearing%20AIDS' },
+      { label: 'Hearing AIDS', href: '/product/hearingaids' },
       { label: 'Vintage Audio System', href: '/contact?product=Vintage%20Audio%20System' },
     ],
   },

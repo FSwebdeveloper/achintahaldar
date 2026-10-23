@@ -54,6 +54,16 @@ const products = [
     price: 2649,
   },
 
+  {
+    id: 5,
+    title: 'Hearing Aids',
+    description:"Hearing Aid for Old Age - Quality Sound Amplification for Mild to Severe Hearing Loss Pocket Model Hearing Aid",
+    category: 'hearingaids',
+    imgURL:"../img/HearingA1.jpg",
+    imgURLB:"../img/HearingA2.jpg",
+    price: 4499,
+  },
+
   // {
   //   id: 6,
   //   title: 'Bluetooth Headphone',

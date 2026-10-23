@@ -55,6 +55,9 @@
     background-repeat: no-repeat;
     background-position: center center; */
     background-color: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    background: #fff;
  }
 
  .andaman-img-two{
@@ -520,6 +523,9 @@ button:hover{
    transition: transform 1s;
    height: 100%;
    object-fit: contain;
+   border: 1px solid #E2E8F0;
+   border-radius: 10px;
+   background: #fff;
 }
 
 .container .forgen-destion-name{
