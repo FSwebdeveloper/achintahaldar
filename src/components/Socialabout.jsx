@@ -193,7 +193,7 @@ const Socialabout = () => {
 
       const data = await response.json();
 
-      console.log("Backend response:", data);
+      // console.log("Backend response:", data);
 
       // ======================================
       // CHECK BACKEND ERROR
@@ -276,10 +276,10 @@ const Socialabout = () => {
         review: "",
       });
     } catch (error) {
-      console.error(
-        "Review submit error:",
-        error
-      );
+      // console.error(
+      //   "Review submit error:",
+      //   error
+      // );
 
       // ======================================
       // CONNECTION ERROR
