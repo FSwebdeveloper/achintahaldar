@@ -272,7 +272,7 @@ export const HomePage = ({
         // console.log(
         //   "Backend review response:",
         //   data
-        );
+        // );
 
         if (!response.ok) {
           console.error(
