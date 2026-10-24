@@ -248,9 +248,9 @@ export const HomePage = ({
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        console.log(
-          "Fetching reviews from backend..."
-        );
+        // console.log(
+        //   "Fetching reviews from backend..."
+        // );
 
         const response = await fetch(
           `${API_URL}/api/reviews`,
@@ -269,9 +269,9 @@ export const HomePage = ({
         const data =
           await response.json();
 
-        console.log(
-          "Backend review response:",
-          data
+        // console.log(
+        //   "Backend review response:",
+        //   data
         );
 
         if (!response.ok) {
