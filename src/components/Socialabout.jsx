@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const Socialabout = () => {
+const Socialabout = ({ onSubmitSuccess }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,7 +17,6 @@ const Socialabout = () => {
   // ==========================================
   // HANDLE INPUT CHANGE
   // ==========================================
-
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -29,27 +29,12 @@ const Socialabout = () => {
   // ==========================================
   // CONVERT STAR TO NUMBER
   // ==========================================
-
   function getRatingNumber(rating) {
-    if (rating === "⭐") {
-      return 1;
-    }
-
-    if (rating === "⭐⭐") {
-      return 2;
-    }
-
-    if (rating === "⭐⭐⭐") {
-      return 3;
-    }
-
-    if (rating === "⭐⭐⭐⭐") {
-      return 4;
-    }
-
-    if (rating === "⭐⭐⭐⭐⭐") {
-      return 5;
-    }
+    if (rating === "⭐") return 1;
+    if (rating === "⭐⭐") return 2;
+    if (rating === "⭐⭐⭐") return 3;
+    if (rating === "⭐⭐⭐⭐") return 4;
+    if (rating === "⭐⭐⭐⭐⭐") return 5;
 
     return 0;
   }
@@ -57,32 +42,34 @@ const Socialabout = () => {
   // ==========================================
   // HANDLE FORM SUBMIT
   // ==========================================
-
   async function handleSubmit(event) {
     event.preventDefault();
+
+    // Prevent duplicate submissions
+    if (isSubmitting) return;
 
     // ========================================
     // NAME VALIDATION
     // ========================================
-
     if (formData.name.trim() === "") {
       toast.error("Please enter your name.");
+      return;
+    }
+
+    if (formData.name.trim().length < 6) {
+      toast.error("Name must be at least 6 characters.");
       return;
     }
 
     // ========================================
     // EMAIL VALIDATION
     // ========================================
-
     if (formData.email.trim() === "") {
       toast.error("Please enter your email.");
       return;
     }
 
-    // ========================================
-    // EMAIL FORMAT VALIDATION
-    // ========================================
-
+    // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(formData.email.trim())) {
@@ -93,7 +80,6 @@ const Socialabout = () => {
     // ========================================
     // PROFESSION VALIDATION
     // ========================================
-
     if (formData.post.trim() === "") {
       toast.error("Please enter your profession.");
       return;
@@ -102,7 +88,6 @@ const Socialabout = () => {
     // ========================================
     // CATEGORY VALIDATION
     // ========================================
-
     if (formData.category === "") {
       toast.error("Please select a category.");
       return;
@@ -111,30 +96,12 @@ const Socialabout = () => {
     // ========================================
     // RATING VALIDATION
     // ========================================
-
     if (formData.rating === "") {
       toast.error("Please select a rating.");
       return;
     }
 
-    // ========================================
-    // REVIEW VALIDATION
-    // ========================================
-
-    if (formData.review.trim() === "") {
-      toast.error("Please write your review.");
-      return;
-    }
-
-    // ========================================
-    // CONVERT RATING
-    // ========================================
-
     const ratingNumber = getRatingNumber(formData.rating);
-
-    // ========================================
-    // CHECK RATING NUMBER
-    // ========================================
 
     if (ratingNumber === 0) {
       toast.error("Please select a valid rating.");
@@ -142,9 +109,26 @@ const Socialabout = () => {
     }
 
     // ========================================
-    // DATA SEND TO BACKEND
+    // REVIEW VALIDATION
     // ========================================
+    if (formData.review.trim() === "") {
+      toast.error("Please write your review.");
+      return;
+    }
 
+    const reviewWords = formData.review
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (reviewWords.length < 6) {
+      toast.error("Review must contain at least 6 words.");
+      return;
+    }
+
+    // ========================================
+    // PREPARE REVIEW DATA
+    // ========================================
     const reviewData = {
       name: formData.name.trim(),
       email: formData.email.trim(),
@@ -160,18 +144,6 @@ const Socialabout = () => {
       // ======================================
       // POST REVIEW TO BACKEND
       // ======================================
-      //
-      // IMPORTANT:
-      // credentials: "include"
-      //
-      // This allows the browser to send/receive
-      // the anonymous visitor HttpOnly cookie.
-      //
-      // The backend creates the anonymous ID
-      // automatically if the visitor does not
-      // already have one.
-      // ======================================
-
       const response = await fetch(
         "https://achintahaldar-backend.onrender.com/api/reviews",
         {
@@ -181,6 +153,7 @@ const Socialabout = () => {
             "Content-Type": "application/json",
           },
 
+          // Send and receive the anonymous visitor cookie
           credentials: "include",
 
           body: JSON.stringify(reviewData),
@@ -190,7 +163,6 @@ const Socialabout = () => {
       // ======================================
       // BACKEND RESPONSE
       // ======================================
-
       const data = await response.json();
 
       // console.log("Backend response:", data);
@@ -198,75 +170,23 @@ const Socialabout = () => {
       // ======================================
       // CHECK BACKEND ERROR
       // ======================================
-
       if (!response.ok) {
         toast.error(
           data.message || "Review submission failed."
         );
-
         return;
       }
 
       // ======================================
-      // IMPORTANT:
-      //
-      // DO NOT SAVE EMAIL TO LOCAL STORAGE
-      // FOR THE LIKE SYSTEM.
-      //
-      // Like/Unlike is now controlled by:
-      //
-      // Anonymous ID + Review ID
-      //
-      // The Anonymous ID is stored by the
-      // backend inside an HttpOnly cookie.
+      // SUCCESS MESSAGE
       // ======================================
+      toast.success("Review submitted successfully!");
 
-      // ======================================
-      // IMPORTANT:
-      //
-      // DO NOT ADD THE NEW REVIEW TO REVIEWS
-      // STATE HERE.
-      //
-      // Backend creates:
-      //
-      // approved: false
-      //
-      // Therefore the review should appear only
-      // after you approve it in MongoDB Atlas.
-      // ======================================
-
-      /*
-        DO NOT DO THIS:
-
-        setReviews((prevReviews) => [
-          data.review,
-          ...prevReviews,
-        ]);
-
-        Because the review is initially:
-        approved: false
-      */
-
-      // ======================================
-      // SUCCESS TOAST
-      // ======================================
-
-      toast.success(
-        "Review submitted successfully!"
-      );
-
-      // ======================================
-      // APPROVAL INFORMATION
-      // ======================================
-
-      toast.info(
-        "Your review is waiting for approval."
-      );
+      toast.info("Your review is waiting for approval.");
 
       // ======================================
       // CLEAR FORM
       // ======================================
-
       setFormData({
         name: "",
         email: "",
@@ -275,30 +195,37 @@ const Socialabout = () => {
         rating: "",
         review: "",
       });
+
+      // ======================================
+      // CLOSE POPUP AFTER SUCCESS
+      // ======================================
+      if (typeof onSubmitSuccess === "function") {
+        onSubmitSuccess();
+      }
     } catch (error) {
+<<<<<<< HEAD
       // console.error(
       //   "Review submit error:",
       //   error
       // );
+=======
+      console.error("Review submit error:", error);
+>>>>>>> 7c5cd6c (Update review form as a popup)
 
-      // ======================================
-      // CONNECTION ERROR
-      // ======================================
-
-      toast.error(
-        "Unable to connect to backend."
-      );
+      toast.error("Unable to connect to backend.");
     } finally {
       setIsSubmitting(false);
     }
   }
 
+  // ==========================================
+  // FORM UI
+  // ==========================================
   return (
     <section id="review-form">
-      <div className="social-about-bg">
+      <div className="social-about-bg socialabout-sec">
         <div className="social-about">
           <div className="social-about-col">
-
             <hr className="separation" />
 
             <p className="latest-heading">
@@ -309,19 +236,17 @@ const Socialabout = () => {
               className="review-section"
               onSubmit={handleSubmit}
             >
-
-              {/* ==========================
-                  NAME
-              ========================== */}
-
+              {/* NAME */}
               <div className="floating-field">
                 <input
+                  id="name"
                   name="name"
                   value={formData.name}
                   className="contact-page"
                   type="text"
-                  placeholder=""
+                  placeholder=" "
                   onChange={handleChange}
+                  autoComplete="name"
                 />
 
                 <label htmlFor="name">
@@ -329,18 +254,17 @@ const Socialabout = () => {
                 </label>
               </div>
 
-              {/* ==========================
-                  EMAIL
-              ========================== */}
-
+              {/* EMAIL */}
               <div className="floating-field">
                 <input
+                  id="email"
                   name="email"
                   value={formData.email}
                   className="contact-page"
                   type="email"
-                  placeholder=""
+                  placeholder=" "
                   onChange={handleChange}
+                  autoComplete="email"
                 />
 
                 <label htmlFor="email">
@@ -348,17 +272,15 @@ const Socialabout = () => {
                 </label>
               </div>
 
-              {/* ==========================
-                  PROFESSION
-              ========================== */}
-
+              {/* PROFESSION */}
               <div className="floating-field">
                 <input
+                  id="post"
                   name="post"
                   value={formData.post}
                   className="contact-page"
                   type="text"
-                  placeholder=""
+                  placeholder=" "
                   onChange={handleChange}
                 />
 
@@ -367,10 +289,7 @@ const Socialabout = () => {
                 </label>
               </div>
 
-              {/* ==========================
-                  CATEGORY
-              ========================== */}
-
+              {/* CATEGORY */}
               <select
                 className="contact-page-select-otp"
                 name="category"
@@ -410,10 +329,7 @@ const Socialabout = () => {
                 </option>
               </select>
 
-              {/* ==========================
-                  RATING
-              ========================== */}
-
+              {/* RATING */}
               <select
                 className="contact-page-select-otp"
                 name="rating"
@@ -445,18 +361,15 @@ const Socialabout = () => {
                 </option>
               </select>
 
-              {/* ==========================
-                  REVIEW
-              ========================== */}
-
+              {/* REVIEW */}
               <div className="floating-field">
                 <textarea
+                  id="review"
                   name="review"
                   className="contact-page-massage"
                   value={formData.review}
-                  rows="5"
-                  cols="10"
-                  placeholder=""
+                  rows={5}
+                  placeholder=" "
                   onChange={handleChange}
                 />
 
@@ -465,10 +378,7 @@ const Socialabout = () => {
                 </label>
               </div>
 
-              {/* ==========================
-                  SUBMIT BUTTON
-              ========================== */}
-
+              {/* SUBMIT BUTTON */}
               <button
                 type="submit"
                 className="contact-page-submit"
@@ -478,7 +388,6 @@ const Socialabout = () => {
                   ? "Submitting..."
                   : "Submit Your Review"}
               </button>
-
             </form>
           </div>
         </div>

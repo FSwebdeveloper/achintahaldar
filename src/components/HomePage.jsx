@@ -1440,14 +1440,14 @@ export const HomePage = ({
             REVIEW FORM
             ================================================= */}
 
-        <Socialabout
+        {/* <Socialabout
           reviews={
             reviews
           }
           setReviews={
             setReviews
           }
-        />
+        /> */}
 
 
         {/* =================================================
