@@ -203,19 +203,12 @@ const Socialabout = ({ onSubmitSuccess }) => {
         onSubmitSuccess();
       }
     } catch (error) {
-<<<<<<< HEAD
-      // console.error(
-      //   "Review submit error:",
-      //   error
-      // );
-=======
-      console.error("Review submit error:", error);
->>>>>>> 7c5cd6c (Update review form as a popup)
+  //  console.error("Review submit error:", error);
 
-      toast.error("Unable to connect to backend.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  toast.error("Unable to connect to backend.");
+  } finally {
+  setIsSubmitting(false);
+  }
   }
 
   // ==========================================
