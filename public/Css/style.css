@@ -5,6 +5,8 @@
     text-decoration: none;
 }
 
+
+
 .f-name{
     color: #2563eb;
 }
@@ -1220,6 +1222,11 @@ button:hover{
     color: #1e293b;
     outline: none;
     
+}
+
+.note{
+    font-size: 10px;
+    margin-top: 2px;
 }
 
 .contact-page-select-otp{
