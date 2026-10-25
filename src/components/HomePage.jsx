@@ -50,6 +50,7 @@ import Socialabout from "./Socialabout";
 import Sociallink from "./Sociallink";
 import Footer from "./Footer";
 import ServiceData from "./ServiceData";
+import FeaturedProducts from "./FeaturedProducts";
 
 
 // =====================================================
@@ -1448,6 +1449,8 @@ export const HomePage = ({
             setReviews
           }
         /> */}
+
+        <FeaturedProducts/>
 
 
         {/* =================================================

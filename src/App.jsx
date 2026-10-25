@@ -22,6 +22,7 @@ import Product from "./components/Product";
 
 
 
+
 function AppContent() {
 
   const navigate = useNavigate();
@@ -154,6 +155,7 @@ function AppContent() {
               <Productsprice />
             }
           />
+
 
 
           {/* =================================================
