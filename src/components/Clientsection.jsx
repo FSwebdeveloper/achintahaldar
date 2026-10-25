@@ -9,6 +9,7 @@ const API_URL = "https://achintahaldar-backend.onrender.com";
 // =====================================================
 // SINGLE REVIEW ITEM
 // =====================================================
+
 function ReviewItem({
   item,
   index,
@@ -29,7 +30,6 @@ function ReviewItem({
 
       if (!element) return;
 
-      // Temporarily remove line clamp
       element.classList.remove("review-collapsed");
 
       const fullHeight = element.scrollHeight;
@@ -40,7 +40,6 @@ function ReviewItem({
 
       const threeLineHeight = lineHeight * 3;
 
-      // Restore line clamp when collapsed
       if (!expanded) {
         element.classList.add("review-collapsed");
       }
@@ -168,6 +167,7 @@ function ReviewItem({
 // =====================================================
 // RELATIVE DATE
 // =====================================================
+
 function getTimeAgo(reviewDate) {
   if (!reviewDate) {
     return "Recently";
@@ -177,12 +177,10 @@ function getTimeAgo(reviewDate) {
   const date = new Date(reviewDate);
   const difference = now - date;
 
-  // Invalid or future date
   if (isNaN(difference) || difference < 0) {
     return "Recently";
   }
 
-  // Milliseconds to days
   const days = Math.floor(
     difference / (1000 * 60 * 60 * 24)
   );
@@ -209,33 +207,31 @@ function getTimeAgo(reviewDate) {
 // =====================================================
 // MAIN CLIENT SECTION
 // =====================================================
+
 function Clientsection({ reviews }) {
   // Review popup state
   const [showReviewModal, setShowReviewModal] = useState(false);
 
+  // Lock background scrolling when popup is open
+  useEffect(() => {
+    if (!showReviewModal) return;
 
-useEffect(() => {
-  if (!showReviewModal) return;
+    const body = document.body;
+    const html = document.documentElement;
 
-  const body = document.body;
-  const html = document.documentElement;
+    const previousBodyOverflow = body.style.overflow;
+    const previousHtmlOverflow = html.style.overflow;
 
-  // Save previous scroll settings
-  const previousBodyOverflow = body.style.overflow;
-  const previousHtmlOverflow = html.style.overflow;
+    body.style.overflow = "hidden";
+    html.style.overflow = "hidden";
 
-  // Lock background scrolling
-  body.style.overflow = "hidden";
-  html.style.overflow = "hidden";
+    return () => {
+      body.style.overflow = previousBodyOverflow;
+      html.style.overflow = previousHtmlOverflow;
+    };
+  }, [showReviewModal]);
 
-  return () => {
-    // Restore previous settings
-    body.style.overflow = previousBodyOverflow;
-    html.style.overflow = previousHtmlOverflow;
-  };
-}, [showReviewModal]);
-
-  // Close popup with Escape and prevent background scrolling
+  // Close popup with Escape
   useEffect(() => {
     if (!showReviewModal) return;
 
@@ -247,12 +243,8 @@ useEffect(() => {
 
     document.addEventListener("keydown", handleEscape);
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = previousOverflow;
     };
   }, [showReviewModal]);
 
@@ -269,17 +261,19 @@ useEffect(() => {
         aria-labelledby="review-modal-title"
         onClick={(event) => event.stopPropagation()}
       >
-        {/* <button
-          type="button"
-          className="review-modal-close"
+        <i
+          className="fa fa-window-close"
+          aria-hidden="true"
+          role="button"
+          tabIndex={0}
           aria-label="Close review form"
-          
-        >
-          ×
-        </button> */}
-
-        <i class="fa fa-window-close" aria-hidden="true" onClick={() => setShowReviewModal(false)}></i>
-
+          onClick={() => setShowReviewModal(false)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setShowReviewModal(false);
+            }
+          }}
+        ></i>
 
         <Socialabout
           onSubmitSuccess={() => setShowReviewModal(false)}
@@ -488,6 +482,7 @@ useEffect(() => {
           Write A Review
         </button>
 
+        {/* Popup also renders when there are no reviews */}
         {reviewModal}
       </div>
     );
@@ -557,6 +552,17 @@ useEffect(() => {
         </div>
       )}
 
+      {/* Write A Review button always shows when reviews exist */}
+      <button
+        type="button"
+        className="contact-page-submit"
+        onClick={() => setShowReviewModal(true)}
+      >
+        Write A Review
+      </button>
+
+      {/* Review Popup */}
+      {reviewModal}
     </div>
   );
 }
