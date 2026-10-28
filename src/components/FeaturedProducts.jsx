@@ -22,10 +22,10 @@ export default function FeaturedProducts() {
             Computer Parts
           </h1>
         </div>
-
+         
         <div className="explore-place-img">
 
-          {products.map((item) => (
+          {products.slice(0, 3).map((item) => (
 
             <div className="container" key={item.id}>
 
