@@ -19,7 +19,7 @@ export default function Products() {
           <h1 className="Explore-heading">Computer Parts</h1>
         </div>
 
-        <div className="explore-place-img">
+        <div className="explore-place-img-two">
           {filteredProducts.map((item) => (
             <div className="container" key={item.id}>
               <img className="" src={item.imgURL} alt={item.title} />

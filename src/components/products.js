@@ -64,12 +64,15 @@ const products = [
     price: 4499,
   },
 
-  // {
-  //   id: 6,
-  //   title: 'Bluetooth Headphone',
-  //   category: 'headphone',
-  //   imgURL:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/keyboard/desktop-keyboard/f/l/m/quest-ivoomi-original-imah5usscvbmswjk.jpeg?q=90",
-  // }
+  {
+    id: 6,
+    title: 'Hdmi Cable',
+    description:" HDMI Cable 1.5 m (Compatible with TV, Computer, Black, HDMI To HDMI)",
+    category: 'hdmi',
+    imgURL:"../img/Hdmi1.png",
+    imgURLB:"../img/Hdmi2.png",
+    price: 249,
+  },
 
 ];
 

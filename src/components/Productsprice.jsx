@@ -153,7 +153,7 @@ Please confirm availability.`;
                     ₹ {product.price}
 
                     <span className="Approx-price">
-                      (Approx) <p className="note"> ⓘ Prices may change at any time.</p>
+                      (Approx) <p className="note"> <span className="warning">ⓘ</span> Prices may change at any time.</p>
                     </span>
                     
 

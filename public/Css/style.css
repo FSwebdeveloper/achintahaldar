@@ -436,15 +436,17 @@ button:hover{
     width: 100%;
     gap: 35px;
     
-    
-    /* display: flex;
+}
+
+.explore-place-img-two{
+  display: flex;
     align-items: center;
     justify-content: center;
     width: 1100px;
     margin: auto;
     max-width: 95%;
     gap: 35px;
-    flex-wrap: wrap; */
+    flex-wrap: wrap;
 }
 
 .Explore-heading{
@@ -1193,6 +1195,11 @@ button:hover{
 .note{
     font-size: 10px;
     margin-top: 2px;
+    color: #64748B;
+}
+
+.warning{
+    color:#2563EB;
 }
 
 .contact-page-select-otp{
