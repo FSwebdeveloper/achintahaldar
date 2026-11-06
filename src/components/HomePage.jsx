@@ -306,6 +306,7 @@ export const HomePage = ({
   // BUBBLE STATES
   // ===================================================
 
+
   const [bubbles, setBubbles] =
     useState([]);
 
@@ -701,59 +702,57 @@ export const HomePage = ({
   // BUBBLE COMPLETE
   // ===================================================
 
-  const handleBubbleComplete =
-    useCallback(
-      (completedId) => {
-        setBubbles(
-          (previous) => {
-            const numLanes =
-              getNumLanes();
 
-            const completedBubble =
-              previous.find(
-                (bubble) =>
-                  bubble.id ===
-                  completedId
-              );
+const handleBubbleComplete = useCallback(
+  (completedId) => {
+    setBubbles((previous) => {
 
-            const remaining =
-              previous.filter(
-                (bubble) =>
-                  bubble.id !==
-                  completedId
-              );
+      // Find the completed bubble
+      const completedBubble = previous.find(
+        (bubble) => bubble.id === completedId
+      );
 
-            const targetColIndex =
-              completedBubble
-                ? completedBubble.colIndex
-                : null;
+      // Safety check: Prevent duplicate respawn
+      if (!completedBubble) {
+        return previous;
+      }
 
-            const occupiedLanes =
-              remaining.map(
-                (bubble) =>
-                  bubble.colIndex
-              );
+      // Get current number of lanes
+      const numLanes = getNumLanes();
 
-            const nextBubble =
-              createNextBubble(
-                numLanes,
-                targetColIndex,
-                occupiedLanes,
-                0
-              );
+      // Remove completed bubble
+      const remaining = previous.filter(
+        (bubble) => bubble.id !== completedId
+      );
 
-            return [
-              ...remaining,
-              nextBubble,
-            ];
-          }
-        );
-      },
-      [
-        getNumLanes,
-        createNextBubble,
-      ]
-    );
+      // Keep the same lane for the next bubble
+      const targetColIndex = completedBubble.colIndex;
+
+      // Find currently occupied lanes
+      const occupiedLanes = remaining.map(
+        (bubble) => bubble.colIndex
+      );
+
+      // Create next bubble
+      const nextBubble = createNextBubble(
+        numLanes,
+        targetColIndex,
+        occupiedLanes,
+        0
+      );
+
+      // Return updated bubble list
+      return [
+        ...remaining,
+        nextBubble,
+      ];
+    });
+  },
+  [
+    getNumLanes,
+    createNextBubble,
+  ]
+);
 
   // ===================================================
   // POP BUBBLE
@@ -1137,143 +1136,61 @@ export const HomePage = ({
                 : bubble.duration;
 
             return (
-              <motion.div
-                key={
-                  bubble.id
-                }
-                className="
-                  interactive-bubble
-                "
-                onClick={(event) =>
-                  handlePop(
-                    event,
-                    bubble
-                  )
-                }
-                initial={{
-                  bottom:
-                    `${startBottomPercent}%`,
-                  left:
-                    leftCalc,
-                  scale:
-                    bubble.initialOffset >
-                    0
-                      ? 1
-                      : 0.3,
-                  opacity:
-                    startOpacity,
-                }}
-                animate={{
-                  bottom: [
-                    `${startBottomPercent}%`,
-                    "115%",
-                  ],
+  <motion.div
+    key={bubble.id}
+    className="interactive-bubble"
 
-                  scale:
-                    bubble.initialOffset >
-                    0
-                      ? [
-                          1,
-                          1,
-                          0.9,
-                        ]
-                      : [
-                          0.3,
-                          1,
-                          1,
-                          0.9,
-                        ],
+    onClick={(e) => handlePop(e, bubble)}
 
-                  opacity:
-                    bubble.initialOffset >
-                    0
-                      ? [
-                          0.96,
-                          0.96,
-                          0,
-                        ]
-                      : [
-                          0,
-                          0.96,
-                          0.96,
-                          0,
-                        ],
-                }}
-                transition={{
-                  duration:
-                    Math.max(
-                      3,
-                      remainingDuration
-                    ),
-                  ease:
-                    "linear",
-                }}
-                onAnimationComplete={() =>
-                  handleBubbleComplete(
-                    bubble.id
-                  )
-                }
-                whileTap={{
-                  scale: 0.85,
-                }}
-                style={{
-                  width:
-                    `${bubble.size}px`,
+    onAnimationEnd={(event) => {
+      if (event.target === event.currentTarget) {
+        handleBubbleComplete(bubble.id);
+      }
+    }}
 
-                  height:
-                    `${bubble.size}px`,
+    whileTap={{ scale: 0.85 }}
 
-                  backgroundColor:
-                    bubble.color,
+    style={{
+      // Bubble animation starting position
+      "--bubble-start-bottom": `${startBottomPercent}%`,
+      "--bubble-start-opacity": startOpacity,
 
-                  boxShadow:
-                    "0 8px 24px 0 rgba(0, 0, 0, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.3)",
+      // Animation duration
+      animationDuration: `${Math.max(3, remainingDuration)}s`,
 
-                  backdropFilter:
-                    "blur(4px)",
+      // Bubble position and size
+      left: leftCalc,
+      width: `${bubble.size}px`,
+      height: `${bubble.size}px`,
 
-                  border:
-                    "1.5px solid rgba(255, 255, 255, 0.35)",
+      // Bubble design
+      backgroundColor: bubble.color,
+      boxShadow: `0 8px 24px 0 rgba(0, 0, 0, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.3)`,
+      backdropFilter: "blur(4px)",
+      border: "1.5px solid rgba(255, 255, 255, 0.35)",
+      outline: `2.5px solid ${bubble.deepBorderColor}`,
+      outlineOffset: "5px",
+    }}
+  >
+    <div className="bubble-product-content">
 
-                  outline:
-                    `2.5px solid ${bubble.deepBorderColor}`,
+      {IconComponent && (
+        <IconComponent
+          className="bubble-product-icon"
+          size={iconSize}
+        />
+      )}
 
-                  outlineOffset:
-                    "5px",
-                }}
-              >
-                <div
-                  className="
-                    bubble-product-content
-                  "
-                >
-                  {IconComponent && (
-                    <IconComponent
-                      className="
-                        bubble-product-icon
-                      "
-                      size={
-                        iconSize
-                      }
-                    />
-                  )}
+      <span
+        className="bubble-product-label"
+        style={{ fontSize: "12px" }}
+      >
+        {bubble.label}
+      </span>
 
-                  <span
-                    className="
-                      bubble-product-label
-                    "
-                    style={{
-                      fontSize:
-                        "12px",
-                    }}
-                  >
-                    {
-                      bubble.label
-                    }
-                  </span>
-                </div>
-              </motion.div>
-            );
+    </div>
+  </motion.div>
+);
           }
         )}
       </div>
