@@ -851,7 +851,8 @@ button:hover{
 
   font-size: clamp(12px, 1.2vw, 16px);
   font-weight: 600;
-  padding: 12px 20px;
+  padding: clamp(7px, 1vw, 12px)
+           clamp(12px, 1.5vw, 20px);
 
   border-radius: 3px;
   white-space: nowrap;
