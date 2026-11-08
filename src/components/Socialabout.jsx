@@ -1,6 +1,15 @@
-
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+
+const ALLOWED_CATEGORIES = [
+  "Web Design",
+  "Hearing AIDS",
+  "Electronics & Accessories",
+  "Vintage Audio Collection",
+  "Desktop & Laptop",
+  "Online Application",
+  "Upgrading & Reinstalling",
+];
 
 const Socialabout = ({ onSubmitSuccess }) => {
   const [formData, setFormData] = useState({
@@ -17,6 +26,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
   // ==========================================
   // HANDLE INPUT CHANGE
   // ==========================================
+
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -29,6 +39,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
   // ==========================================
   // CONVERT STAR TO NUMBER
   // ==========================================
+
   function getRatingNumber(rating) {
     if (rating === "⭐") return 1;
     if (rating === "⭐⭐") return 2;
@@ -42,6 +53,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
   // ==========================================
   // HANDLE FORM SUBMIT
   // ==========================================
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -51,20 +63,31 @@ const Socialabout = ({ onSubmitSuccess }) => {
     // ========================================
     // NAME VALIDATION
     // ========================================
-    if (formData.name.trim() === "") {
+
+    const name = formData.name.trim();
+
+    if (name === "") {
       toast.error("Please enter your name.");
       return;
     }
 
-    if (formData.name.trim().length < 6) {
+    if (name.length < 6) {
       toast.error("Name must be at least 6 characters.");
+      return;
+    }
+
+    if (name.length > 50) {
+      toast.error("Name cannot exceed 50 characters.");
       return;
     }
 
     // ========================================
     // EMAIL VALIDATION
     // ========================================
-    if (formData.email.trim() === "") {
+
+    const email = formData.email.trim();
+
+    if (email === "") {
       toast.error("Please enter your email.");
       return;
     }
@@ -72,7 +95,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
     // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(formData.email.trim())) {
+    if (!emailRegex.test(email)) {
       toast.error("Please enter a valid email address.");
       return;
     }
@@ -80,22 +103,37 @@ const Socialabout = ({ onSubmitSuccess }) => {
     // ========================================
     // PROFESSION VALIDATION
     // ========================================
-    if (formData.post.trim() === "") {
+
+    const post = formData.post.trim();
+
+    if (post === "") {
       toast.error("Please enter your profession.");
+      return;
+    }
+
+    if (post.length < 2) {
+      toast.error("Profession must be at least 2 characters.");
+      return;
+    }
+
+    if (post.length > 50) {
+      toast.error("Profession cannot exceed 50 characters.");
       return;
     }
 
     // ========================================
     // CATEGORY VALIDATION
     // ========================================
-    if (formData.category === "") {
-      toast.error("Please select a category.");
+
+    if (!ALLOWED_CATEGORIES.includes(formData.category)) {
+      toast.error("Please select a valid category.");
       return;
     }
 
     // ========================================
     // RATING VALIDATION
     // ========================================
+
     if (formData.rating === "") {
       toast.error("Please select a rating.");
       return;
@@ -111,13 +149,15 @@ const Socialabout = ({ onSubmitSuccess }) => {
     // ========================================
     // REVIEW VALIDATION
     // ========================================
-    if (formData.review.trim() === "") {
+
+    const review = formData.review.trim();
+
+    if (review === "") {
       toast.error("Please write your review.");
       return;
     }
 
-    const reviewWords = formData.review
-      .trim()
+    const reviewWords = review
       .split(/\s+/)
       .filter(Boolean);
 
@@ -126,16 +166,22 @@ const Socialabout = ({ onSubmitSuccess }) => {
       return;
     }
 
+    if (review.length > 500) {
+      toast.error("Review cannot exceed 500 characters.");
+      return;
+    }
+
     // ========================================
     // PREPARE REVIEW DATA
     // ========================================
+
     const reviewData = {
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      post: formData.post.trim(),
+      name,
+      email: email.toLowerCase(),
+      post,
       category: formData.category,
       rating: ratingNumber,
-      review: formData.review.trim(),
+      review,
     };
 
     try {
@@ -144,6 +190,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
       // ======================================
       // POST REVIEW TO BACKEND
       // ======================================
+
       const response = await fetch(
         "https://achintahaldar-backend.onrender.com/api/reviews",
         {
@@ -153,7 +200,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
             "Content-Type": "application/json",
           },
 
-          // Send and receive the anonymous visitor cookie
+          // Send and receive anonymous visitor cookie
           credentials: "include",
 
           body: JSON.stringify(reviewData),
@@ -163,23 +210,25 @@ const Socialabout = ({ onSubmitSuccess }) => {
       // ======================================
       // BACKEND RESPONSE
       // ======================================
-      const data = await response.json();
 
-      // console.log("Backend response:", data);
+      const data = await response.json();
 
       // ======================================
       // CHECK BACKEND ERROR
       // ======================================
+
       if (!response.ok) {
         toast.error(
           data.message || "Review submission failed."
         );
+
         return;
       }
 
       // ======================================
       // SUCCESS MESSAGE
       // ======================================
+
       toast.success("Review submitted successfully!");
 
       toast.info("Your review is waiting for approval.");
@@ -187,6 +236,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
       // ======================================
       // CLEAR FORM
       // ======================================
+
       setFormData({
         name: "",
         email: "",
@@ -199,26 +249,31 @@ const Socialabout = ({ onSubmitSuccess }) => {
       // ======================================
       // CLOSE POPUP AFTER SUCCESS
       // ======================================
+
       if (typeof onSubmitSuccess === "function") {
         onSubmitSuccess();
       }
-    } catch (error) {
-  //  console.error("Review submit error:", error);
 
-  toast.error("Unable to connect to backend.");
-  } finally {
-  setIsSubmitting(false);
-  }
+    } catch (error) {
+      // console.error("Review submit error:", error);
+
+      toast.error("Unable to connect to backend.");
+
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   // ==========================================
   // FORM UI
   // ==========================================
+
   return (
     <section id="review-form">
       <div className="social-about-bg socialabout-sec">
         <div className="social-about">
           <div className="social-about-col">
+
             <hr className="separation" />
 
             <p className="latest-heading">
@@ -229,8 +284,11 @@ const Socialabout = ({ onSubmitSuccess }) => {
               className="review-section"
               onSubmit={handleSubmit}
             >
+
               {/* NAME */}
+
               <div className="floating-field">
+
                 <input
                   id="name"
                   name="name"
@@ -238,6 +296,7 @@ const Socialabout = ({ onSubmitSuccess }) => {
                   className="contact-page"
                   type="text"
                   placeholder=" "
+                  maxLength={50}
                   onChange={handleChange}
                   autoComplete="name"
                 />
@@ -245,10 +304,13 @@ const Socialabout = ({ onSubmitSuccess }) => {
                 <label htmlFor="name">
                   Your Name
                 </label>
+
               </div>
 
               {/* EMAIL */}
+
               <div className="floating-field">
+
                 <input
                   id="email"
                   name="email"
@@ -263,10 +325,13 @@ const Socialabout = ({ onSubmitSuccess }) => {
                 <label htmlFor="email">
                   Your Email
                 </label>
+
               </div>
 
               {/* PROFESSION */}
+
               <div className="floating-field">
+
                 <input
                   id="post"
                   name="post"
@@ -274,21 +339,25 @@ const Socialabout = ({ onSubmitSuccess }) => {
                   className="contact-page"
                   type="text"
                   placeholder=" "
+                  maxLength={50}
                   onChange={handleChange}
                 />
 
                 <label htmlFor="post">
                   Your Profession
                 </label>
+
               </div>
 
               {/* CATEGORY */}
+
               <select
                 className="contact-page-select-otp"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
               >
+
                 <option value="">
                   Select Category
                 </option>
@@ -320,15 +389,18 @@ const Socialabout = ({ onSubmitSuccess }) => {
                 <option value="Upgrading & Reinstalling">
                   Upgrading & Reinstalling
                 </option>
+
               </select>
 
               {/* RATING */}
+
               <select
                 className="contact-page-select-otp"
                 name="rating"
                 value={formData.rating}
                 onChange={handleChange}
               >
+
                 <option value="">
                   Select Rating
                 </option>
@@ -352,10 +424,13 @@ const Socialabout = ({ onSubmitSuccess }) => {
                 <option value="⭐⭐⭐⭐⭐">
                   5 Stars
                 </option>
+
               </select>
 
               {/* REVIEW */}
+
               <div className="floating-field">
+
                 <textarea
                   id="review"
                   name="review"
@@ -363,25 +438,32 @@ const Socialabout = ({ onSubmitSuccess }) => {
                   value={formData.review}
                   rows={5}
                   placeholder=" "
+                  maxLength={500}
                   onChange={handleChange}
                 />
 
                 <label htmlFor="review">
                   Your Review
                 </label>
+
               </div>
 
               {/* SUBMIT BUTTON */}
+
               <button
                 type="submit"
                 className="contact-page-submit"
                 disabled={isSubmitting}
               >
+
                 {isSubmitting
                   ? "Submitting..."
                   : "Submit Your Review"}
+
               </button>
+
             </form>
+
           </div>
         </div>
       </div>
