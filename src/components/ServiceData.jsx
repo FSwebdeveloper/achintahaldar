@@ -11,7 +11,7 @@ const ServiceData = () => {
 
   return (
     <div className="about-section-bg">
-      <div className="service-about-section">
+      <div className="service-about-section" id="all-service">
         <div className="service-title-section">
 
           <h2 className="testimonial-title">

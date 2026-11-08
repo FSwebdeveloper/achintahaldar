@@ -826,9 +826,71 @@ button:hover{
     padding: 2%;
     color:#2563EB;
     border-radius: 3px;
-    width: auto;
-    font-size: 16px;
+    width: 95%;
+    font-size: 20px;
+    height: 50px;
+
 }
+
+/* Aera Level for Hero Catagory Icon */
+
+.service-name {
+  position: relative;
+}
+
+/* Tooltip Box */
+.service-name::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #172554;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 20px;
+
+  border-radius: 3px;
+  white-space: nowrap;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+
+/* Arrow Pointer */
+.service-name::after {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  border-width: 9px 9px 0;
+  border-style: solid;
+  border-color: #172554 transparent transparent;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+}
+
+/* Hover & Focus */
+.service-name:hover::before,
+.service-name:hover::after,
+.service-name:focus-visible::before,
+.service-name:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Aera Level for Hero Catagory Icon */
 
 .service-name:hover{
     background-color: #1D4ED8;
@@ -837,9 +899,10 @@ button:hover{
 
 .service-n-div{
    margin-left: 50px;
-   display: flex;
+   display: grid;
    gap: 15px;
-   flex-wrap: wrap;
+   grid-template-columns: repeat(4, 1fr);
+   
 }
 
 
