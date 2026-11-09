@@ -359,6 +359,7 @@ body {
   flex-direction: column;
   justify-content: center;
   min-height: 70vh;
+  width: 100%;
 }
 
 .signup-card {
@@ -368,10 +369,12 @@ body {
   box-shadow: 0 10px 25px -5px var(--shadow-lg-color), 0 8px 10px -6px var(--shadow-color);
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s, border-color 0.3s;
+  width: 100%;
 }
 
 .signup-card-body {
   padding: 1.5rem; /* p-6 */
+  width: 100%;
 }
 
 @media (min-width: 640px) {
@@ -694,6 +697,7 @@ body {
 .success-card {
   text-align: center;
   padding: 2rem 0; /* py-8 */
+  width: 100%;
 }
 
 .success-icon-container {

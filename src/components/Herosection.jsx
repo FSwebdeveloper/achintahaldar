@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Herosection () {
     return (
@@ -17,7 +18,7 @@ function Herosection () {
         <div className="service-n-div">
         <button aria-label="Web Design" data-tooltip="Web Design" className="service-name"><i className="fa-solid fa-code"></i> </button>
         <button aria-label="Computer & Laptop" data-tooltip="Computer & Laptop" className="service-name"><i className="fa-solid fa-display"></i> </button>
-        <button aria-label="Hearing AIDS" data-tooltip="Hearing AIDS" className="service-name"><i className="fa-solid fa-headphones"></i> </button>
+        <Link to="/product/hearingaids"><button aria-label="Hearing AIDS" data-tooltip="Hearing AIDS" className="service-name"><i className="fa-solid fa-headphones"></i> </button></Link>
         <button aria-label="Apply Online" data-tooltip="Apply Online" className="service-name"><i className="fa-solid fa-file-lines"></i> </button>
         {/* <button className="service-name"><i class="fa-solid fa-radio"></i> Vintage Audio</button> */}
         </div>

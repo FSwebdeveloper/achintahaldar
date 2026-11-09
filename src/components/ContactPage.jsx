@@ -1,6 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
+import { toast } from "react-toastify";
+
 import {
   User,
   Phone,
@@ -26,10 +29,10 @@ export const ContactPage = () => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  // Submissions state for local storage persistence
+  // Submissions state
   const [submissions, setSubmissions] = useState([]);
 
-  // Load submissions on mount and handle query params
+  // Load submissions and handle query params
   useEffect(() => {
     const saved = localStorage.getItem("contact_submissions");
 
@@ -46,6 +49,7 @@ export const ContactPage = () => {
 
     if (productParam) {
       setProduct(productParam);
+
       setErrors((prev) => {
         const next = { ...prev };
         delete next.product;
@@ -66,52 +70,65 @@ export const ContactPage = () => {
     }
   }, [location.search]);
 
-  // Save submissions to local storage
+  // Save submissions
   const saveSubmissions = (newSubmissions) => {
     setSubmissions(newSubmissions);
-    localStorage.setItem("contact_submissions", JSON.stringify(newSubmissions));
+    localStorage.setItem(
+      "contact_submissions",
+      JSON.stringify(newSubmissions)
+    );
   };
 
-  // Helper to count words in description
+  // Count words
   const countWords = (text) => {
     if (!text || !text.trim()) return 0;
     return text.trim().split(/\s+/).filter(Boolean).length;
   };
 
-  // Validate fields in real-time
+  // Validate Indian phone numbers
+  const validateIndianPhone = (value) => {
+    const cleanNum = value.trim().replace(/[\s()-]/g, "");
+    const indianPhoneRegex = /^(?:\+91|91|0)?[6-9]\d{9}$/;
+    return indianPhoneRegex.test(cleanNum);
+  };
+
+  // Validate fields silently. Toastify only appears on Submit.
   const validateField = (fieldName, value) => {
     const newErrors = { ...errors };
+    const trimmedValue = value.trim();
 
     if (fieldName === "name") {
-      if (!value.trim()) {
+      if (!trimmedValue) {
         newErrors.name = "Full Name is required";
-      } else if (value.trim().length < 6) {
-        newErrors.name =
-          "Name must be at least 6 letters (6 characters or more)";
+      } else if (trimmedValue.length < 6) {
+        newErrors.name = "Full Name must contain at least 6 characters";
+      } else if (trimmedValue.length > 50) {
+        newErrors.name = "Full Name cannot exceed 50 characters";
       } else {
         delete newErrors.name;
       }
     }
 
     if (fieldName === "phone") {
-      if (!value.trim()) {
+      if (!trimmedValue) {
         newErrors.phone = "Phone number is required";
+      } else if (!validateIndianPhone(value)) {
+        newErrors.phone =
+          "Please enter a valid 10-digit Indian phone number (e.g. 9876543210 or +91 9876543210)";
       } else {
-        const cleanNum = value.trim().replace(/[\s\-()]/g, "");
-        const indianPhoneRegex = /^(?:\+91|91|0)?[6-9]\d{9}$/;
-
-        if (!indianPhoneRegex.test(cleanNum)) {
-          newErrors.phone =
-            "Please enter a valid 10-digit Indian phone number (e.g. 9876543210 or +91 9876543210)";
-        } else {
-          delete newErrors.phone;
-        }
+        delete newErrors.phone;
       }
     }
 
     if (fieldName === "product") {
-      if (!value.trim()) {
-        newErrors.product = "Products/ Services is required";
+      if (!trimmedValue) {
+        newErrors.product = "Products / Services is required";
+      } else if (trimmedValue.length < 10) {
+        newErrors.product =
+          "Products / Services must contain at least 10 characters";
+      } else if (trimmedValue.length > 100) {
+        newErrors.product =
+          "Products / Services cannot exceed 100 characters";
       } else {
         delete newErrors.product;
       }
@@ -120,10 +137,14 @@ export const ContactPage = () => {
     if (fieldName === "description") {
       const wordsCount = countWords(value);
 
-      if (!value.trim()) {
+      if (!trimmedValue) {
         newErrors.description = "Description is required";
       } else if (wordsCount < 10) {
-        newErrors.description = `Description must be at least 10 words (currently ${wordsCount} word${wordsCount === 1 ? "" : "s"})`;
+        newErrors.description =
+          `Description must contain at least 10 words (currently ${wordsCount})`;
+      } else if (trimmedValue.length > 500) {
+        newErrors.description =
+          "Description cannot exceed 500 characters";
       } else {
         delete newErrors.description;
       }
@@ -141,6 +162,7 @@ export const ContactPage = () => {
 
     if (errors.general && (field === "name" || field === "phone")) {
       const updatedErrors = { ...errors };
+
       delete updatedErrors.general;
 
       if (updatedErrors.name === "Name and Phone Number already exist") {
@@ -159,6 +181,7 @@ export const ContactPage = () => {
     }
   };
 
+  // Blur validation: updates field border only
   const handleBlur = (field) => {
     setTouched({ ...touched, [field]: true });
 
@@ -178,7 +201,6 @@ export const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Touch all fields
     setTouched({
       name: true,
       phone: true,
@@ -189,40 +211,56 @@ export const ContactPage = () => {
     // Validate all fields
     const newErrors = {};
 
-    if (!name.trim()) {
+    const trimmedName = name.trim();
+    const trimmedPhone = phone.trim();
+    const trimmedProduct = product.trim();
+    const trimmedDescription = description.trim();
+
+    // Name validation
+    if (!trimmedName) {
       newErrors.name = "Full Name is required";
-    } else if (name.trim().length < 6) {
-      newErrors.name = "Name must be at least 6 letters (6 characters or more)";
+    } else if (trimmedName.length < 6) {
+      newErrors.name = "Full Name must contain at least 6 characters";
+    } else if (trimmedName.length > 50) {
+      newErrors.name = "Full Name cannot exceed 50 characters";
     }
 
-    if (!phone.trim()) {
+    // Phone validation
+    if (!trimmedPhone) {
       newErrors.phone = "Phone number is required";
-    } else {
-      const cleanNum = phone.trim().replace(/[\s\-()]/g, "");
-      const indianPhoneRegex = /^(?:\+91|91|0)?[6-9]\d{9}$/;
-
-      if (!indianPhoneRegex.test(cleanNum)) {
-        newErrors.phone =
-          "Please enter a valid 10-digit Indian phone number (e.g. 9876543210 or +91 9876543210)";
-      }
+    } else if (!validateIndianPhone(phone)) {
+      newErrors.phone =
+        "Please enter a valid 10-digit Indian phone number (e.g. 9876543210 or +91 9876543210)";
     }
 
-    if (!product.trim()) {
-      newErrors.product = "Products/ Services is required";
+    // Product validation
+    if (!trimmedProduct) {
+      newErrors.product = "Products / Services is required";
+    } else if (trimmedProduct.length < 10) {
+      newErrors.product =
+        "Products / Services must contain at least 10 characters";
+    } else if (trimmedProduct.length > 100) {
+      newErrors.product =
+        "Products / Services cannot exceed 100 characters";
     }
 
+    // Description validation
     const wordsCount = countWords(description);
 
-    if (!description.trim()) {
+    if (!trimmedDescription) {
       newErrors.description = "Description is required";
     } else if (wordsCount < 10) {
-      newErrors.description = `Description must be at least 10 words (currently ${wordsCount} word${wordsCount === 1 ? "" : "s"})`;
+      newErrors.description =
+        `Description must contain at least 10 words (currently ${wordsCount})`;
+    } else if (trimmedDescription.length > 500) {
+      newErrors.description =
+        "Description cannot exceed 500 characters";
     }
 
-    // Check for duplicate Name and Phone Number in submissions
+    // Check duplicate only after all fields are valid
     if (Object.keys(newErrors).length === 0) {
-      const normalizedNewName = name.trim().toLowerCase();
-      const normalizedNewPhone = phone.trim().replace(/[^0-9]/g, "");
+      const normalizedNewName = trimmedName.toLowerCase();
+      const normalizedNewPhone = trimmedPhone.replace(/[^0-9]/g, "");
 
       const isDuplicate = submissions.some((sub) => {
         const existingName = sub.name.trim().toLowerCase();
@@ -237,6 +275,7 @@ export const ContactPage = () => {
       if (isDuplicate) {
         newErrors.general =
           "Name and Phone Number already exist on Enquiry Form Fill";
+
         newErrors.name = "Name and Phone Number already exist";
         newErrors.phone = "Name and Phone Number already exist";
       }
@@ -244,7 +283,16 @@ export const ContactPage = () => {
 
     setErrors(newErrors);
 
+    // Show only ONE Toastify message per submit click
     if (Object.keys(newErrors).length > 0) {
+      const firstError =
+        newErrors.general ||
+        newErrors.name ||
+        newErrors.phone ||
+        newErrors.product ||
+        newErrors.description;
+
+      toast.error(firstError);
       return;
     }
 
@@ -257,10 +305,10 @@ export const ContactPage = () => {
         id: crypto.randomUUID
           ? crypto.randomUUID()
           : Math.random().toString(36).substring(2, 9),
-        name: name.trim(),
-        phone: phone.trim(),
-        product: product.trim(),
-        description: description.trim(),
+        name: trimmedName,
+        phone: trimmedPhone,
+        product: trimmedProduct,
+        description: trimmedDescription,
         timestamp,
       };
 
@@ -276,22 +324,32 @@ export const ContactPage = () => {
 
 I have successfully filled out the Enquiry Form with the following details:
 
-👤 *Name:* ${name.trim()}
-📱 *Phone:* ${phone.trim()}
-📦 *Products/ Services:* ${product.trim()}
-📝 *Description:* ${description.trim()}`;
+👤 *Name:* ${trimmedName}
 
-      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(formattedMessage)}`;
+📱 *Phone:* ${trimmedPhone}
+
+📦 *Products/ Services:* ${trimmedProduct}
+
+📝 *Description:* ${trimmedDescription}`;
+
+      const whatsappUrl =
+        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(formattedMessage)}`;
+
+      toast.success(
+        "Enquiry prepared successfully! Opening WhatsApp."
+      );
 
       setIsSuccess(true);
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     } catch (err) {
       console.error("Error submitting form:", err);
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  // Reset Form
   const handleResetForm = () => {
     setName("");
     setPhone("");
@@ -322,6 +380,7 @@ I have successfully filled out the Enquiry Form with the following details:
               >
                 <div className="signup-header">
                   <h2 className="signup-title">Enquiry Form</h2>
+
                   <span className="signup-badge">
                     <Lock size={13} className="badge-icon-secure" />
                     WhatsApp Enquiry
@@ -336,15 +395,20 @@ I have successfully filled out the Enquiry Form with the following details:
                   {/* Name Field */}
                   <div className="form-field-group">
                     <div className="form-label-row">
-                      <label htmlFor="name" className="form-field-label">
-                        Full Name <span className="required-star">*</span>
+                      <label
+                        htmlFor="name"
+                        className="form-field-label"
+                      >
+                        Full Name{" "}
+                        <span className="required-star">*</span>
                       </label>
+
                       <span
                         className={`field-hint-badge ${
                           name.trim().length >= 6 ? "badge-valid" : ""
                         }`}
                       >
-                        {name.trim().length}/6+ letters
+                        {name.trim().length}/50 characters
                       </span>
                     </div>
 
@@ -352,9 +416,11 @@ I have successfully filled out the Enquiry Form with the following details:
                       <span className="form-field-icon">
                         <User size={18} />
                       </span>
+
                       <input
                         id="name"
                         type="text"
+                        maxLength={50}
                         value={name}
                         onChange={(e) =>
                           handleInputChange("name", e.target.value)
@@ -370,30 +436,29 @@ I have successfully filled out the Enquiry Form with the following details:
                         }`}
                       />
                     </div>
-
-                    {touched.name && errors.name ? (
-                      <p className="form-field-error-message">{errors.name}</p>
-                    ) : (
-                      <p className="field-subtext-info">
-                        Must be at least 6 letters long.
-                      </p>
-                    )}
                   </div>
 
                   {/* Phone Number Field */}
                   <div className="form-field-group">
                     <div className="form-label-row">
-                      <label htmlFor="phone" className="form-field-label">
+                      <label
+                        htmlFor="phone"
+                        className="form-field-label"
+                      >
                         Phone Number (India){" "}
                         <span className="required-star">*</span>
                       </label>
-                      <span className="country-flag-tag">🇮🇳 +91</span>
+
+                      <span className="country-flag-tag">
+                        🇮🇳 +91
+                      </span>
                     </div>
 
                     <div className="form-field-wrapper">
                       <span className="form-field-icon">
                         <Phone size={18} />
                       </span>
+
                       <input
                         id="phone"
                         type="tel"
@@ -412,31 +477,37 @@ I have successfully filled out the Enquiry Form with the following details:
                         }`}
                       />
                     </div>
-
-                    {touched.phone && errors.phone ? (
-                      <p className="form-field-error-message">{errors.phone}</p>
-                    ) : (
-                      <p className="field-subtext-info">
-                        Must be a valid 10-digit Indian phone number starting
-                        with 6, 7, 8, or 9.
-                      </p>
-                    )}
                   </div>
 
                   {/* Products / Services Field */}
                   <div className="form-field-group">
-                    <label htmlFor="product" className="form-field-label">
-                      Products / Services{" "}
-                      <span className="required-star">*</span>
-                    </label>
+                    <div className="form-label-row">
+                      <label
+                        htmlFor="product"
+                        className="form-field-label"
+                      >
+                        Products / Services{" "}
+                        <span className="required-star">*</span>
+                      </label>
+
+                      <span
+                        className={`field-hint-badge ${
+                          product.trim().length >= 10 ? "badge-valid" : ""
+                        }`}
+                      >
+                        {product.trim().length}/100 characters
+                      </span>
+                    </div>
 
                     <div className="form-field-wrapper">
                       <span className="form-field-icon">
                         <Package size={18} />
                       </span>
+
                       <input
                         id="product"
                         type="text"
+                        maxLength={100}
                         value={product}
                         onChange={(e) =>
                           handleInputChange("product", e.target.value)
@@ -452,26 +523,28 @@ I have successfully filled out the Enquiry Form with the following details:
                         }`}
                       />
                     </div>
-
-                    {touched.product && errors.product && (
-                      <p className="form-field-error-message">
-                        {errors.product}
-                      </p>
-                    )}
                   </div>
 
                   {/* Description Field */}
                   <div className="form-field-group">
                     <div className="form-label-row">
-                      <label htmlFor="description" className="form-field-label">
-                        Description <span className="required-star">*</span>
+                      <label
+                        htmlFor="description"
+                        className="form-field-label"
+                      >
+                        Description{" "}
+                        <span className="required-star">*</span>
                       </label>
+
                       <span
                         className={`word-counter-badge ${
-                          currentWordCount >= 10 ? "word-counter-valid" : ""
+                          currentWordCount >= 10
+                            ? "word-counter-valid"
+                            : ""
                         }`}
                       >
-                        {currentWordCount} / 10 words min
+                        {currentWordCount} / 10 words min ·{" "}
+                        {description.length}/500 chars
                       </span>
                     </div>
 
@@ -479,9 +552,11 @@ I have successfully filled out the Enquiry Form with the following details:
                       <span className="form-field-icon form-field-icon-textarea">
                         <MessageSquare size={18} />
                       </span>
+
                       <textarea
                         id="description"
                         value={description}
+                        maxLength={500}
                         onChange={(e) =>
                           handleInputChange("description", e.target.value)
                         }
@@ -499,30 +574,7 @@ I have successfully filled out the Enquiry Form with the following details:
                         }`}
                       />
                     </div>
-
-                    {touched.description && errors.description ? (
-                      <p className="form-field-error-message">
-                        {errors.description}
-                      </p>
-                    ) : (
-                      <p className="field-subtext-info">
-                        Write a minimum of 10 words to provide clear enquiry
-                        details.
-                      </p>
-                    )}
                   </div>
-
-                  {errors.general && (
-                    <div
-                      className="duplicate-alert-container"
-                      id="signup-duplicate-alert"
-                    >
-                      <span className="duplicate-alert-dot"></span>
-                      <div className="duplicate-alert-text">
-                        {errors.general}
-                      </div>
-                    </div>
-                  )}
 
                   {/* Submit Button */}
                   <button
@@ -545,12 +597,14 @@ I have successfully filled out the Enquiry Form with the following details:
                             stroke="currentColor"
                             strokeWidth="4"
                           />
+
                           <path
                             className="spinner-circle-path"
                             fill="currentColor"
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           />
                         </svg>
+
                         Preparing WhatsApp...
                       </>
                     ) : (
@@ -597,7 +651,9 @@ I have successfully filled out the Enquiry Form with the following details:
                 </p>
 
                 <div className="success-info-box">
-                  <p className="success-info-header">Registered Information</p>
+                  <p className="success-info-header">
+                    Registered Information
+                  </p>
 
                   <div className="success-info-row">
                     <span className="success-info-label">Name:</span>
@@ -632,9 +688,12 @@ I have successfully filled out the Enquiry Form with the following details:
 I have successfully filled out the Enquiry Form with the following details:
 
 👤 *Name:* ${name.trim()}
+
 📱 *Phone:* ${phone.trim()}
+
 📦 *Products/ Services:* ${product.trim()}
-📝 *Description:* ${description.trim()}`,
+
+📝 *Description:* ${description.trim()}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
