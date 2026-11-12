@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
@@ -78,20 +79,18 @@ const DropdownItem = ({ item, depth = 0, activePath }) => {
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    
+
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
-      const dropdownWidth = 240; // 15rem min-width is 240px
-      
+      const dropdownWidth = 240;
+
       if (depth === 0) {
-        // If aligning to the left (default) overflows the screen right edge
         if (rect.left + dropdownWidth > window.innerWidth) {
           setOpenLeft(true);
         } else {
           setOpenLeft(false);
         }
       } else {
-        // If opening to the right (default) overflows the screen right edge
         if (rect.right + dropdownWidth > window.innerWidth) {
           setOpenLeft(true);
         } else {
@@ -99,7 +98,7 @@ const DropdownItem = ({ item, depth = 0, activePath }) => {
         }
       }
     }
-    
+
     setIsOpen(true);
   };
 
@@ -125,9 +124,9 @@ const DropdownItem = ({ item, depth = 0, activePath }) => {
   );
 
   const linkClass = `menu-link ${depth > 0 ? 'menu-link-sub' : ''} ${
-    isActive 
+    isActive
       ? depth === 0
-        ? 'menu-link-active-level0' 
+        ? 'menu-link-active-level0'
         : 'menu-link-active-sub'
       : 'menu-link-inactive'
   } ${isOpen ? 'menu-link-open font-bold' : ''}`;
@@ -153,10 +152,7 @@ const DropdownItem = ({ item, depth = 0, activePath }) => {
           {linkContent}
         </a>
       ) : (
-        <Link
-          to={item.href}
-          className={linkClass}
-        >
+        <Link to={item.href} className={linkClass}>
           {linkContent}
         </Link>
       )}
@@ -164,26 +160,31 @@ const DropdownItem = ({ item, depth = 0, activePath }) => {
       <AnimatePresence>
         {hasChildren && isOpen && (
           <motion.div
-            initial={{ 
-              opacity: 0, 
-              y: depth === 0 ? 10 : 0, 
-              x: depth === 0 ? 0 : (openLeft ? -10 : 10) 
+            initial={{
+              opacity: 0,
+              y: depth === 0 ? 10 : 0,
+              x: depth === 0 ? 0 : (openLeft ? -10 : 10)
             }}
             animate={{ opacity: 1, y: 0, x: 0 }}
-            exit={{ 
-              opacity: 0, 
-              y: depth === 0 ? 10 : 0, 
-              x: depth === 0 ? 0 : (openLeft ? -10 : 10) 
+            exit={{
+              opacity: 0,
+              y: depth === 0 ? 10 : 0,
+              x: depth === 0 ? 0 : (openLeft ? -10 : 10)
             }}
             transition={{ duration: 0.2 }}
             className={`dropdown-menu ${
-              depth === 0 
+              depth === 0
                 ? openLeft ? 'dropdown-level0-right' : 'dropdown-level0-left'
                 : openLeft ? 'dropdown-levelN-left' : 'dropdown-levelN-right'
             }`}
           >
             {item.children?.map((child, index) => (
-              <DropdownItem key={index} item={child} depth={depth + 1} activePath={activePath} />
+              <DropdownItem
+                key={index}
+                item={child}
+                depth={depth + 1}
+                activePath={activePath}
+              />
             ))}
           </motion.div>
         )}
@@ -267,6 +268,7 @@ const MobileMenuItem = ({ item, depth = 0, activePath, onItemClick }) => {
           </motion.div>
         )}
       </div>
+
       <AnimatePresence>
         {hasChildren && isOpen && (
           <motion.div
@@ -276,7 +278,13 @@ const MobileMenuItem = ({ item, depth = 0, activePath, onItemClick }) => {
             className="mobile-submenu-container"
           >
             {item.children?.map((child, index) => (
-              <MobileMenuItem key={index} item={child} depth={depth + 1} activePath={activePath} onItemClick={onItemClick} />
+              <MobileMenuItem
+                key={index}
+                item={child}
+                depth={depth + 1}
+                activePath={activePath}
+                onItemClick={onItemClick}
+              />
             ))}
           </motion.div>
         )}
@@ -287,11 +295,52 @@ const MobileMenuItem = ({ item, depth = 0, activePath, onItemClick }) => {
 
 export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const location = useLocation();
   const currentPath = location.pathname;
 
+  // Track scroll position to dynamically show navbar shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos =
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+
+      setIsScrolled(scrollPos > 10);
+    };
+
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Control mobile menu body scrolling
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
-    <nav className="navbar" id="app-navbar">
+    <nav
+      className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}
+      id="app-navbar"
+    >
       <div className="navbar-container">
         <div className="navbar-row">
           {/* Logo */}
@@ -305,16 +354,20 @@ export const Navigation = () => {
           {/* Desktop Menu */}
           <div className="desktop-menu" id="navbar-desktop-menu">
             {menuData.map((item, index) => (
-              <DropdownItem 
-                key={index} 
-                item={item} 
-                activePath={currentPath} 
+              <DropdownItem
+                key={index}
+                item={item}
+                activePath={currentPath}
               />
             ))}
           </div>
 
           {/* Mobile Actions Container (Hamburger) */}
-          <div className="mobile-btn-container" id="navbar-mobile-controls" style={{ gap: '0.25rem' }}>
+          <div
+            className="mobile-btn-container"
+            id="navbar-mobile-controls"
+            style={{ gap: '0.25rem' }}
+          >
             <button
               id="mobile-hamburger-btn"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -338,11 +391,11 @@ export const Navigation = () => {
           >
             <div className="mobile-drawer-content">
               {menuData.map((item, index) => (
-                <MobileMenuItem 
-                  key={index} 
-                  item={item} 
-                  activePath={currentPath} 
-                  onItemClick={() => setIsMobileMenuOpen(false)} 
+                <MobileMenuItem
+                  key={index}
+                  item={item}
+                  activePath={currentPath}
+                  onItemClick={() => setIsMobileMenuOpen(false)}
                 />
               ))}
             </div>
@@ -352,4 +405,3 @@ export const Navigation = () => {
     </nav>
   );
 };
-

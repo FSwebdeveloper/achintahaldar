@@ -55,8 +55,9 @@
 }
 
 html, body {
-  overflow-x: hidden;
-  max-width: 100vw;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -79,16 +80,58 @@ body {
   background-color: var(--bg-primary);
 }
 
-/* Navigation Base */
+/* ==============================
+   STICKY NAVBAR
+================================ */
+
 .navbar {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
+
   position: sticky;
   top: 0;
-  z-index: 60;
-  transition: background-color 0.3s, border-color 0.3s;
+  width: 100%;
+  z-index: 100;
+
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s ease;
 }
+
+.navbar.navbar-scrolled {
+  box-shadow:
+    0 4px 20px -2px rgba(15, 23, 42, 0.08),
+    0 2px 6px -1px rgba(15, 23, 42, 0.04);
+}
+
+
+/* Main Content */
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile Drawer */
+
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+
+  background-color: var(--bg-secondary);
+  padding-top: 4rem;
+
+  transition: background-color 0.3s;
+}
+
+/* Navigation Base */
+
 
 .navbar-container {
   max-width: 1280px; /* max-w-7xl */
@@ -286,15 +329,6 @@ body {
   outline: none;
 }
 
-/* Mobile Side Navigation Drawer */
-.mobile-drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background-color: var(--bg-secondary);
-  padding-top: 4rem; /* h-16 */
-  transition: background-color 0.3s;
-}
 
 @media (min-width: 768px) {
   .mobile-drawer {
