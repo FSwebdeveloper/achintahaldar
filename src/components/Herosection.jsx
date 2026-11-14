@@ -6,7 +6,7 @@ function Herosection () {
         <div className="hero-section-bg">
         <div className="hero-section">
         <div className="hero-img-sec">
-        <img className="hero-img" src="../img/Achinta-preview.png" alt=""/>
+        <img className="hero-img" src="../img/Achinta-preview.avif" alt=""/>
         </div>
         <div className="hero-sec-details">
         <p className="hero-greeting">Hello, I'm</p>

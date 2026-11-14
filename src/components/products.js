@@ -5,32 +5,18 @@ const products = [
     title: 'Wired keyboard',
     description:"Wired USB Standard Desktop Keyboard Compatible with Desktop, Laptop, Mac stand support,(Black)",
     category: 'keyboard',
-    imgURL:"../img/Keyboard-1.png",
-    imgURLB:"../img/Keyboard-2.png",
+    imgURL:"../img/Keyboard-1.avif",
+    imgURLB:"../img/Keyboard-2.avif",
     price: 299,
   },
-
-  // {
-  //   id: 2,
-  //   title: 'Wireless Keyboard',
-  //   category: 'keyboard',
-  //   imgURL:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/keyboard/desktop-keyboard/f/l/m/quest-ivoomi-original-imah5usscvbmswjk.jpeg?q=90",
-  // },
-
-  // {
-  //   id: 3,
-  //   title: 'Wire Keyboard',
-  //   category: 'keyboard',
-  //   imgURL:"https://rukminim1.flixcart.com/image/1366/1366/xif0q/keyboard/desktop-keyboard/f/l/m/quest-ivoomi-original-imah5usscvbmswjk.jpeg?q=90",
-  // },
 
   {
     id: 2,
     title: 'Wired Mouse',
     description:"Wired Ambidextrous Optical Mouse (USB 2.0, Black)",
     category: 'mouse',
-    imgURL:"../img/Mouse-1.png",
-    imgURLB:"../img/Mouse-2.png",
+    imgURL:"../img/Mouse-1.avif",
+    imgURLB:"../img/Mouse-2.avif",
     price:"349"
   },
 
@@ -39,8 +25,8 @@ const products = [
     title: 'VGA Cable',
     description:"TV-out Cable VGA Male to Male Cable 1.5 Meter (Black, For Computer, 1.5 m)",
     category: 'vga',
-    imgURL:"../img/Vga-1.png",
-    imgURLB:"../img/Vga-2.png",
+    imgURL:"../img/Vga-1.avif",
+    imgURLB:"../img/Vga-2.avif",
     price: 199,
   },
 
@@ -49,8 +35,8 @@ const products = [
     title: 'UPS',
     description:"UPS 600VA/360W, Uninterrupted Power Supply System 220 V Line-interactive Rack-mount Model UPS with Overload Protection 3 Outlet Plugs",
     category: 'ups',
-    imgURL:"../img/Ups-1.png",
-    imgURLB:"../img/Ups-2.png",
+    imgURL:"../img/Ups-1.avif",
+    imgURLB:"../img/Ups-2.avif",
     price: 2649,
   },
 
@@ -59,8 +45,8 @@ const products = [
     title: 'Hearing Aids',
     description:"Hearing Aid for Old Age - Quality Sound Amplification for Mild to Severe Hearing Loss Pocket Model Hearing Aid",
     category: 'hearingaids',
-    imgURL:"../img/HearingA1.jpg",
-    imgURLB:"../img/HearingA2.jpg",
+    imgURL:"../img/HearingA1.avif",
+    imgURLB:"../img/HearingA2.avif",
     price: 4499,
   },
 
@@ -69,8 +55,8 @@ const products = [
     title: 'Hdmi Cable',
     description:" HDMI Cable 1.5 m (Compatible with TV, Computer, Black, HDMI To HDMI)",
     category: 'hdmi',
-    imgURL:"../img/Hdmi1.png",
-    imgURLB:"../img/Hdmi2.png",
+    imgURL:"../img/Hdmi1.avif",
+    imgURLB:"../img/Hdmi2.avif",
     price: 249,
   },
 

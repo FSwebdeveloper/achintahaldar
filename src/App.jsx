@@ -1,17 +1,13 @@
 import "react-toastify/dist/ReactToastify.css";
 
-import {
-  ToastContainer,
-} from "react-toastify";
-
+import { ToastContainer } from "react-toastify";
 
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Routes,
   Route,
   useNavigate,
 } from "react-router-dom";
-
 
 import { Navigation } from "./components/Navigation";
 import { HomePage } from "./components/HomePage";
@@ -19,8 +15,6 @@ import { ContactPage } from "./components/ContactPage";
 import { AboutPage } from "./components/AboutPage";
 import Productsprice from "./components/Productsprice";
 import Product from "./components/Product";
-
-
 
 
 function AppContent() {
@@ -37,9 +31,7 @@ function AppContent() {
     if (productName) {
 
       navigate(
-        `/contact?product=${encodeURIComponent(
-          productName
-        )}`
+        `/contact?product=${encodeURIComponent(productName)}`
       );
 
     } else {
@@ -76,99 +68,69 @@ function AppContent() {
 
         <Routes>
 
-
-          {/* =================================================
-              HOME
-          ================================================= */}
+          {/* HOME */}
 
           <Route
             path="/"
             element={
               <HomePage
-                onNavigateToContact={
-                  handleNavigateToContact
-                }
+                onNavigateToContact={handleNavigateToContact}
               />
             }
           />
 
 
-          {/* =================================================
-              HOME
-          ================================================= */}
+          {/* HOME */}
 
           <Route
             path="/home"
             element={
               <HomePage
-                onNavigateToContact={
-                  handleNavigateToContact
-                }
+                onNavigateToContact={handleNavigateToContact}
               />
             }
           />
 
 
-          {/* =================================================
-              ABOUT
-          ================================================= */}
+          {/* ABOUT */}
 
           <Route
             path="/about"
-            element={
-              <AboutPage />
-            }
+            element={<AboutPage />}
           />
 
 
-          {/* =================================================
-              CONTACT
-          ================================================= */}
+          {/* CONTACT */}
 
           <Route
             path="/contact"
-            element={
-              <ContactPage />
-            }
+            element={<ContactPage />}
           />
 
 
-          {/* =================================================
-              PRODUCT CATEGORY
-          ================================================= */}
+          {/* PRODUCT CATEGORY */}
 
           <Route
             path="/product/:category"
-            element={
-              <Product />
-            }
+            element={<Product />}
           />
 
 
-          {/* =================================================
-              PRODUCT DETAILS
-          ================================================= */}
+          {/* PRODUCT DETAILS */}
 
           <Route
             path="/product-details/:id"
-            element={
-              <Productsprice />
-            }
+            element={<Productsprice />}
           />
 
 
-
-          {/* =================================================
-              FALLBACK
-          ================================================= */}
+          {/* FALLBACK */}
 
           <Route
             path="*"
             element={
               <HomePage
-                onNavigateToContact={
-                  handleNavigateToContact
-                }
+                onNavigateToContact={handleNavigateToContact}
               />
             }
           />
@@ -180,7 +142,7 @@ function AppContent() {
 
       {/* =====================================================
           GLOBAL REACT TOASTIFY
-          ===================================================== */}
+      ===================================================== */}
 
       <ToastContainer
         position="top-right"
@@ -198,7 +160,6 @@ function AppContent() {
   );
 
 }
-
 
 
 // =====================================================
