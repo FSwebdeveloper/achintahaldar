@@ -23,7 +23,7 @@ function Aboutsection({
 
           <div className="hero-img-sec">
             <img className="about-img"
-              src="../img/fswebdeveloper_typing_animation_final_monitor_fit.gif"
+              src="../img/fswebdeveloper_typing_animation_final_monitor_fit1.gif"
               alt=""
             />
           </div>
