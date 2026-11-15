@@ -26,7 +26,7 @@ function Herosection() {
             </i>
           </h1>
           <h2 className="web-highlight">Frontend Web Developer</h2>
-          <br></br>
+          <br/>
           <p className="hero-about">
             I create modern, responsive websites and provide practical digital
             services including computer & laptop support, online applications,
