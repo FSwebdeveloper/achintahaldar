@@ -3,55 +3,44 @@ import Clientsection from "./Clientsection";
 import servicedetails from "./servicedetails";
 import Servicsection from "./Servicesection";
 
-function Aboutsection({
-  reviews,
-  setReviews,
-}) {
+function Aboutsection({ reviews, setReviews }) {
   return (
     <div className="about-section-bg">
       <div className="about-section">
-
         {/* =================================================
             ABOUT US
             ================================================= */}
 
         <div className="about-title-section">
-
-          <h2 className="testimonial-title">
-            A Little About Us
-          </h2>
+          <h2 className="testimonial-title">A Little About Us</h2>
 
           <div className="hero-img-sec">
-            <img className="about-img"
+            <img
+              className="about-img"
               src="../img/fswebdeveloper_typing_animation_final_monitor_fit1.gif"
-              alt=""
+              alt="Web developer working on a computer"
+              loading="lazy"
+              width="320"
+              height="240"
             />
           </div>
 
           <p className="testimonial-about">
-            I'm a Frontend Web Developer
-            passionate about creating responsive,
-            user-friendly, and modern web
-            applications. Alongside web development,
-            I specialize in collecting vintage audio
-            systems, providing sales and service for
-            hearing aids, and offering quality desktop
-            and laptop accessories.
+            I'm a Frontend Web Developer passionate about creating responsive,
+            user-friendly, and modern web applications. Alongside web
+            development, I specialize in collecting vintage audio systems,
+            providing sales and service for hearing aids, and offering quality
+            desktop and laptop accessories.
           </p>
 
           <p className="testimonial-about-more">
-            I combine technical expertise with
-            practical solutions to deliver reliable
-            products and exceptional customer service.
+            I combine technical expertise with practical solutions to deliver
+            reliable products and exceptional customer service.
           </p>
 
-          <a
-            className="more-info"
-            href=""
-          >
+          <a className="more-info" href="">
             Read More About Us »
           </a>
-
         </div>
 
         {/* =================================================
@@ -100,21 +89,12 @@ function Aboutsection({
             ================================================= */}
 
         <div className="about-title-section">
-
-          <h2 className="testimonial-title">
-            What Our Clients Say
-          </h2>
+          <h2 className="testimonial-title">What Our Clients Say</h2>
 
           <div>
-
-            <Clientsection
-              reviews={reviews}
-            />
-
+            <Clientsection reviews={reviews} />
           </div>
-
         </div>
-
       </div>
     </div>
   );

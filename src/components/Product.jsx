@@ -22,7 +22,14 @@ export default function Products() {
         <div className="explore-place-img-two">
           {filteredProducts.map((item) => (
             <div className="container" key={item.id}>
-              <img className="" src={item.imgURL} alt={item.title} />
+              <img
+                className=""
+                src={item.imgURL}
+                alt={item.title}
+                loading="lazy"
+                width="300"
+                height="300"
+              />
 
               <div className="forgen-destion-name">
                 <Link
