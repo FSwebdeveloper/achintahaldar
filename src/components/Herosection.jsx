@@ -32,7 +32,7 @@ function Herosection() {
             services including computer & laptop support, online applications,
             hearing aid services, and electronics.
           </p>
-          <br></br>
+          <br/>
           <div className="service-n-div">
             <button
               aria-label="Web Design"

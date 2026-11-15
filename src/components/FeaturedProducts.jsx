@@ -8,21 +8,22 @@ export default function FeaturedProducts() {
   return (
     <div>
       <div className='Extra-support-poducts'>
-
       </div>
 
       <div className="destination-box-section">
 
         <div className="Explore-section">
+
           <h1 className="destination-title">
             ALL PRODUCTS
           </h1>
 
-          <h1 className='Explore-heading'>
+          <h2 className='Explore-heading'>
             Computer Parts
-          </h1>
+          </h2>
+
         </div>
-         
+
         <div className="explore-place-img">
 
           {products.slice(0, 3).map((item) => (
@@ -30,9 +31,11 @@ export default function FeaturedProducts() {
             <div className="container" key={item.id}>
 
               <img
-                className=""
                 src={item.imgURL}
                 alt={item.title}
+                width="300"
+                height="300"
+                loading="lazy"
               />
 
               <div className="forgen-destion-name">
@@ -41,9 +44,9 @@ export default function FeaturedProducts() {
                   className="product-price"
                   to={`/product-details/${item.id}`}
                 >
-                  <h5 className="country-city">
+                  <h3 className="country-city">
                     {item.title}
-                  </h5>
+                  </h3>
                 </Link>
 
               </div>
