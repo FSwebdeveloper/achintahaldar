@@ -8,7 +8,7 @@ function Herosection() {
         <div className="hero-img-sec">
           <img
             className="hero-img"
-            src="../img/Achinta-preview.avif"
+            src="/img/Achinta-preview.avif"
             alt="Computer and technology services"
             width="300"
             height="300"
