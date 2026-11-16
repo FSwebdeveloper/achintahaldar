@@ -1,5 +1,5 @@
+import React, { lazy, Suspense } from "react";
 import "react-toastify/dist/ReactToastify.css";
-
 import { ToastContainer } from "react-toastify";
 
 import {
@@ -10,139 +10,106 @@ import {
 } from "react-router-dom";
 
 import { Navigation } from "./components/Navigation";
-import { HomePage } from "./components/HomePage";
-import { ContactPage } from "./components/ContactPage";
-import { AboutPage } from "./components/AboutPage";
-import Productsprice from "./components/Productsprice";
-import Product from "./components/Product";
 
+// Homepage eager import — LCP-এর জন্য
+import { HomePage } from "./components/HomePage";
+
+// Other pages lazy load
+const ContactPage = lazy(() =>
+  import("./components/ContactPage").then((module) => ({
+    default: module.ContactPage,
+  }))
+);
+
+const AboutPage = lazy(() =>
+  import("./components/AboutPage").then((module) => ({
+    default: module.AboutPage,
+  }))
+);
+
+const Productsprice = lazy(() =>
+  import("./components/Productsprice")
+);
+
+const Product = lazy(() =>
+  import("./components/Product")
+);
 
 function AppContent() {
-
   const navigate = useNavigate();
 
-
-  // =====================================================
-  // NAVIGATE TO CONTACT
-  // =====================================================
-
   const handleNavigateToContact = (productName) => {
-
     if (productName) {
-
       navigate(
         `/contact?product=${encodeURIComponent(productName)}`
       );
-
     } else {
-
       navigate("/contact");
-
     }
-
   };
 
-
   return (
-
     <div
       className="app-container"
       id="app-main-container"
     >
-
-      {/* =================================================
-          NAVIGATION
-      ================================================= */}
-
       <Navigation />
-
-
-      {/* =================================================
-          MAIN CONTENT
-      ================================================= */}
 
       <main
         className="main-content"
         id="app-main-content"
       >
+        <Suspense fallback={<div className="page-loading" />}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  onNavigateToContact={handleNavigateToContact}
+                />
+              }
+            />
 
-        <Routes>
+            <Route
+              path="/home"
+              element={
+                <HomePage
+                  onNavigateToContact={handleNavigateToContact}
+                />
+              }
+            />
 
-          {/* HOME */}
+            <Route
+              path="/about"
+              element={<AboutPage />}
+            />
 
-          <Route
-            path="/"
-            element={
-              <HomePage
-                onNavigateToContact={handleNavigateToContact}
-              />
-            }
-          />
+            <Route
+              path="/contact"
+              element={<ContactPage />}
+            />
 
+            <Route
+              path="/product/:category"
+              element={<Product />}
+            />
 
-          {/* HOME */}
+            <Route
+              path="/product-details/:id"
+              element={<Productsprice />}
+            />
 
-          <Route
-            path="/home"
-            element={
-              <HomePage
-                onNavigateToContact={handleNavigateToContact}
-              />
-            }
-          />
-
-
-          {/* ABOUT */}
-
-          <Route
-            path="/about"
-            element={<AboutPage />}
-          />
-
-
-          {/* CONTACT */}
-
-          <Route
-            path="/contact"
-            element={<ContactPage />}
-          />
-
-
-          {/* PRODUCT CATEGORY */}
-
-          <Route
-            path="/product/:category"
-            element={<Product />}
-          />
-
-
-          {/* PRODUCT DETAILS */}
-
-          <Route
-            path="/product-details/:id"
-            element={<Productsprice />}
-          />
-
-
-          {/* FALLBACK */}
-
-          <Route
-            path="*"
-            element={
-              <HomePage
-                onNavigateToContact={handleNavigateToContact}
-              />
-            }
-          />
-
-        </Routes>
-
+            <Route
+              path="*"
+              element={
+                <HomePage
+                  onNavigateToContact={handleNavigateToContact}
+                />
+              }
+            />
+          </Routes>
+        </Suspense>
       </main>
-
-
-      {/* =====================================================
-          GLOBAL REACT TOASTIFY
-      ===================================================== */}
 
       <ToastContainer
         position="top-right"
@@ -154,28 +121,14 @@ function AppContent() {
         draggable
         theme="colored"
       />
-
     </div>
-
   );
-
 }
 
-
-// =====================================================
-// APP
-// =====================================================
-
 export default function App() {
-
   return (
-
     <Router>
-
       <AppContent />
-
     </Router>
-
   );
-
 }
