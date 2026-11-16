@@ -163,31 +163,33 @@ const PRODUCT_ITEMS = [
 // UNIQUE BUBBLE COLORS
 // =====================================================
 
+
 const UNIQUE_BUBBLE_COLORS = [
-  "rgba(239, 68, 68, 0.95)",
-  "rgba(249, 115, 22, 0.95)",
-  "rgba(245, 158, 11, 0.95)",
-  "rgba(234, 179, 8, 0.95)",
-  "rgba(132, 204, 22, 0.95)",
-  "rgba(34, 197, 94, 0.95)",
-  "rgba(16, 185, 129, 0.95)",
-  "rgba(20, 184, 166, 0.95)",
-  "rgba(6, 182, 212, 0.95)",
-  "rgba(14, 165, 233, 0.95)",
-  "rgba(59, 130, 246, 0.95)",
-  "rgba(79, 70, 229, 0.95)",
-  "rgba(99, 102, 241, 0.95)",
-  "rgba(139, 92, 246, 0.95)",
-  "rgba(168, 85, 247, 0.95)",
-  "rgba(217, 70, 239, 0.95)",
-  "rgba(236, 72, 153, 0.95)",
-  "rgba(244, 63, 94, 0.95)",
-  "rgba(225, 29, 72, 0.95)",
-  "rgba(2, 132, 199, 0.95)",
-  "rgba(13, 148, 136, 0.95)",
-  "rgba(219, 39, 119, 0.95)",
-  "rgba(101, 163, 13, 0.95)"
+  "rgba(239, 68, 68, 0.88)",   // 0: Red - Mouse
+  "rgba(194, 65, 12, 1)",      // 1: Dark Orange - Keyboard
+  "rgba(161, 98, 7, 1)",       // 2: Dark Amber - Monitor
+  "rgba(234, 179, 8, 0.88)",   // 3: Yellow - HDMI Cable
+  "rgba(132, 204, 22, 0.88)",  // 4: Lime - VGA Cable
+  "rgba(34, 197, 94, 0.88)",   // 5: Green - UPS
+  "rgba(16, 185, 129, 0.88)",  // 6: Emerald - Pendrive
+  "rgba(20, 184, 166, 0.88)",  // 7: Teal - SSD
+  "rgba(6, 182, 212, 0.88)",   // 8: Cyan - HDD
+  "rgba(14, 165, 233, 0.88)",  // 9: Sky - Motherboard
+  "rgba(59, 130, 246, 0.88)",  // 10: Blue - Cabinet
+  "rgba(79, 70, 229, 0.88)",  // 11: Indigo - Desktop
+  "rgba(99, 102, 241, 0.88)",  // 12: Indigo - Laptop
+  "rgba(139, 92, 246, 0.88)",  // 13: Violet - Web Design
+  "rgba(168, 85, 247, 0.88)",  // 14: Purple - Apply Online
+  "rgba(217, 70, 239, 0.88)",  // 15: Fuchsia - Vintage Audio
+  "rgba(236, 72, 153, 0.88)",  // 16: Pink - Processor
+  "rgba(244, 63, 94, 0.88)",   // 17: Rose - Hearing AIDS
+  "rgba(225, 29, 72, 0.88)",   // 18: Rose - CCTV Accessories
+  "rgba(2, 132, 199, 0.88)",   // 19: Blue - Windows OS
+  "rgba(13, 148, 136, 0.88)",  // 20: Teal - Phoenix OS
+  "rgba(219, 39, 119, 0.88)",  // 21: Pink - PC Speaker
+  "rgba(101, 163, 13, 0.88)",  // 22: Lime - RAM
 ];
+
 
 // =====================================================
 // DEEP HIGHLIGHT BORDER COLORS
