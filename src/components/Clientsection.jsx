@@ -90,6 +90,9 @@ function ReviewItem({
             "https://lh3.googleusercontent.com/a/default-user=s32-cc"
           }
           alt="comment-img"
+          height="32"
+          width="32"
+          loading="lazy"
         />
 
         <h3>{item.name} -</h3>
