@@ -168,7 +168,7 @@ const UNIQUE_BUBBLE_COLORS = [
   "rgba(239, 68, 68, 0.88)",   // 0: Red - Mouse
   "rgba(194, 65, 12, 1)",      // 1: Dark Orange - Keyboard
   "rgba(161, 98, 7, 1)",       // 2: Dark Amber - Monitor
-  "rgba(234, 179, 8, 0.88)",   // 3: Yellow - HDMI Cable
+  "rgba(120, 53, 15, 1)",      // 3: Brown - HDMI Cable
   "rgba(132, 204, 22, 0.88)",  // 4: Lime - VGA Cable
   "rgba(34, 197, 94, 0.88)",   // 5: Green - UPS
   "rgba(16, 185, 129, 0.88)",  // 6: Emerald - Pendrive
