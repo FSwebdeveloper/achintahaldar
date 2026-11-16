@@ -8,7 +8,7 @@ function Herosection() {
         <div className="hero-img-sec">
           <img
             className="hero-img"
-            src="/img/Achinta-preview.avif"
+            src="../img/Achinta-preview.avif"
             alt="Computer and technology services"
             width="300"
             height="300"
@@ -26,13 +26,13 @@ function Herosection() {
             </i>
           </h1>
           <h2 className="web-highlight">Frontend Web Developer</h2>
-          <br/>
+          <br />
           <p className="hero-about">
             I create modern, responsive websites and provide practical digital
             services including computer & laptop support, online applications,
             hearing aid services, and electronics.
           </p>
-          <br/>
+          <br />
           <div className="service-n-div">
             <button
               aria-label="Web Design"
@@ -48,14 +48,13 @@ function Herosection() {
             >
               <i className="fa-solid fa-display"></i>{" "}
             </button>
-            <Link to="/product/hearingaids">
-              <button
-                aria-label="Hearing AIDS"
-                data-tooltip="Hearing AIDS"
-                className="service-name"
-              >
-                <i className="fa-solid fa-headphones"></i>{" "}
-              </button>
+            <Link
+              to="/product/hearingaids"
+              aria-label="Hearing AIDS"
+              data-tooltip="Hearing AIDS"
+              className="service-name"
+            >
+              <i className="fa-solid fa-headphones"></i>
             </Link>
             <button
               aria-label="Apply Online"
