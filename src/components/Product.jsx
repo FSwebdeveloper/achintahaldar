@@ -11,6 +11,17 @@ export default function Products() {
   );
 
   return (
+
+    <>
+    <title>
+      Electronics & Computer Accessories | Fswebdeveloper
+    </title>
+
+    <meta
+      name="description"
+      content="Explore electronics and computer accessories at Fswebdeveloper, including keyboards, mouse, monitors, SSD, RAM, HDD, UPS, cables and more."
+    />
+
     <div>
       <div className="Extra-support-poducts"></div>
 
@@ -58,5 +69,6 @@ export default function Products() {
         </div>
       </div>
     </div>
+    </>
   );
 }

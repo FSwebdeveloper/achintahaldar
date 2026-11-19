@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 
 export const ContactPage = () => {
+
+   
   const location = useLocation();
 
   // Form State
@@ -363,6 +365,14 @@ I have successfully filled out the Enquiry Form with the following details:
   const currentWordCount = countWords(description);
 
   return (
+    <>
+    <title>Contact Fswebdeveloper | Website Development Services</title>
+
+      <meta
+        name="description"
+        content="Contact Fswebdeveloper for website design, frontend development, website maintenance, computer services and digital solutions."
+      />
+  
     <div className="signup-page-container">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -716,5 +726,6 @@ I have successfully filled out the Enquiry Form with the following details:
         </div>
       </motion.div>
     </div>
+    </>
   );
 };

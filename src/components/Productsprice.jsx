@@ -54,6 +54,20 @@ Please confirm availability.`;
 
 
   return (
+
+    <>
+  <title>
+    {`${product.title} | Electronics & Accessories | Fswebdeveloper`}
+  </title>
+
+  <meta
+    name="description"
+    content={`Explore ${product.title} at Fswebdeveloper. Discover product details, features and specifications of this electronics and computer accessory.`}
+  />
+
+  {/* Product Details Content */}
+
+
     <div>
 
       <div className="Extra-support-poducts">
@@ -189,6 +203,7 @@ Please confirm availability.`;
       </div>
 
     </div>
+    </>
   );
 };
 

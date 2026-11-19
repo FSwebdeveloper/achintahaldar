@@ -3,7 +3,16 @@ import { motion } from 'motion/react';
 
 export const AboutPage = () => {
   return (
+    <>
+    <title>About Achinta Haldar | Frontend Web Developer</title>
+
+      <meta
+        name="description"
+        content="Learn about Achinta Haldar, a frontend web developer focused on creating responsive, user-friendly websites and practical digital solutions."
+      />
+  
     <div className="home-container" id="about-page-container">
+    
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
@@ -16,5 +25,6 @@ export const AboutPage = () => {
         </h1>
       </motion.div>
     </div>
+    </>
   );
 };

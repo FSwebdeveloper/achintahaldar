@@ -242,6 +242,8 @@ export const HomePage = ({
   // REVIEW STATE
   // ===================================================
 
+  
+
   const [reviews, setReviews] = useState([]);
 
   // ===================================================
@@ -1043,6 +1045,16 @@ const handleBubbleComplete = useCallback(
   // ===================================================
 
   return (
+
+    <>
+    <title>Fswebdeveloper | Web Development & IT Services</title>
+
+      <meta
+        name="description"
+        content="Explore web design, website maintenance, computer services, electronics, laptop accessories and digital solutions at Fswebdeveloper."
+      />
+  
+    
     <div
       ref={containerRef}
       className="
@@ -1384,6 +1396,7 @@ const handleBubbleComplete = useCallback(
         <Footer />
       </motion.div>
     </div>
+    </>
   );
 };
 
