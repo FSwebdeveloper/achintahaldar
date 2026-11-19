@@ -1,5 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://achintahaldar.onrender.com/</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/home</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/about</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/contact</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/product/keyboard</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/product/mouse</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/product/vga</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/product/ups</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/product/hearingaids</loc>
+  </url>
+  <url>
+    <loc>https://achintahaldar.onrender.com/product/hdmi</loc>
   </url>
 </urlset>
