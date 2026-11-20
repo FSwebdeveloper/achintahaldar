@@ -13,25 +13,35 @@ const staticPages = [
   "/contact",
 ];
 
-// Dynamic Product Details Pages
-const productPages = [
+// Dynamic Product Category Pages
+const productCategoryPages = [
   ...new Set(
     products
       .filter((product) => product.category)
-      .map(
-        (product) => `/product/${product.category}`
-      )
+      .map((product) => `/product/${product.category}`)
   ),
 ];
 
-// Combine Static and Dynamic Pages
+// Dynamic Product Details Pages
+const productDetailsPages = products
+  .filter((product) => product.id != null)
+  .map(
+    (product) =>
+      `/product-details/${encodeURIComponent(product.id)}`
+  );
+
+// Combine All Pages
 const allPages = [
-  ...new Set([...staticPages, ...productPages]),
+  ...new Set([
+    ...staticPages,
+    ...productCategoryPages,
+    ...productDetailsPages,
+  ]),
 ];
 
 // XML Special Character Escape
 const escapeXML = (value) =>
-  value
+  String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -63,3 +73,4 @@ fs.writeFileSync(
 
 console.log("Sitemap generated successfully!");
 console.log("Total URLs:", allPages.length);
+console.log("Product Details URLs:", productDetailsPages.length);
